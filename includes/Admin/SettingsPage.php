@@ -235,6 +235,7 @@ final class SettingsPage
                 [
                     'page' => self::PAGE_SLUG,
                     'cache-cleared' => '1',
+                    'notice-nonce' => wp_create_nonce('qndrs_telraam_inzicht_cache_notice'),
                 ],
                 admin_url('options-general.php')
             )
@@ -247,7 +248,11 @@ final class SettingsPage
      */
     private static function render_admin_notices(): void
     {
-        if (! isset($_GET['cache-cleared'])) {
+        if (! isset($_GET['cache-cleared'], $_GET['notice-nonce'])) {
+            return;
+        }
+
+        if (! wp_verify_nonce(sanitize_text_field(wp_unslash((string) $_GET['notice-nonce'])), 'qndrs_telraam_inzicht_cache_notice')) {
             return;
         }
 

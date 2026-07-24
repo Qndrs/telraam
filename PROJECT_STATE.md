@@ -46,7 +46,9 @@ In `telraam/`:
 LICENSE
 PROJECT_PLAN.md
 PROJECT_STATE.md
-qndrs-telraam-inzicht.php
+  qndrs-telraam-inzicht.php
+readme.txt
+.gitattributes
 includes/
   Plugin.php
   index.php
@@ -205,7 +207,6 @@ Bekende API-beperkingen:
 Nog te bouwen:
 
 - frontend CSS
-- `readme.txt` volgens WordPress.org readme standaard
 - tests of testscenario's
 - README
 - changelog
@@ -242,6 +243,11 @@ Vastgelegde checks voor die review:
 - Telraam API-gebruik, externe requests en datalicentie duidelijk documenteren
 - Geen secrets, API-tokens of persoonlijke testdata opnemen
 - Naamgeving controleren op merk-/trademarkkritiek rond Telraam en WordPress
+
+Huidige distributienotitie:
+
+- `readme.txt` is toegevoegd voor Plugin Check en WordPress.org-voorbereiding
+- `.gitattributes` sluit `PROJECT_PLAN.md`, `PROJECT_STATE.md` en lokale release-zips uit bij `git archive`
 
 Officiële referenties:
 
