@@ -4,11 +4,11 @@ Laatste update: 2026-07-24
 
 ## Huidige status
 
-De eerste implementatiestappen zijn gestart. De plugin heeft nu een minimale WordPress bootstrap, basisstructuur, admin settings page, API-tokenstatus, API-testknop, Telraam API-client, transient cachinglaag, traffic report normalizer, toegankelijke frontend shortcode-output en eerste vertaalbestanden.
+De eerste implementatiestappen zijn gestart. De plugin heeft nu een minimale WordPress bootstrap, basisstructuur, opgeschoonde admin settings page, API-tokenstatus, API-testknop, Telraam API-client, transient cachinglaag, traffic report normalizer, toegankelijke frontend shortcode-output, neutrale frontend/admin basisstijl en eerste vertaalbestanden.
 
 Voor WordPress.org-publicatie vertrouwen we op WordPress.org language packs. De plugin roept `load_plugin_textdomain()` niet handmatig aan, zodat Plugin Check geen waarschuwing geeft over de sinds WordPress 4.6 ontmoedigde functie. De `languages/` bestanden blijven voorlopig bron-/ontwikkelmateriaal in de repository.
 
-De repository `Qndrs/telraam` bestaat en bevat nu documentatie plus een minimale plugin-entrypoint, settings page, API client, caching repository en shortcode renderer. De WordPress-pluginnaam/slug is `qndrs-telraam-inzicht`. Er is nog geen README, tests of Composer-configuratie.
+De repository `Qndrs/telraam` bestaat en bevat nu documentatie plus een minimale plugin-entrypoint, settings page, API client, caching repository, shortcode renderer en frontend/admin stylesheets. De WordPress-pluginnaam/slug is `qndrs-telraam-inzicht`. Er is nog geen Composer-configuratie of PHPUnit-testset.
 
 Lokale projectroot:
 
@@ -37,7 +37,13 @@ main
 Laatste bekende commit:
 
 ```text
-f6e3081 Initial commit
+80c7d0f Clean up shortcode output
+```
+
+Huidige werkversie:
+
+```text
+0.3.0
 ```
 
 ## Huidige bestanden
@@ -63,7 +69,14 @@ includes/
     TrafficReportNormalizer.php
     index.php
   Frontend/
+    Assets.php
     Shortcodes.php
+    index.php
+assets/
+  index.php
+  css/
+    admin.css
+    frontend.css
     index.php
 languages/
   index.php
@@ -209,16 +222,10 @@ Bekende API-beperkingen:
 
 Nog te bouwen:
 
-- frontend CSS
-- tests of testscenario's
-- README
-- changelog
+- tests of geautomatiseerde testscenario's
 - shortcode builder in de admin
 - publieke Telraam locatie-URL parsing naar segment-ID
-- admin settings page layout opschonen: API-acties bij tokenveld, cacheactie bij cacheduur, compacter/horizontaler
-- frontend inhoudshiërarchie verbeteren: verkeerstellingen primair, uptime secundair als datakwaliteitsindicator
-- frontend inhoudshiërarchie verder verbeteren: uptime kleiner tonen als datakwaliteitsindicator
-- admin settings page layout opschonen: API-acties bij tokenveld, cacheactie bij cacheduur, compacter/horizontaler
+- fun styling als optionele tweede laag voorbereiden na de neutrale basisstijl
 - dagelijkse aggregates/snapshots opslaan voor toekomstige regressiegrafieken, trends en periodevergelijkingen
 
 ## Open technische keuzes
@@ -260,6 +267,16 @@ Resultaat:
 - Row headers gebruiken het tijdveld
 - Nederlandse tekst voor `days="1"` toont "laatste dag" en niet "last day"
 - Template-inspringing is uit de shortcode HTML-output verwijderd
+- Frontend stylesheet `qndrs-telraam-inzicht` wordt via WordPress enqueue geladen
+- Shortcode-output bevat de basisstijlklassen voor summary cards, uptime-indicator en table wrapper
+- Tabeltitel staat nu zichtbaar buiten de horizontaal scrollende table wrapper, met behoud van een native `<caption>` voor screenreaders
+- Admin stylesheet `qndrs-telraam-inzicht-admin` wordt op de plugin settings page geladen
+- Admin settings page gebruikt kaartlayout met gescopete `.qndrs-telraam-admin` CSS
+- API-testen en API-token wissen staan visueel bij het API-token veld
+- Cache wissen staat visueel bij het cacheduur veld
+- Actieknoppen gebruiken aparte action-forms via het HTML `form` attribuut, zodat er geen geneste forms ontstaan
+- API-token wissen zet het token nu echt leeg; de settings sanitizer heeft hiervoor een expliciete interne clear-flag
+- API-token wissen verwijdert nu ook alle 1 t/m 90 dagen traffic-cache voor het ingestelde standaardsegment
 - Tweede shortcode-call kwam snel terug (`elapsed=0.0069`), passend bij transient cache
 - Plugin Check op de testsite: `Success: Controles afgerond. Geen fouten gevonden.`
 
@@ -332,6 +349,7 @@ php -l includes\Admin\SettingsPage.php
 php -l includes\Api\Client.php
 php -l includes\Api\TrafficReportRepository.php
 php -l includes\Api\TrafficReportNormalizer.php
+php -l includes\Frontend\Assets.php
 php -l includes\Frontend\Shortcodes.php
 ```
 
@@ -369,4 +387,16 @@ Uitgevoerd:
 - Table view ondersteunt nu `rows`, met standaard `24`, maximum `500` en `rows="all"` voor alle teruggegeven regels
 - Frontend table-timestamps worden nu als lokale datum/tijd in een `<time datetime="">` element gerenderd
 - Template-inspringing wordt uit shortcode HTML-output verwijderd
+- Frontend basisstylesheet toegevoegd via `assets/css/frontend.css`
+- Frontend assets worden via `wp_enqueue_scripts` geladen
+- Verkeerstellingen worden visueel als hoofdkaarten gepresenteerd
+- Uptime wordt visueel kleiner als datakwaliteitsindicator gepresenteerd
+- Tabelweergave heeft nu een responsive horizontale scroll-wrapper en neutrale tabelstijl
+- Mobiele tabeltitel gefixt door de zichtbare titel buiten de scroll-wrapper te plaatsen en de native caption visueel te verbergen
+- Admin settings page verplaatst naar compacte kaartlayout
+- Admin API-acties staan bij het API-token veld en cacheactie staat bij cacheduur
+- Admin basisstylesheet toegevoegd via `assets/css/admin.css`
+- Bugfix: API-token wissen werd door token-preserve sanitization teruggedraaid; opgelost met expliciete clear-flag
+- Bugfix: API-token wissen wist nu segment-cache voor alle ondersteunde periodes
+- Versie voorbereid als `0.3.0`
 - `readme.txt`, POT/PO/MO en projectstate bijgewerkt

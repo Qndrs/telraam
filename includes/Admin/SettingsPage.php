@@ -33,6 +33,7 @@ final class SettingsPage
     {
         add_action('admin_menu', [self::class, 'add_options_page']);
         add_action('admin_init', [self::class, 'register_settings']);
+        add_action('admin_enqueue_scripts', [self::class, 'enqueue_admin_styles']);
         add_action('admin_post_qndrs_telraam_inzicht_test_api', [self::class, 'handle_test_api']);
         add_action('admin_post_qndrs_telraam_inzicht_clear_cache', [self::class, 'handle_clear_cache']);
         add_action('admin_post_qndrs_telraam_inzicht_clear_api_token', [self::class, 'handle_clear_api_token']);
@@ -87,44 +88,22 @@ final class SettingsPage
                 'default' => self::get_default_options(),
             ]
         );
+    }
 
-        add_settings_section(
-            'qndrs_telraam_inzicht_api_section',
-            __('Telraam API', 'qndrs-telraam-inzicht'),
-            [self::class, 'render_api_section'],
-            self::PAGE_SLUG
-        );
+    /**
+     * Enqueue admin styles on the plugin settings page.
+     */
+    public static function enqueue_admin_styles(string $hook_suffix): void
+    {
+        if ('settings_page_' . self::PAGE_SLUG !== $hook_suffix) {
+            return;
+        }
 
-        add_settings_field(
-            'api_token',
-            __('API token', 'qndrs-telraam-inzicht'),
-            [self::class, 'render_api_token_field'],
-            self::PAGE_SLUG,
-            'qndrs_telraam_inzicht_api_section'
-        );
-
-        add_settings_field(
-            'default_segment_id',
-            __('Default segment ID', 'qndrs-telraam-inzicht'),
-            [self::class, 'render_default_segment_id_field'],
-            self::PAGE_SLUG,
-            'qndrs_telraam_inzicht_api_section'
-        );
-
-        add_settings_field(
-            'default_days',
-            __('Default period', 'qndrs-telraam-inzicht'),
-            [self::class, 'render_default_days_field'],
-            self::PAGE_SLUG,
-            'qndrs_telraam_inzicht_api_section'
-        );
-
-        add_settings_field(
-            'cache_duration_minutes',
-            __('Cache duration', 'qndrs-telraam-inzicht'),
-            [self::class, 'render_cache_duration_field'],
-            self::PAGE_SLUG,
-            'qndrs_telraam_inzicht_api_section'
+        wp_enqueue_style(
+            'qndrs-telraam-inzicht-admin',
+            QNDRS_TELRAAM_INZICHT_PLUGIN_URL . 'assets/css/admin.css',
+            [],
+            QNDRS_TELRAAM_INZICHT_VERSION
         );
     }
 
@@ -147,9 +126,12 @@ final class SettingsPage
             $input = [];
         }
 
-        $api_token = $existing['api_token'];
-        if (isset($input['api_token']) && '' !== trim((string) $input['api_token'])) {
+        if (! empty($input['_clear_api_token'])) {
+            $api_token = '';
+        } elseif (isset($input['api_token']) && '' !== trim((string) $input['api_token'])) {
             $api_token = sanitize_text_field(wp_unslash((string) $input['api_token']));
+        } else {
+            $api_token = $existing['api_token'];
         }
 
         $default_segment_id = $existing['default_segment_id'];
@@ -185,57 +167,138 @@ final class SettingsPage
             wp_die(esc_html__('You do not have permission to manage Telraam settings.', 'qndrs-telraam-inzicht'));
         }
 
+        $options = self::get_options();
+        $has_api_token = '' !== $options['api_token'];
+        $option_prefix = self::OPTION_NAME;
+        $settings_form_id = 'qndrs-telraam-inzicht-settings-form';
+        $test_api_form_id = 'qndrs-telraam-inzicht-test-api-form';
+        $clear_api_token_form_id = 'qndrs-telraam-inzicht-clear-api-token-form';
+        $clear_cache_form_id = 'qndrs-telraam-inzicht-clear-cache-form';
+
         ?>
-        <div class="wrap">
-            <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+        <div class="wrap qndrs-telraam-admin">
+            <div class="qndrs-telraam-admin__header">
+                <div>
+                    <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+                    <p>
+                        <?php esc_html_e('Configure the Telraam API connection and default display settings for traffic statistics.', 'qndrs-telraam-inzicht'); ?>
+                    </p>
+                </div>
+                <span class="qndrs-telraam-admin__status-badge <?php echo esc_attr($has_api_token ? 'qndrs-telraam-admin__status-badge--success' : 'qndrs-telraam-admin__status-badge--warning'); ?>">
+                    <?php echo esc_html($has_api_token ? __('API token saved.', 'qndrs-telraam-inzicht') : __('No API token saved.', 'qndrs-telraam-inzicht')); ?>
+                </span>
+            </div>
+
             <?php self::render_admin_notices(); ?>
-            <p>
-                <?php esc_html_e('Configure the Telraam API connection and default display settings for traffic statistics.', 'qndrs-telraam-inzicht'); ?>
-            </p>
+            <?php settings_errors(); ?>
 
-            <form action="options.php" method="post">
-                <?php
-                settings_fields(self::SETTINGS_GROUP);
-                do_settings_sections(self::PAGE_SLUG);
-                submit_button(__('Save settings', 'qndrs-telraam-inzicht'));
-                ?>
+            <form id="<?php echo esc_attr($settings_form_id); ?>" class="qndrs-telraam-admin__form" action="options.php" method="post">
+                <?php settings_fields(self::SETTINGS_GROUP); ?>
+
+                <section class="qndrs-telraam-admin__panel" aria-labelledby="qndrs-telraam-inzicht-api-heading">
+                    <div class="qndrs-telraam-admin__panel-header">
+                        <h2 id="qndrs-telraam-inzicht-api-heading"><?php esc_html_e('Telraam API', 'qndrs-telraam-inzicht'); ?></h2>
+                        <p><?php esc_html_e('Enter your Telraam API token and choose sensible defaults for frontend shortcodes.', 'qndrs-telraam-inzicht'); ?></p>
+                    </div>
+
+                    <div class="qndrs-telraam-admin__fields">
+                        <div class="qndrs-telraam-admin__field qndrs-telraam-admin__field--wide">
+                            <label for="<?php echo esc_attr($option_prefix); ?>_api_token"><?php esc_html_e('API token', 'qndrs-telraam-inzicht'); ?></label>
+                            <div class="qndrs-telraam-admin__control-row">
+                                <input
+                                    type="password"
+                                    id="<?php echo esc_attr($option_prefix); ?>_api_token"
+                                    name="<?php echo esc_attr($option_prefix); ?>[api_token]"
+                                    value=""
+                                    class="regular-text"
+                                    autocomplete="off"
+                                />
+                                <button type="submit" form="<?php echo esc_attr($test_api_form_id); ?>" class="button button-secondary">
+                                    <?php esc_html_e('Test API connection', 'qndrs-telraam-inzicht'); ?>
+                                </button>
+                                <button
+                                    type="submit"
+                                    form="<?php echo esc_attr($clear_api_token_form_id); ?>"
+                                    class="button qndrs-telraam-admin__button-delete"
+                                    <?php disabled(! $has_api_token); ?>
+                                >
+                                    <?php esc_html_e('Clear API token', 'qndrs-telraam-inzicht'); ?>
+                                </button>
+                            </div>
+                            <p class="description">
+                                <?php
+                                if ($has_api_token) {
+                                    esc_html_e('An API token is currently saved. Leave this field empty to keep the existing token.', 'qndrs-telraam-inzicht');
+                                } else {
+                                    esc_html_e('Paste your Telraam API token. It will not be shown on the frontend.', 'qndrs-telraam-inzicht');
+                                }
+                                ?>
+                            </p>
+                        </div>
+
+                        <div class="qndrs-telraam-admin__field">
+                            <label for="<?php echo esc_attr($option_prefix); ?>_default_segment_id"><?php esc_html_e('Default segment ID', 'qndrs-telraam-inzicht'); ?></label>
+                            <input
+                                type="text"
+                                id="<?php echo esc_attr($option_prefix); ?>_default_segment_id"
+                                name="<?php echo esc_attr($option_prefix); ?>[default_segment_id]"
+                                value="<?php echo esc_attr($options['default_segment_id']); ?>"
+                                class="regular-text"
+                                inputmode="numeric"
+                                pattern="[0-9]+"
+                            />
+                            <p class="description"><?php esc_html_e('Default Telraam segment ID used when a shortcode does not specify an ID.', 'qndrs-telraam-inzicht'); ?></p>
+                        </div>
+
+                        <div class="qndrs-telraam-admin__field">
+                            <label for="<?php echo esc_attr($option_prefix); ?>_default_days"><?php esc_html_e('Default period', 'qndrs-telraam-inzicht'); ?></label>
+                            <div class="qndrs-telraam-admin__inline-unit">
+                                <input
+                                    type="number"
+                                    id="<?php echo esc_attr($option_prefix); ?>_default_days"
+                                    name="<?php echo esc_attr($option_prefix); ?>[default_days]"
+                                    value="<?php echo esc_attr((string) $options['default_days']); ?>"
+                                    class="small-text"
+                                    min="1"
+                                    max="90"
+                                    step="1"
+                                />
+                                <span><?php esc_html_e('days', 'qndrs-telraam-inzicht'); ?></span>
+                            </div>
+                            <p class="description"><?php esc_html_e('Traffic report requests are limited to a maximum period of 90 days.', 'qndrs-telraam-inzicht'); ?></p>
+                        </div>
+
+                        <div class="qndrs-telraam-admin__field qndrs-telraam-admin__field--wide">
+                            <label for="<?php echo esc_attr($option_prefix); ?>_cache_duration_minutes"><?php esc_html_e('Cache duration', 'qndrs-telraam-inzicht'); ?></label>
+                            <div class="qndrs-telraam-admin__control-row">
+                                <div class="qndrs-telraam-admin__inline-unit">
+                                    <input
+                                        type="number"
+                                        id="<?php echo esc_attr($option_prefix); ?>_cache_duration_minutes"
+                                        name="<?php echo esc_attr($option_prefix); ?>[cache_duration_minutes]"
+                                        value="<?php echo esc_attr((string) $options['cache_duration_minutes']); ?>"
+                                        class="small-text"
+                                        min="5"
+                                        max="1440"
+                                        step="1"
+                                    />
+                                    <span><?php esc_html_e('minutes', 'qndrs-telraam-inzicht'); ?></span>
+                                </div>
+                                <button type="submit" form="<?php echo esc_attr($clear_cache_form_id); ?>" class="button button-secondary">
+                                    <?php esc_html_e('Clear cache', 'qndrs-telraam-inzicht'); ?>
+                                </button>
+                            </div>
+                            <p class="description"><?php esc_html_e('Caching protects your Telraam API quota. The Telraam API allows limited request rates.', 'qndrs-telraam-inzicht'); ?></p>
+                        </div>
+                    </div>
+
+                    <div class="qndrs-telraam-admin__panel-footer">
+                        <?php submit_button(__('Save settings', 'qndrs-telraam-inzicht'), 'primary', 'submit', false); ?>
+                    </div>
+                </section>
             </form>
 
-            <hr />
-
-            <h2><?php esc_html_e('API token management', 'qndrs-telraam-inzicht'); ?></h2>
-            <p>
-                <?php esc_html_e('Remove the saved Telraam API token from this WordPress site. This does not revoke the token in Telraam.', 'qndrs-telraam-inzicht'); ?>
-            </p>
-            <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
-                <?php wp_nonce_field('qndrs_telraam_inzicht_clear_api_token'); ?>
-                <input type="hidden" name="action" value="qndrs_telraam_inzicht_clear_api_token" />
-                <?php submit_button(__('Clear API token', 'qndrs-telraam-inzicht'), 'delete', 'submit', false); ?>
-            </form>
-
-            <hr />
-
-            <h2><?php esc_html_e('API connection test', 'qndrs-telraam-inzicht'); ?></h2>
-            <p>
-                <?php esc_html_e('Test the saved API token and default segment with a one-day traffic report request.', 'qndrs-telraam-inzicht'); ?>
-            </p>
-            <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
-                <?php wp_nonce_field('qndrs_telraam_inzicht_test_api'); ?>
-                <input type="hidden" name="action" value="qndrs_telraam_inzicht_test_api" />
-                <?php submit_button(__('Test API connection', 'qndrs-telraam-inzicht'), 'secondary', 'submit', false); ?>
-            </form>
-
-            <hr />
-
-            <h2><?php esc_html_e('Cache', 'qndrs-telraam-inzicht'); ?></h2>
-            <p>
-                <?php esc_html_e('Clear cached traffic data for the currently configured default segment and period.', 'qndrs-telraam-inzicht'); ?>
-            </p>
-            <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
-                <?php wp_nonce_field('qndrs_telraam_inzicht_clear_cache'); ?>
-                <input type="hidden" name="action" value="qndrs_telraam_inzicht_clear_cache" />
-                <?php submit_button(__('Clear cache', 'qndrs-telraam-inzicht'), 'secondary', 'submit', false); ?>
-            </form>
+            <?php self::render_action_forms($test_api_form_id, $clear_api_token_form_id, $clear_cache_form_id); ?>
         </div>
         <?php
     }
@@ -253,9 +316,10 @@ final class SettingsPage
 
         $options = self::get_options();
         $options['api_token'] = '';
+        $options['_clear_api_token'] = true;
 
         update_option(self::OPTION_NAME, $options);
-        TrafficReportRepository::delete_cache($options['default_segment_id'], $options['default_days']);
+        TrafficReportRepository::delete_segment_cache($options['default_segment_id']);
 
         wp_safe_redirect(
             add_query_arg(
@@ -268,6 +332,29 @@ final class SettingsPage
             )
         );
         exit;
+    }
+
+    /**
+     * Render hidden action forms used by buttons in the settings panel.
+     */
+    private static function render_action_forms(string $test_api_form_id, string $clear_api_token_form_id, string $clear_cache_form_id): void
+    {
+        ?>
+        <div class="qndrs-telraam-admin__action-forms" hidden>
+            <form id="<?php echo esc_attr($test_api_form_id); ?>" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
+                <?php wp_nonce_field('qndrs_telraam_inzicht_test_api'); ?>
+                <input type="hidden" name="action" value="qndrs_telraam_inzicht_test_api" />
+            </form>
+            <form id="<?php echo esc_attr($clear_api_token_form_id); ?>" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
+                <?php wp_nonce_field('qndrs_telraam_inzicht_clear_api_token'); ?>
+                <input type="hidden" name="action" value="qndrs_telraam_inzicht_clear_api_token" />
+            </form>
+            <form id="<?php echo esc_attr($clear_cache_form_id); ?>" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
+                <?php wp_nonce_field('qndrs_telraam_inzicht_clear_cache'); ?>
+                <input type="hidden" name="action" value="qndrs_telraam_inzicht_clear_cache" />
+            </form>
+        </div>
+        <?php
     }
 
     /**

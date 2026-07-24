@@ -1,0 +1,201 @@
+.qndrs-telraam-admin {
+    --qndrs-telraam-admin-color-text: #17202a;
+    --qndrs-telraam-admin-color-muted: #5c6670;
+    --qndrs-telraam-admin-color-border: #d9e1e8;
+    --qndrs-telraam-admin-color-surface: #ffffff;
+    --qndrs-telraam-admin-color-surface-soft: #f6f8fa;
+    --qndrs-telraam-admin-color-accent: #1d6f8f;
+    --qndrs-telraam-admin-color-accent-soft: #e8f4f7;
+    --qndrs-telraam-admin-color-danger: #b32d2e;
+    --qndrs-telraam-admin-radius: 14px;
+    --qndrs-telraam-admin-shadow: 0 10px 30px rgba(23, 32, 42, 0.08);
+
+    max-width: 1120px;
+    color: var(--qndrs-telraam-admin-color-text);
+}
+
+.qndrs-telraam-admin__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-block: 1.25rem;
+}
+
+.qndrs-telraam-admin__header h1 {
+    margin-block-end: 0.35rem;
+    font-weight: 700;
+}
+
+.qndrs-telraam-admin__header p,
+.qndrs-telraam-admin__panel-header p {
+    max-width: 62rem;
+    margin: 0;
+    color: var(--qndrs-telraam-admin-color-muted);
+}
+
+.qndrs-telraam-admin__status-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.qndrs-telraam-admin__status-badge--success {
+    color: var(--qndrs-telraam-admin-color-accent);
+    background: var(--qndrs-telraam-admin-color-accent-soft);
+}
+
+.qndrs-telraam-admin__status-badge--warning {
+    color: #996800;
+    background: #fff4d6;
+}
+
+.qndrs-telraam-admin__panel {
+    background: var(--qndrs-telraam-admin-color-surface);
+    border: 1px solid var(--qndrs-telraam-admin-color-border);
+    border-radius: var(--qndrs-telraam-admin-radius);
+    box-shadow: var(--qndrs-telraam-admin-shadow);
+    overflow: hidden;
+}
+
+.qndrs-telraam-admin__panel-header,
+.qndrs-telraam-admin__panel-footer {
+    padding: 1.25rem 1.5rem;
+    background: var(--qndrs-telraam-admin-color-surface-soft);
+}
+
+.qndrs-telraam-admin__panel-header {
+    border-block-end: 1px solid var(--qndrs-telraam-admin-color-border);
+}
+
+.qndrs-telraam-admin__panel-header h2 {
+    margin: 0 0 0.35rem;
+    color: inherit;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.qndrs-telraam-admin__panel-footer {
+    border-block-start: 1px solid var(--qndrs-telraam-admin-color-border);
+}
+
+.qndrs-telraam-admin__fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+}
+
+.qndrs-telraam-admin__field {
+    min-width: 0;
+    padding: 1.25rem 1.5rem;
+    border-block-end: 1px solid var(--qndrs-telraam-admin-color-border);
+}
+
+.qndrs-telraam-admin__field:nth-child(odd) {
+    border-inline-end: 1px solid var(--qndrs-telraam-admin-color-border);
+}
+
+.qndrs-telraam-admin__field--wide {
+    grid-column: 1 / -1;
+    border-inline-end: 0;
+}
+
+.qndrs-telraam-admin__field label {
+    display: block;
+    margin-block-end: 0.45rem;
+    color: var(--qndrs-telraam-admin-color-text);
+    font-weight: 700;
+}
+
+.qndrs-telraam-admin__field input[type="text"],
+.qndrs-telraam-admin__field input[type="password"],
+.qndrs-telraam-admin__field input[type="number"] {
+    width: 100%;
+    max-width: 32rem;
+    min-height: 2.4rem;
+    border-color: var(--qndrs-telraam-admin-color-border);
+    border-radius: 8px;
+}
+
+.qndrs-telraam-admin__field input.small-text {
+    width: 6rem;
+}
+
+.qndrs-telraam-admin__field .description {
+    max-width: 54rem;
+    margin-block: 0.55rem 0;
+    color: var(--qndrs-telraam-admin-color-muted);
+}
+
+.qndrs-telraam-admin__control-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.qndrs-telraam-admin__control-row input[type="password"] {
+    flex: 1 1 22rem;
+}
+
+.qndrs-telraam-admin__inline-unit {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.qndrs-telraam-admin .button {
+    border-radius: 8px;
+}
+
+.qndrs-telraam-admin__button-delete {
+    color: var(--qndrs-telraam-admin-color-danger);
+    border-color: #dba9a9;
+    background: #fff;
+}
+
+.qndrs-telraam-admin__button-delete:hover,
+.qndrs-telraam-admin__button-delete:focus {
+    color: #8a2424;
+    border-color: var(--qndrs-telraam-admin-color-danger);
+}
+
+.qndrs-telraam-admin__button-delete:disabled {
+    color: #a7aaad;
+    border-color: #dcdcde;
+    background: #f6f7f7;
+}
+
+@media (max-width: 782px) {
+    .qndrs-telraam-admin__header {
+        display: block;
+    }
+
+    .qndrs-telraam-admin__status-badge {
+        margin-block-start: 0.75rem;
+    }
+
+    .qndrs-telraam-admin__fields {
+        grid-template-columns: 1fr;
+    }
+
+    .qndrs-telraam-admin__field,
+    .qndrs-telraam-admin__field:nth-child(odd) {
+        border-inline-end: 0;
+    }
+
+    .qndrs-telraam-admin__control-row {
+        align-items: stretch;
+    }
+
+    .qndrs-telraam-admin__control-row input[type="password"],
+    .qndrs-telraam-admin__control-row .button {
+        width: 100%;
+        max-width: none;
+        text-align: center;
+    }
+}

@@ -121,23 +121,23 @@ final class Shortcodes
             <section class="qndrs-telraam-inzicht__summary-section" aria-labelledby="<?php echo esc_attr($summary_heading_id); ?>">
                 <h3 id="<?php echo esc_attr($summary_heading_id); ?>"><?php esc_html_e('Traffic totals', 'qndrs-telraam-inzicht'); ?></h3>
                 <dl class="qndrs-telraam-inzicht__summary">
-                    <div class="qndrs-telraam-inzicht__summary-item">
+                    <div class="qndrs-telraam-inzicht__summary-item qndrs-telraam-inzicht__summary-item--pedestrians">
                         <dt><?php esc_html_e('Pedestrians', 'qndrs-telraam-inzicht'); ?></dt>
-                        <dd><?php echo esc_html((string) $summary['pedestrians']); ?></dd>
+                        <dd><?php echo esc_html(self::format_count($summary['pedestrians'])); ?></dd>
                     </div>
-                    <div class="qndrs-telraam-inzicht__summary-item">
+                    <div class="qndrs-telraam-inzicht__summary-item qndrs-telraam-inzicht__summary-item--two-wheelers">
                         <dt><?php esc_html_e('Two-wheelers', 'qndrs-telraam-inzicht'); ?></dt>
-                        <dd><?php echo esc_html((string) $summary['two_wheelers']); ?></dd>
+                        <dd><?php echo esc_html(self::format_count($summary['two_wheelers'])); ?></dd>
                     </div>
-                    <div class="qndrs-telraam-inzicht__summary-item">
+                    <div class="qndrs-telraam-inzicht__summary-item qndrs-telraam-inzicht__summary-item--cars">
                         <dt><?php esc_html_e('Cars', 'qndrs-telraam-inzicht'); ?></dt>
-                        <dd><?php echo esc_html((string) $summary['cars']); ?></dd>
+                        <dd><?php echo esc_html(self::format_count($summary['cars'])); ?></dd>
                     </div>
-                    <div class="qndrs-telraam-inzicht__summary-item">
+                    <div class="qndrs-telraam-inzicht__summary-item qndrs-telraam-inzicht__summary-item--heavy-vehicles">
                         <dt><?php esc_html_e('Heavy vehicles', 'qndrs-telraam-inzicht'); ?></dt>
-                        <dd><?php echo esc_html((string) $summary['heavy_vehicles']); ?></dd>
+                        <dd><?php echo esc_html(self::format_count($summary['heavy_vehicles'])); ?></dd>
                     </div>
-                    <div class="qndrs-telraam-inzicht__summary-item">
+                    <div class="qndrs-telraam-inzicht__summary-item qndrs-telraam-inzicht__summary-item--uptime">
                         <dt><?php esc_html_e('Average uptime', 'qndrs-telraam-inzicht'); ?></dt>
                         <dd><?php echo esc_html(self::format_uptime($summary['average_uptime'])); ?></dd>
                     </div>
@@ -229,14 +229,14 @@ final class Shortcodes
         }
 
         $visible_rows = null === $rows_limit ? $rows : array_slice($rows, 0, $rows_limit);
+        $caption = self::format_table_caption($segment_id, $days, count($visible_rows), count($rows));
 
         ob_start();
         ?>
+        <p class="qndrs-telraam-inzicht__table-caption"><?php echo esc_html($caption); ?></p>
         <div class="qndrs-telraam-inzicht__table-wrapper">
             <table class="qndrs-telraam-inzicht__table">
-                <caption>
-                    <?php echo esc_html(self::format_table_caption($segment_id, $days, count($visible_rows), count($rows))); ?>
-                </caption>
+                <caption><?php echo esc_html($caption); ?></caption>
                 <thead>
                     <tr>
                         <th scope="col"><?php esc_html_e('Time', 'qndrs-telraam-inzicht'); ?></th>
@@ -251,10 +251,10 @@ final class Shortcodes
                     <?php foreach ($visible_rows as $row) : ?>
                         <tr>
                             <th scope="row"><?php echo self::render_time($row['time']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></th>
-                            <td><?php echo esc_html((string) $row['pedestrians']); ?></td>
-                            <td><?php echo esc_html((string) $row['two_wheelers']); ?></td>
-                            <td><?php echo esc_html((string) $row['cars']); ?></td>
-                            <td><?php echo esc_html((string) $row['heavy_vehicles']); ?></td>
+                            <td><?php echo esc_html(self::format_count($row['pedestrians'])); ?></td>
+                            <td><?php echo esc_html(self::format_count($row['two_wheelers'])); ?></td>
+                            <td><?php echo esc_html(self::format_count($row['cars'])); ?></td>
+                            <td><?php echo esc_html(self::format_count($row['heavy_vehicles'])); ?></td>
                             <td><?php echo esc_html(self::format_uptime($row['uptime'])); ?></td>
                         </tr>
                     <?php endforeach; ?>
@@ -305,6 +305,14 @@ final class Shortcodes
     private static function clean_markup(string $markup): string
     {
         return trim((string) preg_replace('/>\s+</', '><', $markup));
+    }
+
+    /**
+     * Format a traffic count for display.
+     */
+    private static function format_count(int $count): string
+    {
+        return number_format_i18n($count);
     }
 
     /**

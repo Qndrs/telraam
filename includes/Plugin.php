@@ -17,6 +17,7 @@ require_once QNDRS_TELRAAM_INZICHT_PLUGIN_DIR . 'includes/Api/Client.php';
 require_once QNDRS_TELRAAM_INZICHT_PLUGIN_DIR . 'includes/Api/TrafficReportRepository.php';
 require_once QNDRS_TELRAAM_INZICHT_PLUGIN_DIR . 'includes/Api/TrafficReportNormalizer.php';
 require_once QNDRS_TELRAAM_INZICHT_PLUGIN_DIR . 'includes/Admin/SettingsPage.php';
+require_once QNDRS_TELRAAM_INZICHT_PLUGIN_DIR . 'includes/Frontend/Assets.php';
 require_once QNDRS_TELRAAM_INZICHT_PLUGIN_DIR . 'includes/Frontend/Shortcodes.php';
 
 /**
@@ -33,6 +34,7 @@ final class Plugin
             Admin\SettingsPage::register();
         }
 
+        Frontend\Assets::register();
         Frontend\Shortcodes::register();
     }
 }

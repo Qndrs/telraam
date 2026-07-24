@@ -3,7 +3,7 @@
  * Plugin Name: Qndrs Telraam Inzicht
  * Plugin URI: https://github.com/Qndrs/telraam
  * Description: Display Telraam traffic statistics on your WordPress website.
- * Version: 0.2.0
+ * Version: 0.3.0
  * Requires at least: 6.5
  * Requires PHP: 8.3
  * Author: Qndrs
@@ -22,7 +22,7 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-define('QNDRS_TELRAAM_INZICHT_VERSION', '0.2.0');
+define('QNDRS_TELRAAM_INZICHT_VERSION', '0.3.0');
 define('QNDRS_TELRAAM_INZICHT_MINIMUM_PHP_VERSION', '8.3.0');
 define('QNDRS_TELRAAM_INZICHT_PLUGIN_FILE', __FILE__);
 define('QNDRS_TELRAAM_INZICHT_PLUGIN_DIR', plugin_dir_path(__FILE__));

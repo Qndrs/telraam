@@ -4,7 +4,7 @@ Tags: telraam, traffic, statistics, mobility, shortcode
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 8.3
-Stable tag: 0.2.0
+Stable tag: 0.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,7 @@ Qndrs Telraam Inzicht displays traffic statistics from the Telraam API on a Word
 
 The plugin currently provides a shortcode for showing traffic totals for a Telraam segment. It uses the WordPress HTTP API for requests and WordPress transients for caching, so Telraam API limits are respected.
 
-Frontend output uses semantic HTML with labelled sections, summary data, and accessible table captions.
+Frontend output uses semantic HTML with labelled sections, summary data, accessible table captions, and a neutral responsive base style.
 
 Current shortcode:
 
@@ -41,6 +41,8 @@ The plugin requires a Telraam API token. You can configure the token and default
 The settings page includes an API connection test. The test uses the saved token and default segment ID, but never displays the token.
 
 The saved API token can be cleared from the settings page without entering a replacement token.
+
+The settings page uses a compact card layout with token and cache actions next to the related fields.
 
 This plugin is not affiliated with or endorsed by Telraam. Telraam API use is subject to Telraam's own terms, rate limits, and data licensing conditions.
 
@@ -82,6 +84,15 @@ Yes. The plugin uses the `qndrs-telraam-inzicht` text domain and is prepared for
 
 == Changelog ==
 
+= 0.3.0 =
+
+* Added a `rows` shortcode attribute for table output.
+* Improved frontend table timestamps.
+* Added a neutral responsive frontend base style.
+* Improved settings page layout and admin styling.
+* Fixed API token clearing so the saved token is actually removed.
+* Clear cached segment traffic data when the API token is removed.
+
 = 0.2.0 =
 
 * Added visible API token status without exposing the token.
@@ -89,8 +100,6 @@ Yes. The plugin uses the `qndrs-telraam-inzicht` text domain and is prepared for
 * Added API connection test.
 * Added traffic report normalizer.
 * Improved accessible frontend HTML structure.
-* Added a `rows` shortcode attribute for table output.
-* Improved frontend table timestamps.
 
 = 0.1.0 =
 

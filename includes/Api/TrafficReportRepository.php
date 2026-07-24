@@ -81,6 +81,21 @@ final class TrafficReportRepository
     }
 
     /**
+     * Delete cached traffic report data for all supported periods for a segment.
+     *
+     * This is used when the API token is cleared, so stale cached data for the
+     * configured segment is not still shown after the token has been removed.
+     *
+     * @param string $segment_id Telraam segment ID.
+     */
+    public static function delete_segment_cache(string $segment_id): void
+    {
+        for ($days = 1; $days <= 90; $days++) {
+            self::delete_cache($segment_id, $days);
+        }
+    }
+
+    /**
      * Build a stable transient key.
      *
      * WordPress transient names are limited in length, so use a short hash for

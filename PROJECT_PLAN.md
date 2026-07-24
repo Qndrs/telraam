@@ -374,10 +374,15 @@ De plugin moet in documentatie vermelden:
 - De frontend shortcode gebruikt nu toegankelijkere HTML met gelabelde secties, summary-heading, table caption, row headers en alert-role voor foutmeldingen.
 - Shortcode-output handelt enkelvoud/meervoud af: bij `days="1"` toont de tekst "laatste dag".
 - Admin settings page heeft nu een expliciete actie om het opgeslagen API-token te wissen zonder een dummywaarde te hoeven invullen.
-- Admin settings page moet visueel worden opgeschoond: API-testen en API-token wissen horen bij het API-token veld; cache wissen hoort bij het cacheduur veld; layout mag compacter en horizontaler.
-- Frontend-layout moet inhoudelijk prioriteren: verkeerstellingen zijn primair; uptime is een kleine datakwaliteitsindicatie, geen gelijkwaardige hoofdstatistiek.
+- Admin settings page is visueel opgeschoond: API-testen en API-token wissen staan bij het API-token veld; cache wissen staat bij het cacheduur veld; layout is compacter en horizontaler.
+- API-token wissen moet een expliciete clear-route gebruiken, zodat de settings sanitizer het oude token niet behoudt; tegelijk wordt segment-cache voor alle ondersteunde periodes gewist.
+- Frontend-layout prioriteert nu inhoudelijk: verkeerstellingen zijn primair; uptime is een kleine datakwaliteitsindicatie, geen gelijkwaardige hoofdstatistiek.
 - Grote uur-tabel voorlopig niet pagineren. De table view ondersteunt nu een `rows` attribuut (`rows="24"` standaard, `rows="all"` voor alles) en volledige uurdata blijft een detailweergave.
 - Frontend-output moet netjes renderen zonder template-inspringing in de HTML-output; timestamps moeten als leesbare lokale datum/tijd met machineleesbaar `<time datetime="">` worden getoond.
+- Frontend basisstijl gebruikt gescopete CSS onder `.qndrs-telraam-inzicht`, met CSS-variabelen voor latere theming.
+- Mobiele tabeltitel moet buiten de horizontaal scrollende tabel blijven; native `<caption>` blijft beschikbaar voor screenreaders.
+- Admin basisstijl gebruikt gescopete CSS onder `.qndrs-telraam-admin`, met kaartlayout, veldgroepen en statusbadge.
+- Fun styling komt pas na de neutrale basisroute en moet optioneel blijven, bijvoorbeeld via style presets.
 - Toekomstige dataopslag: dagelijkse Telraam-aggregates/snapshots opslaan in WordPress, los van transient cache, zodat regressiegrafieken, trends en periodevergelijkingen mogelijk worden.
 
 ## Toekomstige trend- en regressielaag
