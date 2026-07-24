@@ -13,6 +13,11 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
+require_once QNDRS_TELRAAM_INZICHT_PLUGIN_DIR . 'includes/Api/Client.php';
+require_once QNDRS_TELRAAM_INZICHT_PLUGIN_DIR . 'includes/Api/TrafficReportRepository.php';
+require_once QNDRS_TELRAAM_INZICHT_PLUGIN_DIR . 'includes/Admin/SettingsPage.php';
+require_once QNDRS_TELRAAM_INZICHT_PLUGIN_DIR . 'includes/Frontend/Shortcodes.php';
+
 /**
  * Coordinates plugin services.
  */
@@ -26,10 +31,10 @@ final class Plugin
         self::load_textdomain();
 
         if (is_admin()) {
-            require_once QNDRS_TELRAAM_INZICHT_PLUGIN_DIR . 'includes/Admin/SettingsPage.php';
-
             Admin\SettingsPage::register();
         }
+
+        Frontend\Shortcodes::register();
     }
 
     /**

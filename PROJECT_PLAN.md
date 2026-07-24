@@ -128,9 +128,9 @@ Caching via transients:
 Eerste shortcode:
 
 ```text
-[telraam_segment]
-[telraam_segment id="9000010390" days="7"]
-[telraam_segment id="9000010390" view="summary"]
+[qndrs_telraam_segment]
+[qndrs_telraam_segment id="9000010390" days="7"]
+[qndrs_telraam_segment id="9000010390" view="summary"]
 ```
 
 Gedrag:
@@ -138,6 +138,27 @@ Gedrag:
 - Zonder `id` gebruikt de shortcode het standaard segment uit de settings
 - Zonder `days` gebruikt de shortcode de standaard periode uit de settings
 - Zonder `view` toont de shortcode een compacte samenvatting
+- Een shortcode builder in de admin wordt later toegevoegd, zodat beheerders de juiste shortcode kunnen samenstellen zonder attributen handmatig te typen
+
+Toekomstige inputoptie:
+
+```text
+[qndrs_telraam_segment url="https://telraam.net/nl/location/9000010390"]
+```
+
+De plugin moet dan het segment-ID uit de publieke Telraam locatie-URL halen en dezelfde statistieken tonen alsof `id="9000010390"` was opgegeven.
+
+Ondersteunde URL-vorm voor de eerste implementatie:
+
+```text
+https://telraam.net/{locale}/location/{segment_id}
+```
+
+Voorbeeld:
+
+```text
+https://telraam.net/nl/location/9000010390
+```
 
 ### 6. Eerste frontend-output
 
@@ -243,7 +264,7 @@ Uitbreidingen:
 - Dashboard shortcode:
 
 ```text
-[telraam_dashboard]
+[qndrs_telraam_dashboard]
 ```
 
 - Segmenten vergelijken
@@ -251,6 +272,7 @@ Uitbreidingen:
 - CSV-export
 - Cron-refresh
 - Mogelijk Gutenberg block
+- Publieke Telraam locatie-URL kunnen gebruiken in plaats van handmatig segment-ID
 
 ## Beveiliging en privacy
 
@@ -275,6 +297,46 @@ Acceptatiecriteria:
 - Escaping, sanitization, nonces en capability checks zijn aantoonbaar verwerkt
 - Internationalisatie wordt meegenomen in alle zichtbare strings
 
+## WordPress.org documentatie en publicatiechecklist
+
+Voor een latere publieke release moet de plugin voldoen aan de WordPress.org plugin directory regels en readme-standaard.
+
+Nog toe te voegen vóór publicatie:
+
+- `readme.txt` volgens de WordPress.org plugin readme standaard
+- korte pluginbeschrijving van maximaal 150 tekens
+- contributors als WordPress.org gebruikersnamen
+- tags, bij voorkeur 1 tot 5 relevante algemene tags
+- `Requires at least`
+- `Tested up to`
+- `Requires PHP`
+- `Stable tag`
+- `License`
+- `License URI`
+- installatie-instructies
+- configuratie-instructies voor Telraam API-token
+- shortcodevoorbeelden
+- FAQ, inclusief Telraam API-token en datalicentie/gebruik
+- changelog
+- eventuele privacy/disclaimertekst over externe API-calls naar Telraam
+
+Regels om expliciet te bewaken:
+
+- Main plugin header blijft de bron voor pluginnaam, versie en runtime requirements
+- `Stable tag` moet overeenkomen met de pluginversie wanneer er een officiële release wordt gemaakt
+- Nieuwe WordPress.org plugins moeten geen `Stable Tag: trunk` gebruiken
+- Pluginmap bij distributie: `qndrs-telraam-inzicht`
+- Alle code, assets en dependencies moeten GPLv2-or-later compatibel zijn
+- Geen tracking of externe API-calls zonder duidelijke uitleg en functionele noodzaak
+- Geen API-token, secrets of persoonlijke testdata in repository, logs, screenshots of readme
+- Geen merk- of naamgebruik dat Telraam of WordPress endorsement suggereert
+
+Te gebruiken officiële referenties:
+
+- <https://developer.wordpress.org/plugins/wordpress-org/how-your-readme-txt-works/>
+- <https://developer.wordpress.org/plugins/wordpress-org/detailed-plugin-guidelines/>
+- <https://developer.wordpress.org/plugins/wordpress-org/common-issues/>
+
 ## Licentie en gebruiksvoorwaarden
 
 De plugin moet in documentatie vermelden:
@@ -298,7 +360,7 @@ De plugin moet in documentatie vermelden:
 2. Admin settings page maken
 3. API client maken
 4. Transient caching toevoegen
-5. Shortcode `[telraam_segment]` maken
+5. Shortcode `[qndrs_telraam_segment]` maken
 6. Output als samenvatting en eenvoudige tabel tonen
 7. Testen met segment `9000010390`
 8. Daarna grafieken toevoegen

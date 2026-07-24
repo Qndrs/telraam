@@ -4,9 +4,9 @@ Laatste update: 2026-07-24
 
 ## Huidige status
 
-De eerste implementatiestappen zijn gestart. De plugin heeft nu een minimale WordPress bootstrap, basisstructuur en admin settings page.
+De eerste implementatiestappen zijn gestart. De plugin heeft nu een minimale WordPress bootstrap, basisstructuur, admin settings page, Telraam API-client, transient cachinglaag en frontend shortcode.
 
-De repository `Qndrs/telraam` bestaat en bevat nu documentatie plus een minimale plugin-entrypoint en settings page. De WordPress-pluginnaam/slug is `qndrs-telraam-inzicht`. Er is nog geen API client, cachinglaag, shortcode, README, tests of Composer-configuratie.
+De repository `Qndrs/telraam` bestaat en bevat nu documentatie plus een minimale plugin-entrypoint, settings page, API client, caching repository en shortcode renderer. De WordPress-pluginnaam/slug is `qndrs-telraam-inzicht`. Er is nog geen README, tests of Composer-configuratie.
 
 Lokale projectroot:
 
@@ -53,6 +53,13 @@ includes/
   Admin/
     SettingsPage.php
     index.php
+  Api/
+    Client.php
+    TrafficReportRepository.php
+    index.php
+  Frontend/
+    Shortcodes.php
+    index.php
 languages/
   index.php
 ```
@@ -98,6 +105,14 @@ De eerste concrete testcase is Roberts Telraam:
 - Publieke pagina: <https://telraam.net/nl/location/9000010390>
 
 Dit segment wordt gebruikt als standaard demo/configuratie tijdens de eerste implementatie.
+
+Voor later is besloten dat de plugin ook een publieke Telraam locatiepagina als input moet kunnen gebruiken. Bijvoorbeeld:
+
+```text
+https://telraam.net/nl/location/9000010390
+```
+
+De plugin moet daaruit het segment-ID `9000010390` kunnen halen en dezelfde statistieken tonen als bij directe segment-ID input.
 
 ## Relevante Telraam bronnen
 
@@ -186,16 +201,16 @@ Bekende API-beperkingen:
 
 Nog te bouwen:
 
-- API client
-- cachinglaag
-- shortcode renderer
 - frontend CSS
 - `languages/` map
 - POT-bestand
 - Nederlandse vertaling
+- `readme.txt` volgens WordPress.org readme standaard
 - tests of testscenario's
 - README
 - changelog
+- shortcode builder in de admin
+- publieke Telraam locatie-URL parsing naar segment-ID
 
 ## Open technische keuzes
 
@@ -208,6 +223,31 @@ Nog te bepalen:
 - Exacte datastructuur voor genormaliseerde Telraam responses
 - Of meerdere segmenten direct in v1.0 komen of pas in v2
 - Exacte Nederlandse terminologie voor Telraam modaliteiten en datakwaliteit
+- Of URL-input direct in de shortcode MVP komt of samen met de latere shortcode builder
+- Definitieve WordPress.org contributors/tags/readme metadata
+
+## WordPress.org publicatie-aandachtspunten
+
+Voor publicatie moet nog een aparte reviewronde plaatsvinden. De repository is nu private en wordt pas later publiek gemaakt.
+
+Vastgelegde checks voor die review:
+
+- `readme.txt` toevoegen volgens de WordPress.org plugin readme standaard
+- `Stable tag` afstemmen op de pluginversie
+- Geen `Stable Tag: trunk` voor nieuwe publieke release
+- Plugin header en readme metadata consistent houden
+- Pluginmap/distributieslug: `qndrs-telraam-inzicht`
+- Plugin Check draaien op de testsite
+- GPL-2.0-or-later consistent houden in header, readme en `LICENSE`
+- Telraam API-gebruik, externe requests en datalicentie duidelijk documenteren
+- Geen secrets, API-tokens of persoonlijke testdata opnemen
+- Naamgeving controleren op merk-/trademarkkritiek rond Telraam en WordPress
+
+Officiële referenties:
+
+- <https://developer.wordpress.org/plugins/wordpress-org/how-your-readme-txt-works/>
+- <https://developer.wordpress.org/plugins/wordpress-org/detailed-plugin-guidelines/>
+- <https://developer.wordpress.org/plugins/wordpress-org/common-issues/>
 
 ## Eerstvolgende logische stap
 
@@ -216,9 +256,9 @@ Starten met de MVP-implementatie:
 1. ~~`qndrs-telraam-inzicht.php` aanmaken~~
 2. ~~Basis namespaced PHP-structuur opzetten~~
 3. ~~Admin settings page toevoegen~~
-4. API client bouwen met `wp_remote_post()`
-5. Caching met transients toevoegen
-6. Shortcode `[telraam_segment]` implementeren
+4. ~~API client bouwen met `wp_remote_post()`~~
+5. ~~Caching met transients toevoegen~~
+6. ~~Shortcode `[qndrs_telraam_segment]` implementeren~~
 7. Alle zichtbare strings vertaalbaar maken
 8. Nederlandse vertaling toevoegen
 9. Testen met segment `9000010390`
@@ -232,6 +272,9 @@ Uitgevoerd op 2026-07-24:
 php -l qndrs-telraam-inzicht.php
 php -l includes\Plugin.php
 php -l includes\Admin\SettingsPage.php
+php -l includes\Api\Client.php
+php -l includes\Api\TrafficReportRepository.php
+php -l includes\Frontend\Shortcodes.php
 ```
 
 Resultaat:

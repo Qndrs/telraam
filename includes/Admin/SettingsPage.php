@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Qndrs\TelraamInzicht\Admin;
 
+use Qndrs\TelraamInzicht\Api\TrafficReportRepository;
+
 if (! defined('ABSPATH')) {
     exit;
 }
@@ -29,6 +31,7 @@ final class SettingsPage
     {
         add_action('admin_menu', [self::class, 'add_options_page']);
         add_action('admin_init', [self::class, 'register_settings']);
+        add_action('admin_post_qndrs_telraam_inzicht_clear_cache', [self::class, 'handle_clear_cache']);
     }
 
     /**
@@ -181,6 +184,7 @@ final class SettingsPage
         ?>
         <div class="wrap">
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+            <?php self::render_admin_notices(); ?>
             <p>
                 <?php esc_html_e('Configure the Telraam API connection and default display settings for traffic statistics.', 'qndrs-telraam-inzicht'); ?>
             </p>
@@ -192,8 +196,66 @@ final class SettingsPage
                 submit_button(__('Save settings', 'qndrs-telraam-inzicht'));
                 ?>
             </form>
+
+            <hr />
+
+            <h2><?php esc_html_e('Cache', 'qndrs-telraam-inzicht'); ?></h2>
+            <p>
+                <?php esc_html_e('Clear cached traffic data for the currently configured default segment and period.', 'qndrs-telraam-inzicht'); ?>
+            </p>
+            <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
+                <?php wp_nonce_field('qndrs_telraam_inzicht_clear_cache'); ?>
+                <input type="hidden" name="action" value="qndrs_telraam_inzicht_clear_cache" />
+                <?php submit_button(__('Clear cache', 'qndrs-telraam-inzicht'), 'secondary', 'submit', false); ?>
+            </form>
         </div>
         <?php
+    }
+
+    /**
+     * Clear cached traffic data for the current default segment and period.
+     */
+    public static function handle_clear_cache(): void
+    {
+        if (! current_user_can('manage_options')) {
+            wp_die(esc_html__('You do not have permission to clear the Telraam cache.', 'qndrs-telraam-inzicht'));
+        }
+
+        check_admin_referer('qndrs_telraam_inzicht_clear_cache');
+
+        $options = self::get_options();
+
+        TrafficReportRepository::delete_cache(
+            $options['default_segment_id'],
+            $options['default_days']
+        );
+
+        wp_safe_redirect(
+            add_query_arg(
+                [
+                    'page' => self::PAGE_SLUG,
+                    'cache-cleared' => '1',
+                ],
+                admin_url('options-general.php')
+            )
+        );
+        exit;
+    }
+
+    /**
+     * Render admin notices for settings actions.
+     */
+    private static function render_admin_notices(): void
+    {
+        if (! isset($_GET['cache-cleared'])) {
+            return;
+        }
+
+        if ('1' !== sanitize_text_field(wp_unslash((string) $_GET['cache-cleared']))) {
+            return;
+        }
+
+        echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__('The Telraam cache has been cleared.', 'qndrs-telraam-inzicht') . '</p></div>';
     }
 
     /**
@@ -202,6 +264,7 @@ final class SettingsPage
     public static function render_api_section(): void
     {
         echo '<p>' . esc_html__('Enter your Telraam API token and choose sensible defaults for frontend shortcodes.', 'qndrs-telraam-inzicht') . '</p>';
+        echo '<p>' . esc_html__('API connection testing will be added after the API client is connected to the caching layer.', 'qndrs-telraam-inzicht') . '</p>';
     }
 
     /**
