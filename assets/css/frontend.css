@@ -18,6 +18,7 @@
     border: 1px solid var(--qndrs-telraam-color-border);
     border-radius: var(--qndrs-telraam-radius);
     box-shadow: var(--qndrs-telraam-shadow);
+    container-type: inline-size;
 }
 
 .qndrs-telraam-inzicht *,
@@ -59,7 +60,7 @@
 
 .qndrs-telraam-inzicht__summary {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(9rem, 100%), 1fr));
     gap: 0.75rem;
     margin: 0;
 }
@@ -82,9 +83,12 @@
 
 .qndrs-telraam-inzicht__summary-item dd {
     margin: 0;
-    font-size: clamp(1.45rem, 3vw, 2rem);
+    font-size: 1.75rem;
+    font-size: clamp(1.45rem, 8cqi, 2rem);
     font-weight: 700;
     line-height: 1;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
 }
 
 .qndrs-telraam-inzicht__summary-item--uptime {
@@ -202,9 +206,6 @@
         margin-block-start: 0.4rem;
     }
 
-    .qndrs-telraam-inzicht__summary {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
 }
 
 @media (max-width: 420px) {

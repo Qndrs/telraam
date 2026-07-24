@@ -190,7 +190,6 @@ final class SettingsPage
             </div>
 
             <?php self::render_admin_notices(); ?>
-            <?php settings_errors(); ?>
 
             <form id="<?php echo esc_attr($settings_form_id); ?>" class="qndrs-telraam-admin__form" action="options.php" method="post">
                 <?php settings_fields(self::SETTINGS_GROUP); ?>

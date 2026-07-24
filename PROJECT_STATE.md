@@ -43,7 +43,7 @@ Laatste bekende commit:
 Huidige werkversie:
 
 ```text
-0.3.0
+0.3.1
 ```
 
 ## Huidige bestanden
@@ -277,6 +277,10 @@ Resultaat:
 - Actieknoppen gebruiken aparte action-forms via het HTML `form` attribuut, zodat er geen geneste forms ontstaan
 - API-token wissen zet het token nu echt leeg; de settings sanitizer heeft hiervoor een expliciete interne clear-flag
 - API-token wissen verwijdert nu ook alle 1 t/m 90 dagen traffic-cache voor het ingestelde standaardsegment
+- Dubbele groene WordPress settings-notice bij opslaan is opgelost door de extra `settings_errors()` call uit de pluginpagina te verwijderen
+- Frontend summary cards reageren nu op de containerbreedte via `auto-fit` en container-query units, zodat sidebarplaatsing geen te smalle vierkolomskaartjes meer forceert
+- Frontend labels zijn ingekort voor smalle sidebarweergave: "Telraam" en "Uptime"
+- Toekomstige verbetering vastgelegd: `title` shortcode-attribuut, inclusief lege waarde om de plugin-heading te verbergen
 - Tweede shortcode-call kwam snel terug (`elapsed=0.0069`), passend bij transient cache
 - Plugin Check op de testsite: `Success: Controles afgerond. Geen fouten gevonden.`
 
@@ -398,5 +402,8 @@ Uitgevoerd:
 - Admin basisstylesheet toegevoegd via `assets/css/admin.css`
 - Bugfix: API-token wissen werd door token-preserve sanitization teruggedraaid; opgelost met expliciete clear-flag
 - Bugfix: API-token wissen wist nu segment-cache voor alle ondersteunde periodes
-- Versie voorbereid als `0.3.0`
+- Versie voorbereid als `0.3.1`
+- Bugfix: dubbele settings-saved notice bij opslaan verwijderd
+- Bugfix: summary card getallen/labels schalen beter in smalle sidebars
+- Sidebarverbetering: hoofdheading en uptime-label ingekort
 - `readme.txt`, POT/PO/MO en projectstate bijgewerkt

@@ -380,6 +380,9 @@ De plugin moet in documentatie vermelden:
 - Grote uur-tabel voorlopig niet pagineren. De table view ondersteunt nu een `rows` attribuut (`rows="24"` standaard, `rows="all"` voor alles) en volledige uurdata blijft een detailweergave.
 - Frontend-output moet netjes renderen zonder template-inspringing in de HTML-output; timestamps moeten als leesbare lokale datum/tijd met machineleesbaar `<time datetime="">` worden getoond.
 - Frontend basisstijl gebruikt gescopete CSS onder `.qndrs-telraam-inzicht`, met CSS-variabelen voor latere theming.
+- Frontend summary cards moeten container-responsief blijven, zodat shortcodes ook in sidebars bruikbaar blijven.
+- Frontend labels moeten kort genoeg blijven voor sidebarplaatsing; huidige korte labels: "Telraam" en "Uptime".
+- Later een `title` shortcode-attribuut toevoegen, inclusief `title=""` om de plugin-heading te verbergen wanneer de site-eigenaar zelf een titel in de editor plaatst.
 - Mobiele tabeltitel moet buiten de horizontaal scrollende tabel blijven; native `<caption>` blijft beschikbaar voor screenreaders.
 - Admin basisstijl gebruikt gescopete CSS onder `.qndrs-telraam-admin`, met kaartlayout, veldgroepen en statusbadge.
 - Fun styling komt pas na de neutrale basisroute en moet optioneel blijven, bijvoorbeeld via style presets.

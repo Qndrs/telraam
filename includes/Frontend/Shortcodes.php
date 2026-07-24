@@ -112,7 +112,7 @@ final class Shortcodes
         ?>
         <section class="qndrs-telraam-inzicht qndrs-telraam-inzicht--<?php echo esc_attr($view); ?>" aria-labelledby="<?php echo esc_attr($heading_id); ?>">
             <header class="qndrs-telraam-inzicht__header">
-                <h2 id="<?php echo esc_attr($heading_id); ?>"><?php esc_html_e('Telraam traffic statistics', 'qndrs-telraam-inzicht'); ?></h2>
+                <h2 id="<?php echo esc_attr($heading_id); ?>"><?php esc_html_e('Telraam', 'qndrs-telraam-inzicht'); ?></h2>
                 <p class="qndrs-telraam-inzicht__meta">
                     <?php echo esc_html(self::format_segment_period($segment_id, $days)); ?>
                 </p>
@@ -138,7 +138,7 @@ final class Shortcodes
                         <dd><?php echo esc_html(self::format_count($summary['heavy_vehicles'])); ?></dd>
                     </div>
                     <div class="qndrs-telraam-inzicht__summary-item qndrs-telraam-inzicht__summary-item--uptime">
-                        <dt><?php esc_html_e('Average uptime', 'qndrs-telraam-inzicht'); ?></dt>
+                        <dt><?php esc_html_e('Uptime', 'qndrs-telraam-inzicht'); ?></dt>
                         <dd><?php echo esc_html(self::format_uptime($summary['average_uptime'])); ?></dd>
                     </div>
                 </dl>
