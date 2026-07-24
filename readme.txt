@@ -63,6 +63,10 @@ Telraam API access is rate limited. Caching reduces repeated API requests and pr
 
 Not yet. This is planned for a later version.
 
+= Is the plugin translation-ready? =
+
+Yes. The plugin uses the `qndrs-telraam-inzicht` text domain and is prepared for WordPress.org language packs.
+
 == Changelog ==
 
 = 0.1.0 =
@@ -72,4 +76,4 @@ Not yet. This is planned for a later version.
 * Added Telraam API client.
 * Added transient caching.
 * Added `[qndrs_telraam_segment]` shortcode.
-* Added Dutch translation files.
+* Prepared internationalization.

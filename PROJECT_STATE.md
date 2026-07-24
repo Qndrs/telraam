@@ -6,6 +6,8 @@ Laatste update: 2026-07-24
 
 De eerste implementatiestappen zijn gestart. De plugin heeft nu een minimale WordPress bootstrap, basisstructuur, admin settings page, Telraam API-client, transient cachinglaag, frontend shortcode en eerste vertaalbestanden.
 
+Voor WordPress.org-publicatie vertrouwen we op WordPress.org language packs. De plugin roept `load_plugin_textdomain()` niet handmatig aan, zodat Plugin Check geen waarschuwing geeft over de sinds WordPress 4.6 ontmoedigde functie. De `languages/` bestanden blijven voorlopig bron-/ontwikkelmateriaal in de repository.
+
 De repository `Qndrs/telraam` bestaat en bevat nu documentatie plus een minimale plugin-entrypoint, settings page, API client, caching repository en shortcode renderer. De WordPress-pluginnaam/slug is `qndrs-telraam-inzicht`. Er is nog geen README, tests of Composer-configuratie.
 
 Lokale projectroot:
@@ -240,6 +242,7 @@ Vastgelegde checks voor die review:
 - Pluginmap/distributieslug: `qndrs-telraam-inzicht`
 - Plugin Check draaien op de testsite
 - GPL-2.0-or-later consistent houden in header, readme en `LICENSE`
+- Runtime-vertalingen voor publicatie via WordPress.org language packs laten lopen
 - Telraam API-gebruik, externe requests en datalicentie duidelijk documenteren
 - Geen secrets, API-tokens of persoonlijke testdata opnemen
 - Naamgeving controleren op merk-/trademarkkritiek rond Telraam en WordPress

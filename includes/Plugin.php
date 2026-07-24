@@ -28,24 +28,10 @@ final class Plugin
      */
     public static function boot(): void
     {
-        self::load_textdomain();
-
         if (is_admin()) {
             Admin\SettingsPage::register();
         }
 
         Frontend\Shortcodes::register();
-    }
-
-    /**
-     * Load plugin translations.
-     */
-    private static function load_textdomain(): void
-    {
-        load_plugin_textdomain(
-            'qndrs-telraam-inzicht',
-            false,
-            dirname(QNDRS_TELRAAM_INZICHT_PLUGIN_BASENAME) . '/languages'
-        );
     }
 }
