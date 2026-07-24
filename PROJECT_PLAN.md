@@ -15,6 +15,7 @@ Eerste concrete testcase:
 
 - Platform: WordPress plugin
 - PHP-versie: PHP 8.3+
+- Pluginlicentie: GPL-2.0-or-later
 - WordPress HTTP API gebruiken voor externe requests
 - Geen PSR-7 dependency nodig voor de eerste versie
 - Geen Composer-verplichting in de MVP, tenzij later nuttig

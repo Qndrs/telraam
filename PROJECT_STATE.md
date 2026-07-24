@@ -73,6 +73,7 @@ Uitgangspunten:
 
 - PHP 8.3+
 - WordPress plugin
+- Pluginlicentie: GPL-2.0-or-later
 - Plugin slug: `qndrs-telraam-inzicht`
 - Telraam API via WordPress HTTP API
 - Shortcode-first aanpak

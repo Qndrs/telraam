@@ -8,8 +8,8 @@
  * Requires PHP: 8.3
  * Author: Qndrs
  * Author URI: https://qndrs.nl
- * License: GPL-3.0-or-later
- * License URI: https://www.gnu.org/licenses/gpl-3.0.html
+ * License: GPL-2.0-or-later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: qndrs-telraam-inzicht
  * Domain Path: /languages
  *
