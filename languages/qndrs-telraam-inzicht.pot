@@ -1,0 +1,143 @@
+# Copyright (C) 2026 Qndrs
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Qndrs Telraam Inzicht 0.1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/Qndrs/telraam/issues\n"
+"POT-Creation-Date: 2026-07-24 00:00+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: qndrs-telraam-inzicht\n"
+
+msgid "Qndrs Telraam Inzicht requires PHP %1$s or higher. Your server is running PHP %2$s."
+msgstr ""
+
+msgid "Qndrs Telraam Inzicht activation failed"
+msgstr ""
+
+msgid "Qndrs Telraam Inzicht requires PHP %1$s or higher. Your server is running PHP %2$s. The plugin has not been loaded."
+msgstr ""
+
+msgid "Qndrs Telraam Inzicht"
+msgstr ""
+
+msgid "Telraam API"
+msgstr ""
+
+msgid "API token"
+msgstr ""
+
+msgid "Default segment ID"
+msgstr ""
+
+msgid "Default period"
+msgstr ""
+
+msgid "Cache duration"
+msgstr ""
+
+msgid "You do not have permission to manage Telraam settings."
+msgstr ""
+
+msgid "Configure the Telraam API connection and default display settings for traffic statistics."
+msgstr ""
+
+msgid "Save settings"
+msgstr ""
+
+msgid "Cache"
+msgstr ""
+
+msgid "Clear cached traffic data for the currently configured default segment and period."
+msgstr ""
+
+msgid "Clear cache"
+msgstr ""
+
+msgid "You do not have permission to clear the Telraam cache."
+msgstr ""
+
+msgid "The Telraam cache has been cleared."
+msgstr ""
+
+msgid "Enter your Telraam API token and choose sensible defaults for frontend shortcodes."
+msgstr ""
+
+msgid "API connection testing will be added after the API client is connected to the caching layer."
+msgstr ""
+
+msgid "An API token is currently saved. Leave this field empty to keep the existing token."
+msgstr ""
+
+msgid "Paste your Telraam API token. It will not be shown on the frontend."
+msgstr ""
+
+msgid "Default Telraam segment ID used when a shortcode does not specify an ID."
+msgstr ""
+
+msgid "days"
+msgstr ""
+
+msgid "Traffic report requests are limited to a maximum period of 90 days."
+msgstr ""
+
+msgid "minutes"
+msgstr ""
+
+msgid "Caching protects your Telraam API quota. The Telraam API allows limited request rates."
+msgstr ""
+
+msgid "The Telraam API token is missing."
+msgstr ""
+
+msgid "The Telraam segment ID is missing."
+msgstr ""
+
+msgid "The Telraam API request failed."
+msgstr ""
+
+msgid "The Telraam API returned an unexpected HTTP status: %d."
+msgstr ""
+
+msgid "The Telraam API returned invalid JSON."
+msgstr ""
+
+msgid "No Telraam segment ID was provided."
+msgstr ""
+
+msgid "Telraam traffic statistics"
+msgstr ""
+
+msgid "Segment %1$s, last %2$d days."
+msgstr ""
+
+msgid "Pedestrians"
+msgstr ""
+
+msgid "Two-wheelers"
+msgstr ""
+
+msgid "Cars"
+msgstr ""
+
+msgid "Heavy vehicles"
+msgstr ""
+
+msgid "Average uptime"
+msgstr ""
+
+msgid "No traffic rows were returned by the Telraam API."
+msgstr ""
+
+msgid "Time"
+msgstr ""
+
+msgid "Uptime"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+msgid "%s%%"
+msgstr ""

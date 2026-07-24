@@ -4,7 +4,7 @@ Laatste update: 2026-07-24
 
 ## Huidige status
 
-De eerste implementatiestappen zijn gestart. De plugin heeft nu een minimale WordPress bootstrap, basisstructuur, admin settings page, Telraam API-client, transient cachinglaag en frontend shortcode.
+De eerste implementatiestappen zijn gestart. De plugin heeft nu een minimale WordPress bootstrap, basisstructuur, admin settings page, Telraam API-client, transient cachinglaag, frontend shortcode en eerste vertaalbestanden.
 
 De repository `Qndrs/telraam` bestaat en bevat nu documentatie plus een minimale plugin-entrypoint, settings page, API client, caching repository en shortcode renderer. De WordPress-pluginnaam/slug is `qndrs-telraam-inzicht`. Er is nog geen README, tests of Composer-configuratie.
 
@@ -62,6 +62,9 @@ includes/
     index.php
 languages/
   index.php
+  qndrs-telraam-inzicht.pot
+  qndrs-telraam-inzicht-nl_NL.po
+  qndrs-telraam-inzicht-nl_NL.mo
 ```
 
 Naast de repo staat lokaal ook een map:
@@ -202,9 +205,6 @@ Bekende API-beperkingen:
 Nog te bouwen:
 
 - frontend CSS
-- `languages/` map
-- POT-bestand
-- Nederlandse vertaling
 - `readme.txt` volgens WordPress.org readme standaard
 - tests of testscenario's
 - README
@@ -259,8 +259,8 @@ Starten met de MVP-implementatie:
 4. ~~API client bouwen met `wp_remote_post()`~~
 5. ~~Caching met transients toevoegen~~
 6. ~~Shortcode `[qndrs_telraam_segment]` implementeren~~
-7. Alle zichtbare strings vertaalbaar maken
-8. Nederlandse vertaling toevoegen
+7. ~~Alle zichtbare strings vertaalbaar maken~~
+8. ~~Nederlandse vertaling toevoegen~~
 9. Testen met segment `9000010390`
 10. Plugin Check draaien
 
@@ -281,4 +281,16 @@ Resultaat:
 
 ```text
 No syntax errors detected
+```
+
+Vertaalbestandvalidatie:
+
+```text
+languages\qndrs-telraam-inzicht-nl_NL.mo
+```
+
+Resultaat:
+
+```text
+MO ok, entries: 45
 ```

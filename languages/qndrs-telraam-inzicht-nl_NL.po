@@ -1,0 +1,148 @@
+# Copyright (C) 2026 Qndrs
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Qndrs Telraam Inzicht 0.1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/Qndrs/telraam/issues\n"
+"POT-Creation-Date: 2026-07-24 00:00+0000\n"
+"PO-Revision-Date: 2026-07-24 00:00+0000\n"
+"Last-Translator: Qndrs\n"
+"Language-Team: Dutch\n"
+"Language: nl_NL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Codex\n"
+"X-Domain: qndrs-telraam-inzicht\n"
+
+msgid "Qndrs Telraam Inzicht requires PHP %1$s or higher. Your server is running PHP %2$s."
+msgstr "Qndrs Telraam Inzicht vereist PHP %1$s of hoger. Je server draait PHP %2$s."
+
+msgid "Qndrs Telraam Inzicht activation failed"
+msgstr "Qndrs Telraam Inzicht activeren is mislukt"
+
+msgid "Qndrs Telraam Inzicht requires PHP %1$s or higher. Your server is running PHP %2$s. The plugin has not been loaded."
+msgstr "Qndrs Telraam Inzicht vereist PHP %1$s of hoger. Je server draait PHP %2$s. De plugin is niet geladen."
+
+msgid "Qndrs Telraam Inzicht"
+msgstr "Qndrs Telraam Inzicht"
+
+msgid "Telraam API"
+msgstr "Telraam API"
+
+msgid "API token"
+msgstr "API-token"
+
+msgid "Default segment ID"
+msgstr "Standaard segment-ID"
+
+msgid "Default period"
+msgstr "Standaardperiode"
+
+msgid "Cache duration"
+msgstr "Cacheduur"
+
+msgid "You do not have permission to manage Telraam settings."
+msgstr "Je hebt geen toestemming om Telraam-instellingen te beheren."
+
+msgid "Configure the Telraam API connection and default display settings for traffic statistics."
+msgstr "Configureer de Telraam API-verbinding en standaard weergave-instellingen voor verkeersstatistieken."
+
+msgid "Save settings"
+msgstr "Instellingen opslaan"
+
+msgid "Cache"
+msgstr "Cache"
+
+msgid "Clear cached traffic data for the currently configured default segment and period."
+msgstr "Wis gecachte verkeersdata voor het momenteel ingestelde standaardsegment en de standaardperiode."
+
+msgid "Clear cache"
+msgstr "Cache wissen"
+
+msgid "You do not have permission to clear the Telraam cache."
+msgstr "Je hebt geen toestemming om de Telraam-cache te wissen."
+
+msgid "The Telraam cache has been cleared."
+msgstr "De Telraam-cache is gewist."
+
+msgid "Enter your Telraam API token and choose sensible defaults for frontend shortcodes."
+msgstr "Voer je Telraam API-token in en kies verstandige standaardwaarden voor frontend-shortcodes."
+
+msgid "API connection testing will be added after the API client is connected to the caching layer."
+msgstr "De API-verbindingstest wordt toegevoegd nadat de API-client is gekoppeld aan de cachinglaag."
+
+msgid "An API token is currently saved. Leave this field empty to keep the existing token."
+msgstr "Er is momenteel een API-token opgeslagen. Laat dit veld leeg om het bestaande token te behouden."
+
+msgid "Paste your Telraam API token. It will not be shown on the frontend."
+msgstr "Plak je Telraam API-token. Het wordt niet op de frontend getoond."
+
+msgid "Default Telraam segment ID used when a shortcode does not specify an ID."
+msgstr "Standaard Telraam segment-ID dat wordt gebruikt wanneer een shortcode geen ID opgeeft."
+
+msgid "days"
+msgstr "dagen"
+
+msgid "Traffic report requests are limited to a maximum period of 90 days."
+msgstr "Traffic report requests zijn beperkt tot een maximale periode van 90 dagen."
+
+msgid "minutes"
+msgstr "minuten"
+
+msgid "Caching protects your Telraam API quota. The Telraam API allows limited request rates."
+msgstr "Caching beschermt je Telraam API-quota. De Telraam API staat beperkte request-aantallen toe."
+
+msgid "The Telraam API token is missing."
+msgstr "Het Telraam API-token ontbreekt."
+
+msgid "The Telraam segment ID is missing."
+msgstr "Het Telraam segment-ID ontbreekt."
+
+msgid "The Telraam API request failed."
+msgstr "De Telraam API-request is mislukt."
+
+msgid "The Telraam API returned an unexpected HTTP status: %d."
+msgstr "De Telraam API gaf een onverwachte HTTP-status terug: %d."
+
+msgid "The Telraam API returned invalid JSON."
+msgstr "De Telraam API gaf ongeldige JSON terug."
+
+msgid "No Telraam segment ID was provided."
+msgstr "Er is geen Telraam segment-ID opgegeven."
+
+msgid "Telraam traffic statistics"
+msgstr "Telraam verkeersstatistieken"
+
+msgid "Segment %1$s, last %2$d days."
+msgstr "Segment %1$s, laatste %2$d dagen."
+
+msgid "Pedestrians"
+msgstr "Voetgangers"
+
+msgid "Two-wheelers"
+msgstr "Tweewielers"
+
+msgid "Cars"
+msgstr "Auto’s"
+
+msgid "Heavy vehicles"
+msgstr "Zwaar verkeer"
+
+msgid "Average uptime"
+msgstr "Gemiddelde uptime"
+
+msgid "No traffic rows were returned by the Telraam API."
+msgstr "De Telraam API gaf geen verkeersregels terug."
+
+msgid "Time"
+msgstr "Tijd"
+
+msgid "Uptime"
+msgstr "Uptime"
+
+msgid "Unknown"
+msgstr "Onbekend"
+
+msgid "%s%%"
+msgstr "%s%%"
