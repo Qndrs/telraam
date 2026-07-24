@@ -4,7 +4,7 @@ Tags: telraam, traffic, statistics, mobility, shortcode
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 8.3
-Stable tag: 0.1.0
+Stable tag: 0.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,6 +15,8 @@ Display Telraam traffic statistics on your WordPress website using a shortcode.
 Qndrs Telraam Inzicht displays traffic statistics from the Telraam API on a WordPress website.
 
 The plugin currently provides a shortcode for showing traffic totals for a Telraam segment. It uses the WordPress HTTP API for requests and WordPress transients for caching, so Telraam API limits are respected.
+
+Frontend output uses semantic HTML with labelled sections, summary data, and accessible table captions.
 
 Current shortcode:
 
@@ -30,6 +32,8 @@ Table view:
 
 The plugin requires a Telraam API token. You can configure the token and default segment settings in Settings > Qndrs Telraam Inzicht.
 
+The settings page includes an API connection test. The test uses the saved token and default segment ID, but never displays the token.
+
 This plugin is not affiliated with or endorsed by Telraam. Telraam API use is subject to Telraam's own terms, rate limits, and data licensing conditions.
 
 == Installation ==
@@ -39,7 +43,8 @@ This plugin is not affiliated with or endorsed by Telraam. Telraam API use is su
 3. Go to Settings > Qndrs Telraam Inzicht.
 4. Enter your Telraam API token.
 5. Configure a default Telraam segment ID and cache duration.
-6. Add the shortcode to a post or page.
+6. Use the API connection test to verify the token and segment.
+7. Add the shortcode to a post or page.
 
 == Frequently Asked Questions ==
 
@@ -68,6 +73,13 @@ Not yet. This is planned for a later version.
 Yes. The plugin uses the `qndrs-telraam-inzicht` text domain and is prepared for WordPress.org language packs.
 
 == Changelog ==
+
+= 0.2.0 =
+
+* Added visible API token status without exposing the token.
+* Added API connection test.
+* Added traffic report normalizer.
+* Improved accessible frontend HTML structure.
 
 = 0.1.0 =
 

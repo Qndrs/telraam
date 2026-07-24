@@ -15,6 +15,7 @@ if (! defined('ABSPATH')) {
 
 require_once QNDRS_TELRAAM_INZICHT_PLUGIN_DIR . 'includes/Api/Client.php';
 require_once QNDRS_TELRAAM_INZICHT_PLUGIN_DIR . 'includes/Api/TrafficReportRepository.php';
+require_once QNDRS_TELRAAM_INZICHT_PLUGIN_DIR . 'includes/Api/TrafficReportNormalizer.php';
 require_once QNDRS_TELRAAM_INZICHT_PLUGIN_DIR . 'includes/Admin/SettingsPage.php';
 require_once QNDRS_TELRAAM_INZICHT_PLUGIN_DIR . 'includes/Frontend/Shortcodes.php';
 

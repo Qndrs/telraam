@@ -4,7 +4,7 @@ Laatste update: 2026-07-24
 
 ## Huidige status
 
-De eerste implementatiestappen zijn gestart. De plugin heeft nu een minimale WordPress bootstrap, basisstructuur, admin settings page, Telraam API-client, transient cachinglaag, frontend shortcode en eerste vertaalbestanden.
+De eerste implementatiestappen zijn gestart. De plugin heeft nu een minimale WordPress bootstrap, basisstructuur, admin settings page, API-tokenstatus, API-testknop, Telraam API-client, transient cachinglaag, traffic report normalizer, toegankelijke frontend shortcode-output en eerste vertaalbestanden.
 
 Voor WordPress.org-publicatie vertrouwen we op WordPress.org language packs. De plugin roept `load_plugin_textdomain()` niet handmatig aan, zodat Plugin Check geen waarschuwing geeft over de sinds WordPress 4.6 ontmoedigde functie. De `languages/` bestanden blijven voorlopig bron-/ontwikkelmateriaal in de repository.
 
@@ -60,6 +60,7 @@ includes/
   Api/
     Client.php
     TrafficReportRepository.php
+    TrafficReportNormalizer.php
     index.php
   Frontend/
     Shortcodes.php
@@ -214,7 +215,8 @@ Nog te bouwen:
 - changelog
 - shortcode builder in de admin
 - publieke Telraam locatie-URL parsing naar segment-ID
-- betere tokenstatus op admin settings page zonder tokenwaarde te tonen
+- tekstverbetering voor `days="1"`: "laatste dag" zonder getal `1`
+- API-token kunnen wissen via een expliciete adminactie
 
 ## Open technische keuzes
 
@@ -229,7 +231,6 @@ Nog te bepalen:
 - Exacte Nederlandse terminologie voor Telraam modaliteiten en datakwaliteit
 - Of URL-input direct in de shortcode MVP komt of samen met de latere shortcode builder
 - Definitieve WordPress.org contributors/tags/readme metadata
-- Exacte admin-UI tekst voor "API-token opgeslagen"
 
 ## Laatste WordPress-test
 
@@ -263,7 +264,7 @@ Gemiddelde uptime: 99,9%
 
 Open punt uit test:
 
-- De admin settings page moet duidelijker tonen dat er een API-token bekend is.
+- Geen open punt meer voor tokenstatus; de admin settings page toont nu expliciet of er een API-token opgeslagen is, zonder de tokenwaarde te tonen.
 
 ## WordPress.org publicatie-aandachtspunten
 
@@ -337,5 +338,19 @@ languages\qndrs-telraam-inzicht-nl_NL.mo
 Resultaat:
 
 ```text
-MO ok, entries: 45
+MO written, entries: 56
 ```
+
+## Laatste implementatieronde
+
+Uitgevoerd:
+
+- Versie opgehoogd naar `0.2.0`
+- Admin tokenstatus toegevoegd zonder tokenwaarde te tonen
+- Admin API-testknop toegevoegd
+- API-testresultaat wordt tijdelijk per gebruiker opgeslagen in een transient en daarna verwijderd
+- `TrafficReportNormalizer` toegevoegd voor stabiele rows en summary totals
+- Shortcode refactored naar genormaliseerde data
+- Shortcode HTML verbeterd met `section`, `header`, gelabelde headings, table caption, row headers en `role="alert"` voor fouten
+- Enkelvoud/meervoud voor dag/dagen geïmplementeerd
+- `readme.txt`, POT/PO/MO en projectstate bijgewerkt

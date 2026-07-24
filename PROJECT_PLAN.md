@@ -368,4 +368,10 @@ De plugin moet in documentatie vermelden:
 
 ## Actuele follow-up punten
 
-- Admin settings page moet expliciet tonen dat er een API-token opgeslagen is, zonder de tokenwaarde te tonen. De huidige test bevestigde dat het token technisch is opgeslagen, maar de admin-UI communiceert dat niet duidelijk genoeg.
+- De admin settings page toont nu expliciet of er een API-token opgeslagen is, zonder de tokenwaarde te tonen.
+- De admin settings page heeft nu een API-verbindingstest voor het opgeslagen token en standaardsegment.
+- De frontend shortcode gebruikt nu een aparte traffic report normalizer in plaats van ruwe API-velden rechtstreeks te interpreteren.
+- De frontend shortcode gebruikt nu toegankelijkere HTML met gelabelde secties, summary-heading, table caption, row headers en alert-role voor foutmeldingen.
+- Shortcode-output handelt enkelvoud/meervoud af: bij `days="1"` toont de tekst "laatste 1 dag", niet "laatste 1 dagen".
+- Gewenste tekstverbetering: bij `days="1"` uiteindelijk "laatste dag" tonen, zonder het getal `1`.
+- Admin settings page moet een expliciete actie krijgen om het opgeslagen API-token te wissen zonder een dummywaarde te hoeven invullen.

@@ -11,6 +11,7 @@ namespace Qndrs\TelraamInzicht\Frontend;
 
 use Qndrs\TelraamInzicht\Admin\SettingsPage;
 use Qndrs\TelraamInzicht\Api\Client;
+use Qndrs\TelraamInzicht\Api\TrafficReportNormalizer;
 use Qndrs\TelraamInzicht\Api\TrafficReportRepository;
 
 if (! defined('ABSPATH')) {
@@ -83,161 +84,165 @@ final class Shortcodes
      */
     private static function render_report(array $report, string $segment_id, int $days, string $view): string
     {
-        $rows = self::extract_rows($report);
-        $summary = self::summarize_rows($rows);
+        $normalized_report = (new TrafficReportNormalizer())->normalize($report);
+        $rows = $normalized_report['rows'];
+        $summary = $normalized_report['summary'];
+        $component_id = wp_unique_id('qndrs-telraam-inzicht-');
+        $heading_id = $component_id . 'heading';
+        $summary_heading_id = $component_id . 'summary-heading';
 
         ob_start();
         ?>
-        <div class="qndrs-telraam-inzicht qndrs-telraam-inzicht--<?php echo esc_attr($view); ?>">
-            <h2><?php esc_html_e('Telraam traffic statistics', 'qndrs-telraam-inzicht'); ?></h2>
-            <p>
-                <?php
-                printf(
-                    /* translators: 1: segment ID, 2: number of days. */
-                    esc_html__('Segment %1$s, last %2$d days.', 'qndrs-telraam-inzicht'),
-                    esc_html($segment_id),
-                    esc_html((string) $days)
-                );
-                ?>
-            </p>
+        <section class="qndrs-telraam-inzicht qndrs-telraam-inzicht--<?php echo esc_attr($view); ?>" aria-labelledby="<?php echo esc_attr($heading_id); ?>">
+            <header class="qndrs-telraam-inzicht__header">
+                <h2 id="<?php echo esc_attr($heading_id); ?>"><?php esc_html_e('Telraam traffic statistics', 'qndrs-telraam-inzicht'); ?></h2>
+                <p class="qndrs-telraam-inzicht__meta">
+                    <?php echo esc_html(self::format_segment_period($segment_id, $days)); ?>
+                </p>
+            </header>
 
-            <dl class="qndrs-telraam-inzicht__summary">
-                <div>
-                    <dt><?php esc_html_e('Pedestrians', 'qndrs-telraam-inzicht'); ?></dt>
-                    <dd><?php echo esc_html((string) $summary['pedestrians']); ?></dd>
-                </div>
-                <div>
-                    <dt><?php esc_html_e('Two-wheelers', 'qndrs-telraam-inzicht'); ?></dt>
-                    <dd><?php echo esc_html((string) $summary['two_wheelers']); ?></dd>
-                </div>
-                <div>
-                    <dt><?php esc_html_e('Cars', 'qndrs-telraam-inzicht'); ?></dt>
-                    <dd><?php echo esc_html((string) $summary['cars']); ?></dd>
-                </div>
-                <div>
-                    <dt><?php esc_html_e('Heavy vehicles', 'qndrs-telraam-inzicht'); ?></dt>
-                    <dd><?php echo esc_html((string) $summary['heavy_vehicles']); ?></dd>
-                </div>
-                <div>
-                    <dt><?php esc_html_e('Average uptime', 'qndrs-telraam-inzicht'); ?></dt>
-                    <dd><?php echo esc_html(self::format_uptime($summary['average_uptime'])); ?></dd>
-                </div>
-            </dl>
+            <section class="qndrs-telraam-inzicht__summary-section" aria-labelledby="<?php echo esc_attr($summary_heading_id); ?>">
+                <h3 id="<?php echo esc_attr($summary_heading_id); ?>"><?php esc_html_e('Traffic totals', 'qndrs-telraam-inzicht'); ?></h3>
+                <dl class="qndrs-telraam-inzicht__summary">
+                    <div class="qndrs-telraam-inzicht__summary-item">
+                        <dt><?php esc_html_e('Pedestrians', 'qndrs-telraam-inzicht'); ?></dt>
+                        <dd><?php echo esc_html((string) $summary['pedestrians']); ?></dd>
+                    </div>
+                    <div class="qndrs-telraam-inzicht__summary-item">
+                        <dt><?php esc_html_e('Two-wheelers', 'qndrs-telraam-inzicht'); ?></dt>
+                        <dd><?php echo esc_html((string) $summary['two_wheelers']); ?></dd>
+                    </div>
+                    <div class="qndrs-telraam-inzicht__summary-item">
+                        <dt><?php esc_html_e('Cars', 'qndrs-telraam-inzicht'); ?></dt>
+                        <dd><?php echo esc_html((string) $summary['cars']); ?></dd>
+                    </div>
+                    <div class="qndrs-telraam-inzicht__summary-item">
+                        <dt><?php esc_html_e('Heavy vehicles', 'qndrs-telraam-inzicht'); ?></dt>
+                        <dd><?php echo esc_html((string) $summary['heavy_vehicles']); ?></dd>
+                    </div>
+                    <div class="qndrs-telraam-inzicht__summary-item">
+                        <dt><?php esc_html_e('Average uptime', 'qndrs-telraam-inzicht'); ?></dt>
+                        <dd><?php echo esc_html(self::format_uptime($summary['average_uptime'])); ?></dd>
+                    </div>
+                </dl>
+            </section>
 
             <?php if ('table' === $view || 'summary-table' === $view) : ?>
-                <?php echo self::render_table($rows); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                <?php echo self::render_table($rows, $segment_id, $days); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
             <?php endif; ?>
-        </div>
+        </section>
         <?php
 
         return (string) ob_get_clean();
     }
 
     /**
-     * Extract traffic rows from known Telraam response shapes.
-     *
-     * @param array<string, mixed> $report Telraam API response.
-     * @return array<int, array<string, mixed>>
+     * Format the segment and period metadata text.
      */
-    private static function extract_rows(array $report): array
+    private static function format_segment_period(string $segment_id, int $days): string
     {
-        if (isset($report['report']) && is_array($report['report'])) {
-            return array_values(array_filter($report['report'], 'is_array'));
+        if (1 === $days) {
+            return sprintf(
+                /* translators: %s: segment ID. */
+                __('Segment %s, last 1 day.', 'qndrs-telraam-inzicht'),
+                $segment_id
+            );
         }
 
-        if (isset($report['data']) && is_array($report['data'])) {
-            return array_values(array_filter($report['data'], 'is_array'));
-        }
-
-        if (array_is_list($report)) {
-            return array_values(array_filter($report, 'is_array'));
-        }
-
-        return [];
+        return sprintf(
+            /* translators: 1: segment ID, 2: number of days. */
+            __('Segment %1$s, last %2$d days.', 'qndrs-telraam-inzicht'),
+            $segment_id,
+            $days
+        );
     }
 
     /**
-     * Summarize traffic rows.
-     *
-     * @param array<int, array<string, mixed>> $rows Traffic rows.
-     * @return array{
-     *     pedestrians: int,
-     *     two_wheelers: int,
-     *     cars: int,
-     *     heavy_vehicles: int,
-     *     average_uptime: float|null
-     * }
+     * Format the traffic table caption.
      */
-    private static function summarize_rows(array $rows): array
+    private static function format_table_caption(string $segment_id, int $days, int $visible_rows, int $total_rows): string
     {
-        $summary = [
-            'pedestrians' => 0,
-            'two_wheelers' => 0,
-            'cars' => 0,
-            'heavy_vehicles' => 0,
-            'average_uptime' => null,
-        ];
-
-        $uptime_sum = 0.0;
-        $uptime_count = 0;
-
-        foreach ($rows as $row) {
-            $summary['pedestrians'] += self::read_int($row, ['pedestrian', 'pedestrians']);
-            $summary['two_wheelers'] += self::read_int($row, ['bike', 'bikes', 'bicycle', 'two_wheelers']);
-            $summary['cars'] += self::read_int($row, ['car', 'cars']);
-            $summary['heavy_vehicles'] += self::read_int($row, ['heavy', 'heavy_vehicle', 'heavy_vehicles', 'truck', 'trucks']);
-
-            $uptime = self::read_float($row, ['uptime']);
-            if (null !== $uptime) {
-                $uptime_sum += $uptime;
-                ++$uptime_count;
-            }
+        if (1 === $days) {
+            $period = sprintf(
+                /* translators: %s: segment ID. */
+                __('Hourly traffic rows for segment %s, last 1 day.', 'qndrs-telraam-inzicht'),
+                $segment_id
+            );
+        } else {
+            $period = sprintf(
+                /* translators: 1: segment ID, 2: number of days. */
+                __('Hourly traffic rows for segment %1$s, last %2$d days.', 'qndrs-telraam-inzicht'),
+                $segment_id,
+                $days
+            );
         }
 
-        if ($uptime_count > 0) {
-            $summary['average_uptime'] = $uptime_sum / $uptime_count;
+        if ($visible_rows >= $total_rows) {
+            return $period;
         }
 
-        return $summary;
+        return sprintf(
+            /* translators: 1: table caption, 2: number of visible rows, 3: total number of rows. */
+            __('%1$s Showing %2$d of %3$d rows.', 'qndrs-telraam-inzicht'),
+            $period,
+            $visible_rows,
+            $total_rows
+        );
     }
 
     /**
      * Render a compact data table.
      *
-     * @param array<int, array<string, mixed>> $rows Traffic rows.
+     * @param array<int, array{
+     *     time: string,
+     *     pedestrians: int,
+     *     two_wheelers: int,
+     *     cars: int,
+     *     heavy_vehicles: int,
+     *     uptime: float|null
+     * }> $rows Normalized traffic rows.
+     * @param string $segment_id Telraam segment ID.
+     * @param int    $days Number of requested days.
      */
-    private static function render_table(array $rows): string
+    private static function render_table(array $rows, string $segment_id, int $days): string
     {
         if ([] === $rows) {
-            return '<p>' . esc_html__('No traffic rows were returned by the Telraam API.', 'qndrs-telraam-inzicht') . '</p>';
+            return '<p class="qndrs-telraam-inzicht__empty">' . esc_html__('No traffic rows were returned by the Telraam API.', 'qndrs-telraam-inzicht') . '</p>';
         }
+
+        $visible_rows = array_slice($rows, 0, 24);
 
         ob_start();
         ?>
-        <table class="qndrs-telraam-inzicht__table">
-            <thead>
-                <tr>
-                    <th scope="col"><?php esc_html_e('Time', 'qndrs-telraam-inzicht'); ?></th>
-                    <th scope="col"><?php esc_html_e('Pedestrians', 'qndrs-telraam-inzicht'); ?></th>
-                    <th scope="col"><?php esc_html_e('Two-wheelers', 'qndrs-telraam-inzicht'); ?></th>
-                    <th scope="col"><?php esc_html_e('Cars', 'qndrs-telraam-inzicht'); ?></th>
-                    <th scope="col"><?php esc_html_e('Heavy vehicles', 'qndrs-telraam-inzicht'); ?></th>
-                    <th scope="col"><?php esc_html_e('Uptime', 'qndrs-telraam-inzicht'); ?></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach (array_slice($rows, 0, 24) as $row) : ?>
+        <div class="qndrs-telraam-inzicht__table-wrapper">
+            <table class="qndrs-telraam-inzicht__table">
+                <caption>
+                    <?php echo esc_html(self::format_table_caption($segment_id, $days, count($visible_rows), count($rows))); ?>
+                </caption>
+                <thead>
                     <tr>
-                        <td><?php echo esc_html(self::read_string($row, ['date', 'datetime', 'time', 'time_start'])); ?></td>
-                        <td><?php echo esc_html((string) self::read_int($row, ['pedestrian', 'pedestrians'])); ?></td>
-                        <td><?php echo esc_html((string) self::read_int($row, ['bike', 'bikes', 'bicycle', 'two_wheelers'])); ?></td>
-                        <td><?php echo esc_html((string) self::read_int($row, ['car', 'cars'])); ?></td>
-                        <td><?php echo esc_html((string) self::read_int($row, ['heavy', 'heavy_vehicle', 'heavy_vehicles', 'truck', 'trucks'])); ?></td>
-                        <td><?php echo esc_html(self::format_uptime(self::read_float($row, ['uptime']))); ?></td>
+                        <th scope="col"><?php esc_html_e('Time', 'qndrs-telraam-inzicht'); ?></th>
+                        <th scope="col"><?php esc_html_e('Pedestrians', 'qndrs-telraam-inzicht'); ?></th>
+                        <th scope="col"><?php esc_html_e('Two-wheelers', 'qndrs-telraam-inzicht'); ?></th>
+                        <th scope="col"><?php esc_html_e('Cars', 'qndrs-telraam-inzicht'); ?></th>
+                        <th scope="col"><?php esc_html_e('Heavy vehicles', 'qndrs-telraam-inzicht'); ?></th>
+                        <th scope="col"><?php esc_html_e('Uptime', 'qndrs-telraam-inzicht'); ?></th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php foreach ($visible_rows as $row) : ?>
+                        <tr>
+                            <th scope="row"><?php echo esc_html('' !== $row['time'] ? $row['time'] : __('Unknown', 'qndrs-telraam-inzicht')); ?></th>
+                            <td><?php echo esc_html((string) $row['pedestrians']); ?></td>
+                            <td><?php echo esc_html((string) $row['two_wheelers']); ?></td>
+                            <td><?php echo esc_html((string) $row['cars']); ?></td>
+                            <td><?php echo esc_html((string) $row['heavy_vehicles']); ?></td>
+                            <td><?php echo esc_html(self::format_uptime($row['uptime'])); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
         <?php
 
         return (string) ob_get_clean();
@@ -249,60 +254,9 @@ final class Shortcodes
     private static function render_error(string $message): string
     {
         return sprintf(
-            '<div class="qndrs-telraam-inzicht qndrs-telraam-inzicht--error"><p>%s</p></div>',
+            '<div class="qndrs-telraam-inzicht qndrs-telraam-inzicht--error" role="alert" aria-live="polite"><p>%s</p></div>',
             esc_html($message)
         );
-    }
-
-    /**
-     * Read an integer value from the first matching row key.
-     *
-     * @param array<string, mixed> $row Traffic row.
-     * @param array<int, string>   $keys Candidate keys.
-     */
-    private static function read_int(array $row, array $keys): int
-    {
-        foreach ($keys as $key) {
-            if (isset($row[$key]) && is_numeric($row[$key])) {
-                return max(0, (int) round((float) $row[$key]));
-            }
-        }
-
-        return 0;
-    }
-
-    /**
-     * Read a float value from the first matching row key.
-     *
-     * @param array<string, mixed> $row Traffic row.
-     * @param array<int, string>   $keys Candidate keys.
-     */
-    private static function read_float(array $row, array $keys): ?float
-    {
-        foreach ($keys as $key) {
-            if (isset($row[$key]) && is_numeric($row[$key])) {
-                return (float) $row[$key];
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Read a string value from the first matching row key.
-     *
-     * @param array<string, mixed> $row Traffic row.
-     * @param array<int, string>   $keys Candidate keys.
-     */
-    private static function read_string(array $row, array $keys): string
-    {
-        foreach ($keys as $key) {
-            if (isset($row[$key]) && is_scalar($row[$key])) {
-                return (string) $row[$key];
-            }
-        }
-
-        return '';
     }
 
     /**

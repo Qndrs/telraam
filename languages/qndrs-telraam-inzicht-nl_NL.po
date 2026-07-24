@@ -2,7 +2,7 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Qndrs Telraam Inzicht 0.1.0\n"
+"Project-Id-Version: Qndrs Telraam Inzicht 0.2.0\n"
 "Report-Msgid-Bugs-To: https://github.com/Qndrs/telraam/issues\n"
 "POT-Creation-Date: 2026-07-24 00:00+0000\n"
 "PO-Revision-Date: 2026-07-24 00:00+0000\n"
@@ -69,9 +69,6 @@ msgstr "De Telraam-cache is gewist."
 msgid "Enter your Telraam API token and choose sensible defaults for frontend shortcodes."
 msgstr "Voer je Telraam API-token in en kies verstandige standaardwaarden voor frontend-shortcodes."
 
-msgid "API connection testing will be added after the API client is connected to the caching layer."
-msgstr "De API-verbindingstest wordt toegevoegd nadat de API-client is gekoppeld aan de cachinglaag."
-
 msgid "An API token is currently saved. Leave this field empty to keep the existing token."
 msgstr "Er is momenteel een API-token opgeslagen. Laat dit veld leeg om het bestaande token te behouden."
 
@@ -117,6 +114,21 @@ msgstr "Telraam verkeersstatistieken"
 msgid "Segment %1$s, last %2$d days."
 msgstr "Segment %1$s, laatste %2$d dagen."
 
+msgid "Segment %s, last 1 day."
+msgstr "Segment %s, laatste 1 dag."
+
+msgid "Traffic totals"
+msgstr "Verkeerstotalen"
+
+msgid "Hourly traffic rows for segment %s, last 1 day."
+msgstr "Verkeersregels per uur voor segment %s, laatste 1 dag."
+
+msgid "Hourly traffic rows for segment %1$s, last %2$d days."
+msgstr "Verkeersregels per uur voor segment %1$s, laatste %2$d dagen."
+
+msgid "%1$s Showing %2$d of %3$d rows."
+msgstr "%1$s Toont %2$d van %3$d regels."
+
 msgid "Pedestrians"
 msgstr "Voetgangers"
 
@@ -146,3 +158,39 @@ msgstr "Onbekend"
 
 msgid "%s%%"
 msgstr "%s%%"
+
+msgid "API connection test"
+msgstr "API-verbindingstest"
+
+msgid "Test the saved API token and default segment with a one-day traffic report request."
+msgstr "Test het opgeslagen API-token en standaardsegment met een verkeersrapportrequest van één dag."
+
+msgid "Test API connection"
+msgstr "API-verbinding testen"
+
+msgid "You do not have permission to test the Telraam API connection."
+msgstr "Je hebt geen toestemming om de Telraam API-verbinding te testen."
+
+msgid "The Telraam API connection works. The test returned %d traffic rows."
+msgstr "De Telraam API-verbinding werkt. De test gaf %d verkeersregels terug."
+
+msgid "The Telraam API connection test failed: %s"
+msgstr "De Telraam API-verbindingstest is mislukt: %s"
+
+msgid "Unknown error."
+msgstr "Onbekende fout."
+
+msgid "API token status:"
+msgstr "API-tokenstatus:"
+
+msgid "API token saved"
+msgstr "API-token opgeslagen"
+
+msgid "API token saved."
+msgstr "API-token opgeslagen."
+
+msgid "No API token saved"
+msgstr "Geen API-token opgeslagen"
+
+msgid "No API token saved."
+msgstr "Geen API-token opgeslagen."

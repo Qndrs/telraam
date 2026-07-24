@@ -2,7 +2,7 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Qndrs Telraam Inzicht 0.1.0\n"
+"Project-Id-Version: Qndrs Telraam Inzicht 0.2.0\n"
 "Report-Msgid-Bugs-To: https://github.com/Qndrs/telraam/issues\n"
 "POT-Creation-Date: 2026-07-24 00:00+0000\n"
 "MIME-Version: 1.0\n"
@@ -64,9 +64,6 @@ msgstr ""
 msgid "Enter your Telraam API token and choose sensible defaults for frontend shortcodes."
 msgstr ""
 
-msgid "API connection testing will be added after the API client is connected to the caching layer."
-msgstr ""
-
 msgid "An API token is currently saved. Leave this field empty to keep the existing token."
 msgstr ""
 
@@ -112,6 +109,21 @@ msgstr ""
 msgid "Segment %1$s, last %2$d days."
 msgstr ""
 
+msgid "Segment %s, last 1 day."
+msgstr ""
+
+msgid "Traffic totals"
+msgstr ""
+
+msgid "Hourly traffic rows for segment %s, last 1 day."
+msgstr ""
+
+msgid "Hourly traffic rows for segment %1$s, last %2$d days."
+msgstr ""
+
+msgid "%1$s Showing %2$d of %3$d rows."
+msgstr ""
+
 msgid "Pedestrians"
 msgstr ""
 
@@ -140,4 +152,40 @@ msgid "Unknown"
 msgstr ""
 
 msgid "%s%%"
+msgstr ""
+
+msgid "API connection test"
+msgstr ""
+
+msgid "Test the saved API token and default segment with a one-day traffic report request."
+msgstr ""
+
+msgid "Test API connection"
+msgstr ""
+
+msgid "You do not have permission to test the Telraam API connection."
+msgstr ""
+
+msgid "The Telraam API connection works. The test returned %d traffic rows."
+msgstr ""
+
+msgid "The Telraam API connection test failed: %s"
+msgstr ""
+
+msgid "Unknown error."
+msgstr ""
+
+msgid "API token status:"
+msgstr ""
+
+msgid "API token saved"
+msgstr ""
+
+msgid "API token saved."
+msgstr ""
+
+msgid "No API token saved"
+msgstr ""
+
+msgid "No API token saved."
 msgstr ""

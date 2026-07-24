@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Qndrs\TelraamInzicht\Admin;
 
+use Qndrs\TelraamInzicht\Api\Client;
+use Qndrs\TelraamInzicht\Api\TrafficReportNormalizer;
 use Qndrs\TelraamInzicht\Api\TrafficReportRepository;
 
 if (! defined('ABSPATH')) {
@@ -31,6 +33,7 @@ final class SettingsPage
     {
         add_action('admin_menu', [self::class, 'add_options_page']);
         add_action('admin_init', [self::class, 'register_settings']);
+        add_action('admin_post_qndrs_telraam_inzicht_test_api', [self::class, 'handle_test_api']);
         add_action('admin_post_qndrs_telraam_inzicht_clear_cache', [self::class, 'handle_clear_cache']);
     }
 
@@ -199,6 +202,18 @@ final class SettingsPage
 
             <hr />
 
+            <h2><?php esc_html_e('API connection test', 'qndrs-telraam-inzicht'); ?></h2>
+            <p>
+                <?php esc_html_e('Test the saved API token and default segment with a one-day traffic report request.', 'qndrs-telraam-inzicht'); ?>
+            </p>
+            <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
+                <?php wp_nonce_field('qndrs_telraam_inzicht_test_api'); ?>
+                <input type="hidden" name="action" value="qndrs_telraam_inzicht_test_api" />
+                <?php submit_button(__('Test API connection', 'qndrs-telraam-inzicht'), 'secondary', 'submit', false); ?>
+            </form>
+
+            <hr />
+
             <h2><?php esc_html_e('Cache', 'qndrs-telraam-inzicht'); ?></h2>
             <p>
                 <?php esc_html_e('Clear cached traffic data for the currently configured default segment and period.', 'qndrs-telraam-inzicht'); ?>
@@ -210,6 +225,56 @@ final class SettingsPage
             </form>
         </div>
         <?php
+    }
+
+    /**
+     * Test the configured Telraam API connection.
+     */
+    public static function handle_test_api(): void
+    {
+        if (! current_user_can('manage_options')) {
+            wp_die(esc_html__('You do not have permission to test the Telraam API connection.', 'qndrs-telraam-inzicht'));
+        }
+
+        check_admin_referer('qndrs_telraam_inzicht_test_api');
+
+        $options = self::get_options();
+        $repository = new TrafficReportRepository(
+            new Client($options['api_token']),
+            $options['cache_duration_minutes']
+        );
+
+        $report = $repository->get_traffic_report($options['default_segment_id'], 1, true);
+
+        if (is_wp_error($report)) {
+            self::store_api_test_result(
+                [
+                    'status' => 'error',
+                    'message' => $report->get_error_message(),
+                ]
+            );
+        } else {
+            $normalized_report = (new TrafficReportNormalizer())->normalize($report);
+
+            self::store_api_test_result(
+                [
+                    'status' => 'success',
+                    'rows' => count($normalized_report['rows']),
+                ]
+            );
+        }
+
+        wp_safe_redirect(
+            add_query_arg(
+                [
+                    'page' => self::PAGE_SLUG,
+                    'api-tested' => '1',
+                    'notice-nonce' => wp_create_nonce('qndrs_telraam_inzicht_api_test_notice'),
+                ],
+                admin_url('options-general.php')
+            )
+        );
+        exit;
     }
 
     /**
@@ -248,6 +313,64 @@ final class SettingsPage
      */
     private static function render_admin_notices(): void
     {
+        self::render_api_test_notice();
+        self::render_cache_notice();
+    }
+
+    /**
+     * Render API test result notice.
+     */
+    private static function render_api_test_notice(): void
+    {
+        if (! isset($_GET['api-tested'], $_GET['notice-nonce'])) {
+            return;
+        }
+
+        if (! wp_verify_nonce(sanitize_text_field(wp_unslash((string) $_GET['notice-nonce'])), 'qndrs_telraam_inzicht_api_test_notice')) {
+            return;
+        }
+
+        if ('1' !== sanitize_text_field(wp_unslash((string) $_GET['api-tested']))) {
+            return;
+        }
+
+        $result = self::get_api_test_result();
+
+        if ([] === $result) {
+            return;
+        }
+
+        if ('success' === ($result['status'] ?? '')) {
+            printf(
+                '<div class="notice notice-success is-dismissible"><p>%s</p></div>',
+                esc_html(
+                    sprintf(
+                        /* translators: %d: number of normalized traffic rows returned by the API test. */
+                        __('The Telraam API connection works. The test returned %d traffic rows.', 'qndrs-telraam-inzicht'),
+                        absint($result['rows'] ?? 0)
+                    )
+                )
+            );
+            return;
+        }
+
+        printf(
+            '<div class="notice notice-error is-dismissible"><p>%s</p></div>',
+            esc_html(
+                sprintf(
+                    /* translators: %s: public-safe API error message. */
+                    __('The Telraam API connection test failed: %s', 'qndrs-telraam-inzicht'),
+                    (string) ($result['message'] ?? __('Unknown error.', 'qndrs-telraam-inzicht'))
+                )
+            )
+        );
+    }
+
+    /**
+     * Render cache action notice.
+     */
+    private static function render_cache_notice(): void
+    {
         if (! isset($_GET['cache-cleared'], $_GET['notice-nonce'])) {
             return;
         }
@@ -269,7 +392,6 @@ final class SettingsPage
     public static function render_api_section(): void
     {
         echo '<p>' . esc_html__('Enter your Telraam API token and choose sensible defaults for frontend shortcodes.', 'qndrs-telraam-inzicht') . '</p>';
-        echo '<p>' . esc_html__('API connection testing will be added after the API client is connected to the caching layer.', 'qndrs-telraam-inzicht') . '</p>';
     }
 
     /**
@@ -279,6 +401,18 @@ final class SettingsPage
     {
         $options = self::get_options();
         ?>
+        <p>
+            <strong><?php esc_html_e('API token status:', 'qndrs-telraam-inzicht'); ?></strong>
+            <?php if ('' !== $options['api_token']) : ?>
+                <span aria-label="<?php echo esc_attr__('API token saved', 'qndrs-telraam-inzicht'); ?>">
+                    <?php esc_html_e('API token saved.', 'qndrs-telraam-inzicht'); ?>
+                </span>
+            <?php else : ?>
+                <span aria-label="<?php echo esc_attr__('No API token saved', 'qndrs-telraam-inzicht'); ?>">
+                    <?php esc_html_e('No API token saved.', 'qndrs-telraam-inzicht'); ?>
+                </span>
+            <?php endif; ?>
+        </p>
         <input
             type="password"
             id="<?php echo esc_attr(self::OPTION_NAME); ?>_api_token"
@@ -387,6 +521,42 @@ final class SettingsPage
             'default_days' => 7,
             'cache_duration_minutes' => 60,
         ];
+    }
+
+    /**
+     * Store the API test result for the current user.
+     *
+     * @param array<string, mixed> $result Test result data.
+     */
+    private static function store_api_test_result(array $result): void
+    {
+        set_transient(
+            self::get_api_test_result_transient_key(),
+            $result,
+            5 * MINUTE_IN_SECONDS
+        );
+    }
+
+    /**
+     * Get and delete the API test result for the current user.
+     *
+     * @return array<string, mixed>
+     */
+    private static function get_api_test_result(): array
+    {
+        $key = self::get_api_test_result_transient_key();
+        $result = get_transient($key);
+        delete_transient($key);
+
+        return is_array($result) ? $result : [];
+    }
+
+    /**
+     * Get the current user's API test result transient key.
+     */
+    private static function get_api_test_result_transient_key(): string
+    {
+        return 'qndrs_telraam_inzicht_api_test_' . get_current_user_id();
     }
 
     /**
