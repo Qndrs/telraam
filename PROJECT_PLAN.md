@@ -90,6 +90,7 @@ languages/
 Adminpagina onder WordPress beheer:
 
 - API-token instellen
+- Duidelijke tokenstatus tonen zonder het token zelf te tonen, bijvoorbeeld "API-token opgeslagen"
 - Standaard segment-ID instellen
 - Standaard periode instellen, bijvoorbeeld laatste 7 dagen
 - Cacheduur instellen, standaard 60 minuten
@@ -364,3 +365,7 @@ De plugin moet in documentatie vermelden:
 6. Output als samenvatting en eenvoudige tabel tonen
 7. Testen met segment `9000010390`
 8. Daarna grafieken toevoegen
+
+## Actuele follow-up punten
+
+- Admin settings page moet expliciet tonen dat er een API-token opgeslagen is, zonder de tokenwaarde te tonen. De huidige test bevestigde dat het token technisch is opgeslagen, maar de admin-UI communiceert dat niet duidelijk genoeg.

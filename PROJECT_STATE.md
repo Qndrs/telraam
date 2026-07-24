@@ -214,6 +214,7 @@ Nog te bouwen:
 - changelog
 - shortcode builder in de admin
 - publieke Telraam locatie-URL parsing naar segment-ID
+- betere tokenstatus op admin settings page zonder tokenwaarde te tonen
 
 ## Open technische keuzes
 
@@ -228,6 +229,41 @@ Nog te bepalen:
 - Exacte Nederlandse terminologie voor Telraam modaliteiten en datakwaliteit
 - Of URL-input direct in de shortcode MVP komt of samen met de latere shortcode builder
 - Definitieve WordPress.org contributors/tags/readme metadata
+- Exacte admin-UI tekst voor "API-token opgeslagen"
+
+## Laatste WordPress-test
+
+Uitgevoerd op 2026-07-24 op:
+
+```text
+https://qndrs.training/telraam/
+```
+
+Resultaat:
+
+- Plugin actief
+- Telraam API-token is opgeslagen als WordPress option
+- Tokenwaarde is niet geprint of gelogd
+- Standaard segment-ID: `9000010390`
+- Standaard periode: 7 dagen
+- Cacheduur: 60 minuten
+- Shortcode `[qndrs_telraam_segment id="9000010390" days="7"]` haalt echte data op
+- Shortcode table view werkt
+- Tweede shortcode-call kwam snel terug (`elapsed=0.0069`), passend bij transient cache
+
+Geteste summary-output:
+
+```text
+Voetgangers: 6195
+Tweewielers: 44574
+Auto's: 3240
+Zwaar verkeer: 288
+Gemiddelde uptime: 99,9%
+```
+
+Open punt uit test:
+
+- De admin settings page moet duidelijker tonen dat er een API-token bekend is.
 
 ## WordPress.org publicatie-aandachtspunten
 
