@@ -30,9 +30,17 @@ Table view:
 
 `[qndrs_telraam_segment id="9000010390" days="7" view="table"]`
 
+Limit table rows:
+
+`[qndrs_telraam_segment id="9000010390" days="7" view="table" rows="24"]`
+
+Use `rows="all"` to show all returned rows. The default is `24`.
+
 The plugin requires a Telraam API token. You can configure the token and default segment settings in Settings > Qndrs Telraam Inzicht.
 
 The settings page includes an API connection test. The test uses the saved token and default segment ID, but never displays the token.
+
+The saved API token can be cleared from the settings page without entering a replacement token.
 
 This plugin is not affiliated with or endorsed by Telraam. Telraam API use is subject to Telraam's own terms, rate limits, and data licensing conditions.
 
@@ -54,7 +62,7 @@ Yes. The plugin uses the Telraam API and needs a valid API token.
 
 = Does the plugin store my API token? =
 
-Yes. The token is stored as a WordPress option. It is not shown on the frontend.
+Yes. The token is stored as a WordPress option. It is not shown on the frontend and can be cleared from the settings page.
 
 = Does the plugin call an external service? =
 
@@ -77,9 +85,12 @@ Yes. The plugin uses the `qndrs-telraam-inzicht` text domain and is prepared for
 = 0.2.0 =
 
 * Added visible API token status without exposing the token.
+* Added API token clearing action.
 * Added API connection test.
 * Added traffic report normalizer.
 * Improved accessible frontend HTML structure.
+* Added a `rows` shortcode attribute for table output.
+* Improved frontend table timestamps.
 
 = 0.1.0 =
 

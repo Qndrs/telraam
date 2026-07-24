@@ -109,13 +109,13 @@ msgstr ""
 msgid "Segment %1$s, last %2$d days."
 msgstr ""
 
-msgid "Segment %s, last 1 day."
+msgid "Segment %s, last day."
 msgstr ""
 
 msgid "Traffic totals"
 msgstr ""
 
-msgid "Hourly traffic rows for segment %s, last 1 day."
+msgid "Hourly traffic rows for segment %s, last day."
 msgstr ""
 
 msgid "Hourly traffic rows for segment %1$s, last %2$d days."
@@ -188,4 +188,19 @@ msgid "No API token saved"
 msgstr ""
 
 msgid "No API token saved."
+msgstr ""
+
+msgid "API token management"
+msgstr ""
+
+msgid "Remove the saved Telraam API token from this WordPress site. This does not revoke the token in Telraam."
+msgstr ""
+
+msgid "Clear API token"
+msgstr ""
+
+msgid "You do not have permission to clear the Telraam API token."
+msgstr ""
+
+msgid "The Telraam API token has been cleared."
 msgstr ""

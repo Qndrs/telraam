@@ -215,8 +215,11 @@ Nog te bouwen:
 - changelog
 - shortcode builder in de admin
 - publieke Telraam locatie-URL parsing naar segment-ID
-- tekstverbetering voor `days="1"`: "laatste dag" zonder getal `1`
-- API-token kunnen wissen via een expliciete adminactie
+- admin settings page layout opschonen: API-acties bij tokenveld, cacheactie bij cacheduur, compacter/horizontaler
+- frontend inhoudshiërarchie verbeteren: verkeerstellingen primair, uptime secundair als datakwaliteitsindicator
+- frontend inhoudshiërarchie verder verbeteren: uptime kleiner tonen als datakwaliteitsindicator
+- admin settings page layout opschonen: API-acties bij tokenveld, cacheactie bij cacheduur, compacter/horizontaler
+- dagelijkse aggregates/snapshots opslaan voor toekomstige regressiegrafieken, trends en periodevergelijkingen
 
 ## Open technische keuzes
 
@@ -231,6 +234,7 @@ Nog te bepalen:
 - Exacte Nederlandse terminologie voor Telraam modaliteiten en datakwaliteit
 - Of URL-input direct in de shortcode MVP komt of samen met de latere shortcode builder
 - Definitieve WordPress.org contributors/tags/readme metadata
+- Exacte opslagvorm voor trenddata: waarschijnlijk custom table, niet options/transients
 
 ## Laatste WordPress-test
 
@@ -250,7 +254,14 @@ Resultaat:
 - Cacheduur: 60 minuten
 - Shortcode `[qndrs_telraam_segment id="9000010390" days="7"]` haalt echte data op
 - Shortcode table view werkt
+- Shortcode table view met `rows="5"` toont exact 5 datarijen
+- Shortcode table view met `rows="all"` toont meer dan 24 datarijen
+- Table timestamps worden als `<time>` elementen gerenderd
+- Row headers gebruiken het tijdveld
+- Nederlandse tekst voor `days="1"` toont "laatste dag" en niet "last day"
+- Template-inspringing is uit de shortcode HTML-output verwijderd
 - Tweede shortcode-call kwam snel terug (`elapsed=0.0069`), passend bij transient cache
+- Plugin Check op de testsite: `Success: Controles afgerond. Geen fouten gevonden.`
 
 Geteste summary-output:
 
@@ -307,8 +318,8 @@ Starten met de MVP-implementatie:
 6. ~~Shortcode `[qndrs_telraam_segment]` implementeren~~
 7. ~~Alle zichtbare strings vertaalbaar maken~~
 8. ~~Nederlandse vertaling toevoegen~~
-9. Testen met segment `9000010390`
-10. Plugin Check draaien
+9. ~~Testen met segment `9000010390`~~
+10. ~~Plugin Check draaien~~
 
 ## Laatste lokale validatie
 
@@ -320,6 +331,7 @@ php -l includes\Plugin.php
 php -l includes\Admin\SettingsPage.php
 php -l includes\Api\Client.php
 php -l includes\Api\TrafficReportRepository.php
+php -l includes\Api\TrafficReportNormalizer.php
 php -l includes\Frontend\Shortcodes.php
 ```
 
@@ -352,5 +364,9 @@ Uitgevoerd:
 - `TrafficReportNormalizer` toegevoegd voor stabiele rows en summary totals
 - Shortcode refactored naar genormaliseerde data
 - Shortcode HTML verbeterd met `section`, `header`, gelabelde headings, table caption, row headers en `role="alert"` voor fouten
-- Enkelvoud/meervoud voor dag/dagen geïmplementeerd
+- Enkelvoud/meervoud voor dag/dagen geïmplementeerd; bij 1 dag toont de output "laatste dag"
+- Expliciete adminactie toegevoegd om het API-token te wissen
+- Table view ondersteunt nu `rows`, met standaard `24`, maximum `500` en `rows="all"` voor alle teruggegeven regels
+- Frontend table-timestamps worden nu als lokale datum/tijd in een `<time datetime="">` element gerenderd
+- Template-inspringing wordt uit shortcode HTML-output verwijderd
 - `readme.txt`, POT/PO/MO en projectstate bijgewerkt

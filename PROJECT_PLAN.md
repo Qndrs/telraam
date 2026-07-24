@@ -372,6 +372,31 @@ De plugin moet in documentatie vermelden:
 - De admin settings page heeft nu een API-verbindingstest voor het opgeslagen token en standaardsegment.
 - De frontend shortcode gebruikt nu een aparte traffic report normalizer in plaats van ruwe API-velden rechtstreeks te interpreteren.
 - De frontend shortcode gebruikt nu toegankelijkere HTML met gelabelde secties, summary-heading, table caption, row headers en alert-role voor foutmeldingen.
-- Shortcode-output handelt enkelvoud/meervoud af: bij `days="1"` toont de tekst "laatste 1 dag", niet "laatste 1 dagen".
-- Gewenste tekstverbetering: bij `days="1"` uiteindelijk "laatste dag" tonen, zonder het getal `1`.
-- Admin settings page moet een expliciete actie krijgen om het opgeslagen API-token te wissen zonder een dummywaarde te hoeven invullen.
+- Shortcode-output handelt enkelvoud/meervoud af: bij `days="1"` toont de tekst "laatste dag".
+- Admin settings page heeft nu een expliciete actie om het opgeslagen API-token te wissen zonder een dummywaarde te hoeven invullen.
+- Admin settings page moet visueel worden opgeschoond: API-testen en API-token wissen horen bij het API-token veld; cache wissen hoort bij het cacheduur veld; layout mag compacter en horizontaler.
+- Frontend-layout moet inhoudelijk prioriteren: verkeerstellingen zijn primair; uptime is een kleine datakwaliteitsindicatie, geen gelijkwaardige hoofdstatistiek.
+- Grote uur-tabel voorlopig niet pagineren. De table view ondersteunt nu een `rows` attribuut (`rows="24"` standaard, `rows="all"` voor alles) en volledige uurdata blijft een detailweergave.
+- Frontend-output moet netjes renderen zonder template-inspringing in de HTML-output; timestamps moeten als leesbare lokale datum/tijd met machineleesbaar `<time datetime="">` worden getoond.
+- Toekomstige dataopslag: dagelijkse Telraam-aggregates/snapshots opslaan in WordPress, los van transient cache, zodat regressiegrafieken, trends en periodevergelijkingen mogelijk worden.
+
+## Toekomstige trend- en regressielaag
+
+De huidige transient cache is bedoeld om API-limieten te beschermen, niet als historische databron.
+
+Voor trendanalyse is later een aparte opslaglaag nodig:
+
+- dagelijkse aggregates per segment opslaan
+- totalen per modaliteit bewaren
+- gemiddelde/minimale uptime bewaren als datakwaliteitsindicator
+- datum, segment-ID en eventueel richting bewaren
+- periodieke WP-Cron import/sync toevoegen
+- ontbrekende dagen kunnen backfillen binnen Telraam API-limieten
+- regressiegrafieken en trends baseren op deze lokale dagdata
+- onderscheid maken tussen ruwe API-cache en duurzame geaggregeerde statistieken
+
+Mogelijke opslagopties:
+
+- custom database table voor schaalbaarheid en queries
+- custom post type is minder geschikt voor tijdreeksen
+- options/transients niet gebruiken voor duurzame trenddata

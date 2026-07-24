@@ -46,6 +46,7 @@ final class Shortcodes
             [
                 'id' => $options['default_segment_id'],
                 'days' => (string) $options['default_days'],
+                'rows' => '24',
                 'view' => 'summary',
             ],
             is_array($attributes) ? $attributes : [],
@@ -54,6 +55,7 @@ final class Shortcodes
 
         $segment_id = preg_replace('/[^0-9]/', '', (string) $attributes['id']) ?? '';
         $days = max(1, min(90, absint($attributes['days'])));
+        $rows_limit = self::parse_rows_limit((string) $attributes['rows']);
         $view = sanitize_key((string) $attributes['view']);
 
         if ('' === $segment_id) {
@@ -71,7 +73,21 @@ final class Shortcodes
             return self::render_error($report->get_error_message());
         }
 
-        return self::render_report($report, $segment_id, $days, $view);
+        return self::render_report($report, $segment_id, $days, $view, $rows_limit);
+    }
+
+    /**
+     * Parse the optional rows limit.
+     */
+    private static function parse_rows_limit(string $rows): ?int
+    {
+        if ('all' === strtolower(trim($rows))) {
+            return null;
+        }
+
+        $limit = absint($rows);
+
+        return $limit > 0 ? min($limit, 500) : 24;
     }
 
     /**
@@ -81,8 +97,9 @@ final class Shortcodes
      * @param string               $segment_id Telraam segment ID.
      * @param int                  $days Number of requested days.
      * @param string               $view Requested shortcode view.
+     * @param int|null             $rows_limit Maximum number of table rows, or null for all rows.
      */
-    private static function render_report(array $report, string $segment_id, int $days, string $view): string
+    private static function render_report(array $report, string $segment_id, int $days, string $view, ?int $rows_limit): string
     {
         $normalized_report = (new TrafficReportNormalizer())->normalize($report);
         $rows = $normalized_report['rows'];
@@ -128,12 +145,12 @@ final class Shortcodes
             </section>
 
             <?php if ('table' === $view || 'summary-table' === $view) : ?>
-                <?php echo self::render_table($rows, $segment_id, $days); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+                <?php echo self::render_table($rows, $segment_id, $days, $rows_limit); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
             <?php endif; ?>
         </section>
         <?php
 
-        return (string) ob_get_clean();
+        return self::clean_markup((string) ob_get_clean());
     }
 
     /**
@@ -144,7 +161,7 @@ final class Shortcodes
         if (1 === $days) {
             return sprintf(
                 /* translators: %s: segment ID. */
-                __('Segment %s, last 1 day.', 'qndrs-telraam-inzicht'),
+                __('Segment %s, last day.', 'qndrs-telraam-inzicht'),
                 $segment_id
             );
         }
@@ -165,7 +182,7 @@ final class Shortcodes
         if (1 === $days) {
             $period = sprintf(
                 /* translators: %s: segment ID. */
-                __('Hourly traffic rows for segment %s, last 1 day.', 'qndrs-telraam-inzicht'),
+                __('Hourly traffic rows for segment %s, last day.', 'qndrs-telraam-inzicht'),
                 $segment_id
             );
         } else {
@@ -203,14 +220,15 @@ final class Shortcodes
      * }> $rows Normalized traffic rows.
      * @param string $segment_id Telraam segment ID.
      * @param int    $days Number of requested days.
+     * @param int|null $rows_limit Maximum number of table rows, or null for all rows.
      */
-    private static function render_table(array $rows, string $segment_id, int $days): string
+    private static function render_table(array $rows, string $segment_id, int $days, ?int $rows_limit): string
     {
         if ([] === $rows) {
             return '<p class="qndrs-telraam-inzicht__empty">' . esc_html__('No traffic rows were returned by the Telraam API.', 'qndrs-telraam-inzicht') . '</p>';
         }
 
-        $visible_rows = array_slice($rows, 0, 24);
+        $visible_rows = null === $rows_limit ? $rows : array_slice($rows, 0, $rows_limit);
 
         ob_start();
         ?>
@@ -232,7 +250,7 @@ final class Shortcodes
                 <tbody>
                     <?php foreach ($visible_rows as $row) : ?>
                         <tr>
-                            <th scope="row"><?php echo esc_html('' !== $row['time'] ? $row['time'] : __('Unknown', 'qndrs-telraam-inzicht')); ?></th>
+                            <th scope="row"><?php echo self::render_time($row['time']); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></th>
                             <td><?php echo esc_html((string) $row['pedestrians']); ?></td>
                             <td><?php echo esc_html((string) $row['two_wheelers']); ?></td>
                             <td><?php echo esc_html((string) $row['cars']); ?></td>
@@ -245,7 +263,29 @@ final class Shortcodes
         </div>
         <?php
 
-        return (string) ob_get_clean();
+        return self::clean_markup((string) ob_get_clean());
+    }
+
+    /**
+     * Render an accessible time element for a Telraam timestamp.
+     */
+    private static function render_time(string $raw_time): string
+    {
+        if ('' === $raw_time) {
+            return esc_html__('Unknown', 'qndrs-telraam-inzicht');
+        }
+
+        $timestamp = strtotime($raw_time);
+
+        if (false === $timestamp) {
+            return esc_html($raw_time);
+        }
+
+        return sprintf(
+            '<time datetime="%1$s">%2$s</time>',
+            esc_attr(gmdate('c', $timestamp)),
+            esc_html(wp_date(get_option('date_format') . ' ' . get_option('time_format'), $timestamp))
+        );
     }
 
     /**
@@ -257,6 +297,14 @@ final class Shortcodes
             '<div class="qndrs-telraam-inzicht qndrs-telraam-inzicht--error" role="alert" aria-live="polite"><p>%s</p></div>',
             esc_html($message)
         );
+    }
+
+    /**
+     * Remove template indentation whitespace between HTML tags.
+     */
+    private static function clean_markup(string $markup): string
+    {
+        return trim((string) preg_replace('/>\s+</', '><', $markup));
     }
 
     /**

@@ -35,6 +35,7 @@ final class SettingsPage
         add_action('admin_init', [self::class, 'register_settings']);
         add_action('admin_post_qndrs_telraam_inzicht_test_api', [self::class, 'handle_test_api']);
         add_action('admin_post_qndrs_telraam_inzicht_clear_cache', [self::class, 'handle_clear_cache']);
+        add_action('admin_post_qndrs_telraam_inzicht_clear_api_token', [self::class, 'handle_clear_api_token']);
     }
 
     /**
@@ -202,6 +203,18 @@ final class SettingsPage
 
             <hr />
 
+            <h2><?php esc_html_e('API token management', 'qndrs-telraam-inzicht'); ?></h2>
+            <p>
+                <?php esc_html_e('Remove the saved Telraam API token from this WordPress site. This does not revoke the token in Telraam.', 'qndrs-telraam-inzicht'); ?>
+            </p>
+            <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
+                <?php wp_nonce_field('qndrs_telraam_inzicht_clear_api_token'); ?>
+                <input type="hidden" name="action" value="qndrs_telraam_inzicht_clear_api_token" />
+                <?php submit_button(__('Clear API token', 'qndrs-telraam-inzicht'), 'delete', 'submit', false); ?>
+            </form>
+
+            <hr />
+
             <h2><?php esc_html_e('API connection test', 'qndrs-telraam-inzicht'); ?></h2>
             <p>
                 <?php esc_html_e('Test the saved API token and default segment with a one-day traffic report request.', 'qndrs-telraam-inzicht'); ?>
@@ -225,6 +238,36 @@ final class SettingsPage
             </form>
         </div>
         <?php
+    }
+
+    /**
+     * Clear the saved Telraam API token.
+     */
+    public static function handle_clear_api_token(): void
+    {
+        if (! current_user_can('manage_options')) {
+            wp_die(esc_html__('You do not have permission to clear the Telraam API token.', 'qndrs-telraam-inzicht'));
+        }
+
+        check_admin_referer('qndrs_telraam_inzicht_clear_api_token');
+
+        $options = self::get_options();
+        $options['api_token'] = '';
+
+        update_option(self::OPTION_NAME, $options);
+        TrafficReportRepository::delete_cache($options['default_segment_id'], $options['default_days']);
+
+        wp_safe_redirect(
+            add_query_arg(
+                [
+                    'page' => self::PAGE_SLUG,
+                    'api-token-cleared' => '1',
+                    'notice-nonce' => wp_create_nonce('qndrs_telraam_inzicht_api_token_notice'),
+                ],
+                admin_url('options-general.php')
+            )
+        );
+        exit;
     }
 
     /**
@@ -315,6 +358,7 @@ final class SettingsPage
     {
         self::render_api_test_notice();
         self::render_cache_notice();
+        self::render_api_token_notice();
     }
 
     /**
@@ -384,6 +428,26 @@ final class SettingsPage
         }
 
         echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__('The Telraam cache has been cleared.', 'qndrs-telraam-inzicht') . '</p></div>';
+    }
+
+    /**
+     * Render API token management notice.
+     */
+    private static function render_api_token_notice(): void
+    {
+        if (! isset($_GET['api-token-cleared'], $_GET['notice-nonce'])) {
+            return;
+        }
+
+        if (! wp_verify_nonce(sanitize_text_field(wp_unslash((string) $_GET['notice-nonce'])), 'qndrs_telraam_inzicht_api_token_notice')) {
+            return;
+        }
+
+        if ('1' !== sanitize_text_field(wp_unslash((string) $_GET['api-token-cleared']))) {
+            return;
+        }
+
+        echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__('The Telraam API token has been cleared.', 'qndrs-telraam-inzicht') . '</p></div>';
     }
 
     /**

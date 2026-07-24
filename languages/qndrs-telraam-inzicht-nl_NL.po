@@ -114,14 +114,14 @@ msgstr "Telraam verkeersstatistieken"
 msgid "Segment %1$s, last %2$d days."
 msgstr "Segment %1$s, laatste %2$d dagen."
 
-msgid "Segment %s, last 1 day."
-msgstr "Segment %s, laatste 1 dag."
+msgid "Segment %s, last day."
+msgstr "Segment %s, laatste dag."
 
 msgid "Traffic totals"
 msgstr "Verkeerstotalen"
 
-msgid "Hourly traffic rows for segment %s, last 1 day."
-msgstr "Verkeersregels per uur voor segment %s, laatste 1 dag."
+msgid "Hourly traffic rows for segment %s, last day."
+msgstr "Verkeersregels per uur voor segment %s, laatste dag."
 
 msgid "Hourly traffic rows for segment %1$s, last %2$d days."
 msgstr "Verkeersregels per uur voor segment %1$s, laatste %2$d dagen."
@@ -194,3 +194,18 @@ msgstr "Geen API-token opgeslagen"
 
 msgid "No API token saved."
 msgstr "Geen API-token opgeslagen."
+
+msgid "API token management"
+msgstr "API-tokenbeheer"
+
+msgid "Remove the saved Telraam API token from this WordPress site. This does not revoke the token in Telraam."
+msgstr "Verwijder het opgeslagen Telraam API-token van deze WordPress-site. Dit trekt het token niet in bij Telraam."
+
+msgid "Clear API token"
+msgstr "API-token wissen"
+
+msgid "You do not have permission to clear the Telraam API token."
+msgstr "Je hebt geen toestemming om het Telraam API-token te wissen."
+
+msgid "The Telraam API token has been cleared."
+msgstr "Het Telraam API-token is gewist."
