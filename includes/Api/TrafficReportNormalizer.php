@@ -29,6 +29,7 @@ final class TrafficReportNormalizer
      *         two_wheelers: int,
      *         cars: int,
      *         heavy_vehicles: int,
+     *         night: int,
      *         uptime: float|null
      *     }>,
      *     summary: array{
@@ -36,6 +37,7 @@ final class TrafficReportNormalizer
      *         two_wheelers: int,
      *         cars: int,
      *         heavy_vehicles: int,
+     *         night: int,
      *         average_uptime: float|null
      *     }
      * }
@@ -86,6 +88,7 @@ final class TrafficReportNormalizer
      *     two_wheelers: int,
      *     cars: int,
      *     heavy_vehicles: int,
+     *     night: int,
      *     uptime: float|null
      * }
      */
@@ -97,6 +100,7 @@ final class TrafficReportNormalizer
             'two_wheelers' => self::read_int($row, ['bike', 'bikes', 'bicycle', 'two_wheelers']),
             'cars' => self::read_int($row, ['car', 'cars']),
             'heavy_vehicles' => self::read_int($row, ['heavy', 'heavy_vehicle', 'heavy_vehicles', 'truck', 'trucks']),
+            'night' => self::read_int($row, ['night', 'night_count', 'night_counts']),
             'uptime' => self::read_float($row, ['uptime']),
         ];
     }
@@ -110,6 +114,7 @@ final class TrafficReportNormalizer
      *     two_wheelers: int,
      *     cars: int,
      *     heavy_vehicles: int,
+     *     night: int,
      *     uptime: float|null
      * }> $rows Normalized rows.
      * @return array{
@@ -117,6 +122,7 @@ final class TrafficReportNormalizer
      *     two_wheelers: int,
      *     cars: int,
      *     heavy_vehicles: int,
+     *     night: int,
      *     average_uptime: float|null
      * }
      */
@@ -127,6 +133,7 @@ final class TrafficReportNormalizer
             'two_wheelers' => 0,
             'cars' => 0,
             'heavy_vehicles' => 0,
+            'night' => 0,
             'average_uptime' => null,
         ];
 
@@ -138,6 +145,7 @@ final class TrafficReportNormalizer
             $summary['two_wheelers'] += $row['two_wheelers'];
             $summary['cars'] += $row['cars'];
             $summary['heavy_vehicles'] += $row['heavy_vehicles'];
+            $summary['night'] += $row['night'];
 
             if (null !== $row['uptime']) {
                 $uptime_sum += $row['uptime'];

@@ -4,7 +4,7 @@ Tags: telraam, traffic, statistics, mobility, shortcode
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 8.3
-Stable tag: 0.3.1
+Stable tag: 0.3.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -83,6 +83,12 @@ Not yet. This is planned for a later version.
 Yes. The plugin uses the `qndrs-telraam-inzicht` text domain and is prepared for WordPress.org language packs.
 
 == Changelog ==
+
+= 0.3.2 =
+
+* Added Telraam S2 night traffic counts as a separate traffic category.
+* Improved Telraam API rate-limit handling during cold-cache page renders.
+* Refined responsive summary card breakpoints for narrow and wide containers.
 
 = 0.3.1 =
 

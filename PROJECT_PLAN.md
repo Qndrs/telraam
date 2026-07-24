@@ -384,6 +384,8 @@ De plugin moet in documentatie vermelden:
 - Brede tegels moeten weer over de volledige beschikbare breedte vullen; smalle containers gebruiken expliciete container-breakpoints naar 3, 2 en 1 kolom.
 - Frontend labels moeten kort genoeg blijven voor sidebarplaatsing; huidige korte labels: "Telraam" en "Uptime".
 - Telraam API rate limiting moet rekening houden met meerdere shortcodes op één koude-cache pagina; live API-calls worden binnen één PHP request gespreid en 429 krijgt één retry.
+- Telraam S2 nachtverkeer moet als aparte categorie worden getoond; niet optellen bij auto's of zwaar verkeer.
+- Later verkeer en nachtverkeer relateren aan zonsopkomst, zonsondergang en seizoen voor trends en infographics.
 - Later een `title` shortcode-attribuut toevoegen, inclusief `title=""` om de plugin-heading te verbergen wanneer de site-eigenaar zelf een titel in de editor plaatst.
 - Mobiele tabeltitel moet buiten de horizontaal scrollende tabel blijven; native `<caption>` blijft beschikbaar voor screenreaders.
 - Admin basisstijl gebruikt gescopete CSS onder `.qndrs-telraam-admin`, met kaartlayout, veldgroepen en statusbadge.
@@ -404,6 +406,7 @@ Voor trendanalyse is later een aparte opslaglaag nodig:
 - ontbrekende dagen kunnen backfillen binnen Telraam API-limieten
 - regressiegrafieken en trends baseren op deze lokale dagdata
 - onderscheid maken tussen ruwe API-cache en duurzame geaggregeerde statistieken
+- zonsopkomst/zonsondergang en seizoen koppelen aan dag- en nachtverkeer voor contextuele trendanalyse en infographics
 
 Mogelijke opslagopties:
 

@@ -137,6 +137,10 @@ final class Shortcodes
                         <dt><?php esc_html_e('Heavy vehicles', 'qndrs-telraam-inzicht'); ?></dt>
                         <dd><?php echo esc_html(self::format_count($summary['heavy_vehicles'])); ?></dd>
                     </div>
+                    <div class="qndrs-telraam-inzicht__summary-item qndrs-telraam-inzicht__summary-item--night">
+                        <dt><?php esc_html_e('Night traffic', 'qndrs-telraam-inzicht'); ?></dt>
+                        <dd><?php echo esc_html(self::format_count($summary['night'])); ?></dd>
+                    </div>
                     <div class="qndrs-telraam-inzicht__summary-item qndrs-telraam-inzicht__summary-item--uptime">
                         <dt><?php esc_html_e('Uptime', 'qndrs-telraam-inzicht'); ?></dt>
                         <dd><?php echo esc_html(self::format_uptime($summary['average_uptime'])); ?></dd>
@@ -216,6 +220,7 @@ final class Shortcodes
      *     two_wheelers: int,
      *     cars: int,
      *     heavy_vehicles: int,
+     *     night: int,
      *     uptime: float|null
      * }> $rows Normalized traffic rows.
      * @param string $segment_id Telraam segment ID.
@@ -244,6 +249,7 @@ final class Shortcodes
                         <th scope="col"><?php esc_html_e('Two-wheelers', 'qndrs-telraam-inzicht'); ?></th>
                         <th scope="col"><?php esc_html_e('Cars', 'qndrs-telraam-inzicht'); ?></th>
                         <th scope="col"><?php esc_html_e('Heavy vehicles', 'qndrs-telraam-inzicht'); ?></th>
+                        <th scope="col"><?php esc_html_e('Night', 'qndrs-telraam-inzicht'); ?></th>
                         <th scope="col"><?php esc_html_e('Uptime', 'qndrs-telraam-inzicht'); ?></th>
                     </tr>
                 </thead>
@@ -255,6 +261,7 @@ final class Shortcodes
                             <td><?php echo esc_html(self::format_count($row['two_wheelers'])); ?></td>
                             <td><?php echo esc_html(self::format_count($row['cars'])); ?></td>
                             <td><?php echo esc_html(self::format_count($row['heavy_vehicles'])); ?></td>
+                            <td><?php echo esc_html(self::format_count($row['night'])); ?></td>
                             <td><?php echo esc_html(self::format_uptime($row['uptime'])); ?></td>
                         </tr>
                     <?php endforeach; ?>

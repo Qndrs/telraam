@@ -34,7 +34,7 @@ Huidige branch:
 main
 ```
 
-Laatste bekende commit:
+Laatste bekende gepushte commit vóór deze release:
 
 ```text
 3eeed59 Release 0.3.1 compact display fixes
@@ -43,7 +43,7 @@ Laatste bekende commit:
 Huidige werkversie:
 
 ```text
-0.3.1
+0.3.2
 ```
 
 ## Huidige bestanden
@@ -345,7 +345,7 @@ De technische MVP-basis is aanwezig en getest:
 Eerstvolgende pragmatische opties:
 
 1. `title` shortcode-attribuut toevoegen, inclusief `title=""` om de plugin-heading te verbergen.
-2. Nieuwe installatie-ZIP maken voor `0.3.1` als die extern getest moet worden.
+2. Nieuwe installatie-ZIP maken voor `0.3.2` als die extern getest moet worden.
 3. Fun styling optioneel voorbereiden, bijvoorbeeld via style preset.
 4. Daarna pas shortcode builder/admin UX uitbreiden.
 
@@ -423,9 +423,10 @@ Repo/status:
 
 - Branch: `main`
 - Remote: `origin/main`
-- Laatste commit: `3eeed59 Release 0.3.1 compact display fixes`
-- Werkversie: `0.3.1`
-- Werkboom heeft lokale wijzigingen na `3eeed59`: `PROJECT_STATE.md`, `PROJECT_PLAN.md`, `assets/css/frontend.css` en `includes/Api/Client.php`
+- Laatste gepushte commit vóór deze release: `3eeed59 Release 0.3.1 compact display fixes`
+- Lokale commit klaar voor push: `f626e4b Handle Telraam rate limits and responsive cards`
+- Werkversie: `0.3.2`
+- Werkboom bevat releasewijzigingen voor `0.3.2`: nachtverkeer, documentatie, i18n headers en versie-bump.
 
 Functionele stand:
 
@@ -441,19 +442,21 @@ Functionele stand:
 - Smalle containers gebruiken container-breakpoints naar 3, 2 en 1 kolom.
 - Telraam API-client spreidt live API-calls binnen één PHP request om de 1 request/sec limiet te respecteren.
 - Telraam API-client probeert één retry na een HTTP 429 response.
+- Telraam S2 nachtverkeer wordt als aparte categorie `Nachtverkeer`/`Nacht` getoond in summary en tabel.
+- Toekomstig analysepunt: verkeer en nachtverkeer koppelen aan zonsopkomst, zonsondergang en seizoen voor trends en infographics.
 - Tabelcaption staat mobiel buiten de horizontale scroll-wrapper; native `<caption>` blijft beschikbaar voor screenreaders.
 
 Laatste checks:
 
 - PHP lint op pluginbestanden: groen
-- Shortcode-outputcheck op testsite: heading `Telraam`, label `Uptime`, versie `0.3.1`
+- Shortcode-outputcheck op testsite: heading `Telraam`, label `Uptime`, versie `0.3.2`
 - Koude-cache test op testsite met `days="1"` en `days="7"` in één request: geen 429, totals aanwezig, elapsed circa 2.49s
 - Plugin Check op testsite: groen
 
 Distributie:
 
 - Laatste eerder gemaakte installatie-ZIP: `D:\_qndrs\Telraam-plugin\qndrs-telraam-inzicht-0.3.0.zip`
-- Voor externe test van de huidige `0.3.1` stand moet nog een nieuwe ZIP worden gemaakt.
+- Voor externe test van de huidige `0.3.2` stand moet nog een nieuwe ZIP worden gemaakt.
 
 Open vervolgpunten:
 
@@ -462,3 +465,4 @@ Open vervolgpunten:
 - Shortcode builder in admin later toevoegen.
 - Publieke Telraam locatie-URL later als input ondersteunen.
 - Dagelijkse aggregates/snapshots later opslaan voor trends/regressiegrafieken.
+- Zonsopkomst/zonsondergang en seizoen later koppelen aan dag- en nachtverkeer voor infographics.

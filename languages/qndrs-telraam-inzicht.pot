@@ -2,7 +2,7 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Qndrs Telraam Inzicht 0.3.1\n"
+"Project-Id-Version: Qndrs Telraam Inzicht 0.3.2\n"
 "Report-Msgid-Bugs-To: https://github.com/Qndrs/telraam/issues\n"
 "POT-Creation-Date: 2026-07-24 00:00+0000\n"
 "MIME-Version: 1.0\n"
@@ -136,6 +136,9 @@ msgstr ""
 msgid "Heavy vehicles"
 msgstr ""
 
+msgid "Night traffic"
+msgstr ""
+
 msgid "No traffic rows were returned by the Telraam API."
 msgstr ""
 
@@ -143,6 +146,9 @@ msgid "Time"
 msgstr ""
 
 msgid "Uptime"
+msgstr ""
+
+msgid "Night"
 msgstr ""
 
 msgid "Unknown"
