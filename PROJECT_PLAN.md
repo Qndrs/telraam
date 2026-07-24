@@ -381,7 +381,9 @@ De plugin moet in documentatie vermelden:
 - Frontend-output moet netjes renderen zonder template-inspringing in de HTML-output; timestamps moeten als leesbare lokale datum/tijd met machineleesbaar `<time datetime="">` worden getoond.
 - Frontend basisstijl gebruikt gescopete CSS onder `.qndrs-telraam-inzicht`, met CSS-variabelen voor latere theming.
 - Frontend summary cards moeten container-responsief blijven, zodat shortcodes ook in sidebars bruikbaar blijven.
+- Brede tegels moeten weer over de volledige beschikbare breedte vullen; smalle containers gebruiken expliciete container-breakpoints naar 3, 2 en 1 kolom.
 - Frontend labels moeten kort genoeg blijven voor sidebarplaatsing; huidige korte labels: "Telraam" en "Uptime".
+- Telraam API rate limiting moet rekening houden met meerdere shortcodes op één koude-cache pagina; live API-calls worden binnen één PHP request gespreid en 429 krijgt één retry.
 - Later een `title` shortcode-attribuut toevoegen, inclusief `title=""` om de plugin-heading te verbergen wanneer de site-eigenaar zelf een titel in de editor plaatst.
 - Mobiele tabeltitel moet buiten de horizontaal scrollende tabel blijven; native `<caption>` blijft beschikbaar voor screenreaders.
 - Admin basisstijl gebruikt gescopete CSS onder `.qndrs-telraam-admin`, met kaartlayout, veldgroepen en statusbadge.

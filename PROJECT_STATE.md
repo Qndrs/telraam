@@ -1,6 +1,6 @@
 # Qndrs Telraam Inzicht - Projectstate
 
-Laatste update: 2026-07-24
+Laatste update: 2026-07-25
 
 ## Huidige status
 
@@ -37,7 +37,7 @@ main
 Laatste bekende commit:
 
 ```text
-80c7d0f Clean up shortcode output
+3eeed59 Release 0.3.1 compact display fixes
 ```
 
 Huidige werkversie:
@@ -291,7 +291,7 @@ Voetgangers: 6195
 Tweewielers: 44574
 Auto's: 3240
 Zwaar verkeer: 288
-Gemiddelde uptime: 99,9%
+Uptime: 99,9%
 ```
 
 Open punt uit test:
@@ -329,7 +329,7 @@ Officiële referenties:
 
 ## Eerstvolgende logische stap
 
-Starten met de MVP-implementatie:
+De technische MVP-basis is aanwezig en getest:
 
 1. ~~`qndrs-telraam-inzicht.php` aanmaken~~
 2. ~~Basis namespaced PHP-structuur opzetten~~
@@ -341,6 +341,13 @@ Starten met de MVP-implementatie:
 8. ~~Nederlandse vertaling toevoegen~~
 9. ~~Testen met segment `9000010390`~~
 10. ~~Plugin Check draaien~~
+
+Eerstvolgende pragmatische opties:
+
+1. `title` shortcode-attribuut toevoegen, inclusief `title=""` om de plugin-heading te verbergen.
+2. Nieuwe installatie-ZIP maken voor `0.3.1` als die extern getest moet worden.
+3. Fun styling optioneel voorbereiden, bijvoorbeeld via style preset.
+4. Daarna pas shortcode builder/admin UX uitbreiden.
 
 ## Laatste lokale validatie
 
@@ -407,3 +414,51 @@ Uitgevoerd:
 - Bugfix: summary card getallen/labels schalen beter in smalle sidebars
 - Sidebarverbetering: hoofdheading en uptime-label ingekort
 - `readme.txt`, POT/PO/MO en projectstate bijgewerkt
+
+## Actuele snapshot voor hervatten
+
+Vastgelegd op 2026-07-25 na de 429/layout-fix bovenop commit `3eeed59`.
+
+Repo/status:
+
+- Branch: `main`
+- Remote: `origin/main`
+- Laatste commit: `3eeed59 Release 0.3.1 compact display fixes`
+- Werkversie: `0.3.1`
+- Werkboom heeft lokale wijzigingen na `3eeed59`: `PROJECT_STATE.md`, `PROJECT_PLAN.md`, `assets/css/frontend.css` en `includes/Api/Client.php`
+
+Functionele stand:
+
+- Shortcode `[qndrs_telraam_segment]` werkt met echte Telraam API-data.
+- Standaard segment op testsite: `9000010390`.
+- API-token is door Robert geroteerd.
+- API-token wissen, opnieuw opslaan en foutmeldingen bij ontbrekende token werken op frontend en admin.
+- Cache wordt bij token wissen voor het ingestelde segment voor periodes 1 t/m 90 dagen verwijderd.
+- Adminpaneel gebruikt compacte kaartlayout met acties bij de relevante velden.
+- Frontend gebruikt neutrale basisstijl met container-responsieve summary cards.
+- Sidebarweergave is verbeterd; heading is nu `Telraam`, uptime-label is `Uptime`.
+- Brede tegelweergave vult weer de beschikbare breedte met expliciete vierkolomsgrid.
+- Smalle containers gebruiken container-breakpoints naar 3, 2 en 1 kolom.
+- Telraam API-client spreidt live API-calls binnen één PHP request om de 1 request/sec limiet te respecteren.
+- Telraam API-client probeert één retry na een HTTP 429 response.
+- Tabelcaption staat mobiel buiten de horizontale scroll-wrapper; native `<caption>` blijft beschikbaar voor screenreaders.
+
+Laatste checks:
+
+- PHP lint op pluginbestanden: groen
+- Shortcode-outputcheck op testsite: heading `Telraam`, label `Uptime`, versie `0.3.1`
+- Koude-cache test op testsite met `days="1"` en `days="7"` in één request: geen 429, totals aanwezig, elapsed circa 2.49s
+- Plugin Check op testsite: groen
+
+Distributie:
+
+- Laatste eerder gemaakte installatie-ZIP: `D:\_qndrs\Telraam-plugin\qndrs-telraam-inzicht-0.3.0.zip`
+- Voor externe test van de huidige `0.3.1` stand moet nog een nieuwe ZIP worden gemaakt.
+
+Open vervolgpunten:
+
+- `title` shortcode-attribuut toevoegen, inclusief `title=""` om de plugin-heading te verbergen.
+- Fun styling optioneel voorbereiden, bijvoorbeeld via style preset.
+- Shortcode builder in admin later toevoegen.
+- Publieke Telraam locatie-URL later als input ondersteunen.
+- Dagelijkse aggregates/snapshots later opslaan voor trends/regressiegrafieken.

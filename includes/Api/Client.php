@@ -21,6 +21,12 @@ final class Client
     private const TRAFFIC_REPORT_ENDPOINT = 'https://telraam-api.net/v1/reports/traffic';
     private const REQUEST_TIMEOUT = 15;
     private const MAX_DAYS = 90;
+    private const RATE_LIMIT_RETRY_DELAY_MICROSECONDS = 1100000;
+
+    /**
+     * Timestamp of the last live API request in this PHP request.
+     */
+    private static float $last_request_time = 0.0;
 
     /**
      * Telraam API token.
@@ -61,17 +67,7 @@ final class Client
             );
         }
 
-        $response = wp_remote_post(
-            self::TRAFFIC_REPORT_ENDPOINT,
-            [
-                'timeout' => self::REQUEST_TIMEOUT,
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'X-Api-Key' => $this->api_token,
-                ],
-                'body' => wp_json_encode($this->build_traffic_report_payload($segment_id, $days)),
-            ]
-        );
+        $response = $this->send_traffic_report_request($segment_id, $days);
 
         if (is_wp_error($response)) {
             return new \WP_Error(
@@ -137,5 +133,71 @@ final class Client
             'level' => 'segments',
             'format' => 'per-hour',
         ];
+    }
+
+    /**
+     * Send a traffic report request with basic rate-limit protection.
+     *
+     * Telraam allows one request per second for regular API users. A single
+     * WordPress page can contain multiple shortcodes, so protect cold-cache
+     * renders by spacing live API requests and retrying one 429 response.
+     *
+     * @param string $segment_id Telraam segment ID.
+     * @param int    $days Number of days.
+     * @return array<string, mixed>|\WP_Error
+     */
+    private function send_traffic_report_request(string $segment_id, int $days): array|\WP_Error
+    {
+        $payload = $this->build_traffic_report_payload($segment_id, $days);
+        $response = null;
+
+        for ($attempt = 0; $attempt < 2; $attempt++) {
+            if ($attempt > 0) {
+                usleep(self::RATE_LIMIT_RETRY_DELAY_MICROSECONDS);
+            }
+
+            self::wait_for_request_slot();
+
+            $response = wp_remote_post(
+                self::TRAFFIC_REPORT_ENDPOINT,
+                [
+                    'timeout' => self::REQUEST_TIMEOUT,
+                    'headers' => [
+                        'Content-Type' => 'application/json',
+                        'X-Api-Key' => $this->api_token,
+                    ],
+                    'body' => wp_json_encode($payload),
+                ]
+            );
+
+            if (is_wp_error($response)) {
+                return $response;
+            }
+
+            if (429 !== wp_remote_retrieve_response_code($response)) {
+                return $response;
+            }
+        }
+
+        return is_array($response) ? $response : new \WP_Error(
+            'qndrs_telraam_inzicht_request_failed',
+            __('The Telraam API request failed.', 'qndrs-telraam-inzicht')
+        );
+    }
+
+    /**
+     * Wait until the next API request slot in the current PHP request.
+     */
+    private static function wait_for_request_slot(): void
+    {
+        if (0.0 !== self::$last_request_time) {
+            $elapsed_microseconds = (int) ((microtime(true) - self::$last_request_time) * 1000000);
+
+            if ($elapsed_microseconds < self::RATE_LIMIT_RETRY_DELAY_MICROSECONDS) {
+                usleep(self::RATE_LIMIT_RETRY_DELAY_MICROSECONDS - $elapsed_microseconds);
+            }
+        }
+
+        self::$last_request_time = microtime(true);
     }
 }

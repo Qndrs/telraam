@@ -60,7 +60,7 @@
 
 .qndrs-telraam-inzicht__summary {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(9rem, 100%), 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 0.75rem;
     margin: 0;
 }
@@ -208,13 +208,27 @@
 
 }
 
+@container (max-width: 52rem) {
+    .qndrs-telraam-inzicht__summary {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@container (max-width: 38rem) {
+    .qndrs-telraam-inzicht__summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@container (max-width: 26rem) {
+    .qndrs-telraam-inzicht__summary {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 420px) {
     .qndrs-telraam-inzicht {
         padding: 1rem;
-    }
-
-    .qndrs-telraam-inzicht__summary {
-        grid-template-columns: 1fr;
     }
 }
 
