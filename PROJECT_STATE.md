@@ -96,6 +96,7 @@ Belangrijk diagnosepunt uit test:
 - ZIP bevat het hoofdpluginbestand.
 - ZIP sluit projectdocumentatie en gitdata uit.
 - Nieuwe review-ZIP is gemaakt: 20 entries, rootmap `qndrs-traffic-display-for-telraam/`, hoofdpluginbestand aanwezig, `readme.txt` aanwezig, geen `.po/.mo`, geen projectdocs/gitdata, versieheader `0.3.3`, stable tag `0.3.3`, textdomain `qndrs-traffic-display-for-telraam`, geen `Plugin URI`, External services-sectie aanwezig.
+- `Plugin URI` is bewust weggelaten; `Author URI` blijft `https://qndrs.nl`, zodat plugin- en author-URI niet gelijk zijn.
 - `.gitignore` houdt lokale ZIP-bestanden en een eventuele `pub/` map buiten git.
 - `.gitattributes` sluit `PROJECT_PLAN.md`, `PROJECT_STATE.md`, `.gitattributes` en lokale release-zips uit bij `git archive`.
 

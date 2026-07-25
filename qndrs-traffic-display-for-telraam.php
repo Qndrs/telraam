@@ -1,7 +1,6 @@
 <?php
 /**
  * Plugin Name: Qndrs Traffic Display for Telraam
- * Plugin URI: https://qndrs.nl
  * Description: Display Telraam traffic statistics on your WordPress website.
  * Version: 0.3.3
  * Requires at least: 6.5
