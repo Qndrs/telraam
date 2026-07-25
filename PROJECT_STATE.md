@@ -4,24 +4,20 @@ Laatste update: 2026-07-25
 
 ## Korte status
 
-`qndrs-telraam-inzicht` is functioneel MVP-klaar en wordt nu voorbereid voor WordPress.org-publicatie.
+`qndrs-telraam-inzicht` is functioneel MVP-klaar en de eerste WordPress.org review-submission is ingediend.
 
 De plugin toont Telraam verkeersstatistieken via shortcode, gebruikt de WordPress HTTP API voor Telraam API-calls, cached responses met transients, heeft een compacte adminpagina, is internationaliseerbaar opgezet en heeft een geteste Nederlandse vertaling als ontwikkelbestand.
 
-De repository blijft voorlopig private totdat de WordPress.org/publicatiecheck is afgerond.
+De repository blijft voorlopig private totdat de WordPress.org-review is afgerond.
 
 ## Repo
 
 - Lokale repo: `D:\_qndrs\Telraam-plugin\telraam`
 - Remote: `https://github.com/Qndrs/telraam.git`
 - Branch: `main`
-- Laatste gepushte commit: `fa09740 Release 0.3.2 night traffic counts`
+- Laatste gepushte commit: `e3f4997 Prepare WordPress.org MVP submission`
 - Huidige werkversie: `0.3.2`
-- Werkboom bevat nog niet-gecommitte MVP/publicatie-afronding:
-  - `title` shortcode-attribuut
-  - frontend CSS voor visueel verborgen heading
-  - `readme.txt` met WordPress.org publicatie-informatie
-  - opgeschoonde projectstate
+- Werkboom was schoon na commit/push van de MVP/publicatie-afronding.
 
 ## Plugin-identiteit
 
@@ -97,7 +93,7 @@ Belangrijk diagnosepunt uit test:
 - `.gitignore` houdt lokale ZIP-bestanden en een eventuele `pub/` map buiten git.
 - `.gitattributes` sluit `PROJECT_PLAN.md`, `PROJECT_STATE.md`, `.gitattributes` en lokale release-zips uit bij `git archive`.
 
-Voor een definitieve WordPress.org-submission moet na de laatste commit een nieuwe schone ZIP worden gemaakt.
+De submission-ZIP `qndrs-telraam-inzicht.zip` is ingediend voor WordPress.org review.
 
 ## WordPress.org-publicatievoorbereiding
 
@@ -131,15 +127,13 @@ Publicatie-readiness:
 - `readme.txt` bevat nu een expliciete `External services`-sectie voor Telraam.
 - Telraam is als derde partij gedocumenteerd met service-, API-, terms-, privacy- en datalicentielinks.
 
-Nog te doen vóór submission:
+Nog te doen na submission:
 
-1. Laatste lokale wijzigingen committen en pushen naar GitHub.
-2. `readme.txt` door de officiële WordPress.org readme validator halen.
-3. Beslissen of eerste publieke versie `0.3.2` blijft of naar `1.0.0` gaat.
-4. Nieuwe definitieve submission-ZIP maken uit de gecommitte stand.
-5. Controleren of screenshots wenselijk zijn voor de WordPress.org pluginpagina.
-6. Plugin indienen via WordPress.org.
-7. Na goedkeuring SVN `trunk` en `tags/{version}` vullen volgens WordPress.org releaseflow.
+1. Wachten op feedback van het WordPress.org plugin review team.
+2. Eventuele reviewfeedback verwerken in GitHub.
+3. Bij goedkeuring SVN `trunk` en `tags/{version}` vullen volgens WordPress.org releaseflow.
+4. Controleren of screenshots wenselijk zijn voor de WordPress.org pluginpagina.
+5. Daarna repository publiek zetten wanneer de review/publicatie stabiel is.
 
 ## Telraam-documentatie die relevant blijft
 
