@@ -56,14 +56,14 @@ final class Client
         if ('' === $this->api_token) {
             return new \WP_Error(
                 'qndrs_telraam_inzicht_missing_api_token',
-                __('The Telraam API token is missing.', 'qndrs-telraam-inzicht')
+                __('The Telraam API token is missing.', 'qndrs-traffic-display-for-telraam')
             );
         }
 
         if ('' === $segment_id) {
             return new \WP_Error(
                 'qndrs_telraam_inzicht_missing_segment_id',
-                __('The Telraam segment ID is missing.', 'qndrs-telraam-inzicht')
+                __('The Telraam segment ID is missing.', 'qndrs-traffic-display-for-telraam')
             );
         }
 
@@ -72,7 +72,7 @@ final class Client
         if (is_wp_error($response)) {
             return new \WP_Error(
                 'qndrs_telraam_inzicht_request_failed',
-                __('The Telraam API request failed.', 'qndrs-telraam-inzicht'),
+                __('The Telraam API request failed.', 'qndrs-traffic-display-for-telraam'),
                 [
                     'reason' => $response->get_error_message(),
                 ]
@@ -87,7 +87,7 @@ final class Client
                 'qndrs_telraam_inzicht_unexpected_status',
                 sprintf(
                     /* translators: %d: HTTP response status code. */
-                    __('The Telraam API returned an unexpected HTTP status: %d.', 'qndrs-telraam-inzicht'),
+                    __('The Telraam API returned an unexpected HTTP status: %d.', 'qndrs-traffic-display-for-telraam'),
                     $status_code
                 ),
                 [
@@ -101,7 +101,7 @@ final class Client
         if (! is_array($decoded)) {
             return new \WP_Error(
                 'qndrs_telraam_inzicht_invalid_json',
-                __('The Telraam API returned invalid JSON.', 'qndrs-telraam-inzicht')
+                __('The Telraam API returned invalid JSON.', 'qndrs-traffic-display-for-telraam')
             );
         }
 
@@ -181,7 +181,7 @@ final class Client
 
         return is_array($response) ? $response : new \WP_Error(
             'qndrs_telraam_inzicht_request_failed',
-            __('The Telraam API request failed.', 'qndrs-telraam-inzicht')
+            __('The Telraam API request failed.', 'qndrs-traffic-display-for-telraam')
         );
     }
 

@@ -47,7 +47,7 @@ final class Shortcodes
                 'id' => $options['default_segment_id'],
                 'days' => (string) $options['default_days'],
                 'rows' => '24',
-                'title' => __('Telraam', 'qndrs-telraam-inzicht'),
+                'title' => __('Traffic data', 'qndrs-traffic-display-for-telraam'),
                 'view' => 'summary',
             ],
             is_array($attributes) ? $attributes : [],
@@ -61,7 +61,7 @@ final class Shortcodes
         $view = sanitize_key((string) $attributes['view']);
 
         if ('' === $segment_id) {
-            return self::render_error(__('No Telraam segment ID was provided.', 'qndrs-telraam-inzicht'));
+            return self::render_error(__('No Telraam segment ID was provided.', 'qndrs-traffic-display-for-telraam'));
         }
 
         $repository = new TrafficReportRepository(
@@ -119,47 +119,47 @@ final class Shortcodes
         $normalized_report = (new TrafficReportNormalizer())->normalize($report);
         $rows = $normalized_report['rows'];
         $summary = $normalized_report['summary'];
-        $component_id = wp_unique_id('qndrs-telraam-inzicht-');
+        $component_id = wp_unique_id('qndrs-traffic-display-for-telraam-');
         $heading_id = $component_id . 'heading';
         $summary_heading_id = $component_id . 'summary-heading';
-        $heading_class = null === $title ? ' class="qndrs-telraam-inzicht__screen-reader-text"' : '';
-        $heading_text = $title ?? __('Telraam', 'qndrs-telraam-inzicht');
+        $heading_class = null === $title ? ' class="qndrs-traffic-display-for-telraam__screen-reader-text"' : '';
+        $heading_text = $title ?? __('Traffic data', 'qndrs-traffic-display-for-telraam');
 
         ob_start();
         ?>
-        <section class="qndrs-telraam-inzicht qndrs-telraam-inzicht--<?php echo esc_attr($view); ?>" aria-labelledby="<?php echo esc_attr($heading_id); ?>">
-            <header class="qndrs-telraam-inzicht__header">
+        <section class="qndrs-traffic-display-for-telraam qndrs-traffic-display-for-telraam--<?php echo esc_attr($view); ?>" aria-labelledby="<?php echo esc_attr($heading_id); ?>">
+            <header class="qndrs-traffic-display-for-telraam__header">
                 <h2 id="<?php echo esc_attr($heading_id); ?>"<?php echo $heading_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php echo esc_html($heading_text); ?></h2>
-                <p class="qndrs-telraam-inzicht__meta">
+                <p class="qndrs-traffic-display-for-telraam__meta">
                     <?php echo esc_html(self::format_segment_period($segment_id, $days)); ?>
                 </p>
             </header>
 
-            <section class="qndrs-telraam-inzicht__summary-section" aria-labelledby="<?php echo esc_attr($summary_heading_id); ?>">
-                <h3 id="<?php echo esc_attr($summary_heading_id); ?>"><?php esc_html_e('Traffic totals', 'qndrs-telraam-inzicht'); ?></h3>
-                <dl class="qndrs-telraam-inzicht__summary">
-                    <div class="qndrs-telraam-inzicht__summary-item qndrs-telraam-inzicht__summary-item--pedestrians">
-                        <dt><?php esc_html_e('Pedestrians', 'qndrs-telraam-inzicht'); ?></dt>
+            <section class="qndrs-traffic-display-for-telraam__summary-section" aria-labelledby="<?php echo esc_attr($summary_heading_id); ?>">
+                <h3 id="<?php echo esc_attr($summary_heading_id); ?>"><?php esc_html_e('Traffic totals', 'qndrs-traffic-display-for-telraam'); ?></h3>
+                <dl class="qndrs-traffic-display-for-telraam__summary">
+                    <div class="qndrs-traffic-display-for-telraam__summary-item qndrs-traffic-display-for-telraam__summary-item--pedestrians">
+                        <dt><?php esc_html_e('Pedestrians', 'qndrs-traffic-display-for-telraam'); ?></dt>
                         <dd><?php echo esc_html(self::format_count($summary['pedestrians'])); ?></dd>
                     </div>
-                    <div class="qndrs-telraam-inzicht__summary-item qndrs-telraam-inzicht__summary-item--two-wheelers">
-                        <dt><?php esc_html_e('Two-wheelers', 'qndrs-telraam-inzicht'); ?></dt>
+                    <div class="qndrs-traffic-display-for-telraam__summary-item qndrs-traffic-display-for-telraam__summary-item--two-wheelers">
+                        <dt><?php esc_html_e('Two-wheelers', 'qndrs-traffic-display-for-telraam'); ?></dt>
                         <dd><?php echo esc_html(self::format_count($summary['two_wheelers'])); ?></dd>
                     </div>
-                    <div class="qndrs-telraam-inzicht__summary-item qndrs-telraam-inzicht__summary-item--cars">
-                        <dt><?php esc_html_e('Cars', 'qndrs-telraam-inzicht'); ?></dt>
+                    <div class="qndrs-traffic-display-for-telraam__summary-item qndrs-traffic-display-for-telraam__summary-item--cars">
+                        <dt><?php esc_html_e('Cars', 'qndrs-traffic-display-for-telraam'); ?></dt>
                         <dd><?php echo esc_html(self::format_count($summary['cars'])); ?></dd>
                     </div>
-                    <div class="qndrs-telraam-inzicht__summary-item qndrs-telraam-inzicht__summary-item--heavy-vehicles">
-                        <dt><?php esc_html_e('Heavy vehicles', 'qndrs-telraam-inzicht'); ?></dt>
+                    <div class="qndrs-traffic-display-for-telraam__summary-item qndrs-traffic-display-for-telraam__summary-item--heavy-vehicles">
+                        <dt><?php esc_html_e('Heavy vehicles', 'qndrs-traffic-display-for-telraam'); ?></dt>
                         <dd><?php echo esc_html(self::format_count($summary['heavy_vehicles'])); ?></dd>
                     </div>
-                    <div class="qndrs-telraam-inzicht__summary-item qndrs-telraam-inzicht__summary-item--night">
-                        <dt><?php esc_html_e('Night traffic', 'qndrs-telraam-inzicht'); ?></dt>
+                    <div class="qndrs-traffic-display-for-telraam__summary-item qndrs-traffic-display-for-telraam__summary-item--night">
+                        <dt><?php esc_html_e('Night traffic', 'qndrs-traffic-display-for-telraam'); ?></dt>
                         <dd><?php echo esc_html(self::format_count($summary['night'])); ?></dd>
                     </div>
-                    <div class="qndrs-telraam-inzicht__summary-item qndrs-telraam-inzicht__summary-item--uptime">
-                        <dt><?php esc_html_e('Uptime', 'qndrs-telraam-inzicht'); ?></dt>
+                    <div class="qndrs-traffic-display-for-telraam__summary-item qndrs-traffic-display-for-telraam__summary-item--uptime">
+                        <dt><?php esc_html_e('Uptime', 'qndrs-traffic-display-for-telraam'); ?></dt>
                         <dd><?php echo esc_html(self::format_uptime($summary['average_uptime'])); ?></dd>
                     </div>
                 </dl>
@@ -182,14 +182,14 @@ final class Shortcodes
         if (1 === $days) {
             return sprintf(
                 /* translators: %s: segment ID. */
-                __('Segment %s, last day.', 'qndrs-telraam-inzicht'),
+                __('Segment %s, last day.', 'qndrs-traffic-display-for-telraam'),
                 $segment_id
             );
         }
 
         return sprintf(
             /* translators: 1: segment ID, 2: number of days. */
-            __('Segment %1$s, last %2$d days.', 'qndrs-telraam-inzicht'),
+            __('Segment %1$s, last %2$d days.', 'qndrs-traffic-display-for-telraam'),
             $segment_id,
             $days
         );
@@ -203,13 +203,13 @@ final class Shortcodes
         if (1 === $days) {
             $period = sprintf(
                 /* translators: %s: segment ID. */
-                __('Hourly traffic rows for segment %s, last day.', 'qndrs-telraam-inzicht'),
+                __('Hourly traffic rows for segment %s, last day.', 'qndrs-traffic-display-for-telraam'),
                 $segment_id
             );
         } else {
             $period = sprintf(
                 /* translators: 1: segment ID, 2: number of days. */
-                __('Hourly traffic rows for segment %1$s, last %2$d days.', 'qndrs-telraam-inzicht'),
+                __('Hourly traffic rows for segment %1$s, last %2$d days.', 'qndrs-traffic-display-for-telraam'),
                 $segment_id,
                 $days
             );
@@ -221,7 +221,7 @@ final class Shortcodes
 
         return sprintf(
             /* translators: 1: table caption, 2: number of visible rows, 3: total number of rows. */
-            __('%1$s Showing %2$d of %3$d rows.', 'qndrs-telraam-inzicht'),
+            __('%1$s Showing %2$d of %3$d rows.', 'qndrs-traffic-display-for-telraam'),
             $period,
             $visible_rows,
             $total_rows
@@ -247,7 +247,7 @@ final class Shortcodes
     private static function render_table(array $rows, string $segment_id, int $days, ?int $rows_limit): string
     {
         if ([] === $rows) {
-            return '<p class="qndrs-telraam-inzicht__empty">' . esc_html__('No traffic rows were returned by the Telraam API.', 'qndrs-telraam-inzicht') . '</p>';
+            return '<p class="qndrs-traffic-display-for-telraam__empty">' . esc_html__('No traffic rows were returned by the Telraam API.', 'qndrs-traffic-display-for-telraam') . '</p>';
         }
 
         usort(
@@ -265,19 +265,19 @@ final class Shortcodes
 
         ob_start();
         ?>
-        <p class="qndrs-telraam-inzicht__table-caption"><?php echo esc_html($caption); ?></p>
-        <div class="qndrs-telraam-inzicht__table-wrapper">
-            <table class="qndrs-telraam-inzicht__table">
+        <p class="qndrs-traffic-display-for-telraam__table-caption"><?php echo esc_html($caption); ?></p>
+        <div class="qndrs-traffic-display-for-telraam__table-wrapper">
+            <table class="qndrs-traffic-display-for-telraam__table">
                 <caption><?php echo esc_html($caption); ?></caption>
                 <thead>
                     <tr>
-                        <th scope="col"><?php esc_html_e('Time', 'qndrs-telraam-inzicht'); ?></th>
-                        <th scope="col"><?php esc_html_e('Pedestrians', 'qndrs-telraam-inzicht'); ?></th>
-                        <th scope="col"><?php esc_html_e('Two-wheelers', 'qndrs-telraam-inzicht'); ?></th>
-                        <th scope="col"><?php esc_html_e('Cars', 'qndrs-telraam-inzicht'); ?></th>
-                        <th scope="col"><?php esc_html_e('Heavy vehicles', 'qndrs-telraam-inzicht'); ?></th>
-                        <th scope="col"><?php esc_html_e('Night', 'qndrs-telraam-inzicht'); ?></th>
-                        <th scope="col"><?php esc_html_e('Uptime', 'qndrs-telraam-inzicht'); ?></th>
+                        <th scope="col"><?php esc_html_e('Time', 'qndrs-traffic-display-for-telraam'); ?></th>
+                        <th scope="col"><?php esc_html_e('Pedestrians', 'qndrs-traffic-display-for-telraam'); ?></th>
+                        <th scope="col"><?php esc_html_e('Two-wheelers', 'qndrs-traffic-display-for-telraam'); ?></th>
+                        <th scope="col"><?php esc_html_e('Cars', 'qndrs-traffic-display-for-telraam'); ?></th>
+                        <th scope="col"><?php esc_html_e('Heavy vehicles', 'qndrs-traffic-display-for-telraam'); ?></th>
+                        <th scope="col"><?php esc_html_e('Night', 'qndrs-traffic-display-for-telraam'); ?></th>
+                        <th scope="col"><?php esc_html_e('Uptime', 'qndrs-traffic-display-for-telraam'); ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -306,7 +306,7 @@ final class Shortcodes
     private static function render_time(string $raw_time): string
     {
         if ('' === $raw_time) {
-            return esc_html__('Unknown', 'qndrs-telraam-inzicht');
+            return esc_html__('Unknown', 'qndrs-traffic-display-for-telraam');
         }
 
         $timestamp = strtotime($raw_time);
@@ -328,7 +328,7 @@ final class Shortcodes
     private static function render_error(string $message): string
     {
         return sprintf(
-            '<div class="qndrs-telraam-inzicht qndrs-telraam-inzicht--error" role="alert" aria-live="polite"><p>%s</p></div>',
+            '<div class="qndrs-traffic-display-for-telraam qndrs-traffic-display-for-telraam--error" role="alert" aria-live="polite"><p>%s</p></div>',
             esc_html($message)
         );
     }
@@ -355,13 +355,13 @@ final class Shortcodes
     private static function format_uptime(?float $uptime): string
     {
         if (null === $uptime) {
-            return __('Unknown', 'qndrs-telraam-inzicht');
+            return __('Unknown', 'qndrs-traffic-display-for-telraam');
         }
 
         if ($uptime <= 1.0) {
             return sprintf(
                 /* translators: %s: uptime percentage. */
-                __('%s%%', 'qndrs-telraam-inzicht'),
+                __('%s%%', 'qndrs-traffic-display-for-telraam'),
                 number_format_i18n($uptime * 100, 1)
             );
         }

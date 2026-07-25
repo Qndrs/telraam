@@ -1,4 +1,4 @@
-.qndrs-telraam-inzicht {
+.qndrs-traffic-display-for-telraam {
     --qndrs-telraam-color-text: #17202a;
     --qndrs-telraam-color-muted: #5c6670;
     --qndrs-telraam-color-border: #d9e1e8;
@@ -21,13 +21,13 @@
     container-type: inline-size;
 }
 
-.qndrs-telraam-inzicht *,
-.qndrs-telraam-inzicht *::before,
-.qndrs-telraam-inzicht *::after {
+.qndrs-traffic-display-for-telraam *,
+.qndrs-traffic-display-for-telraam *::before,
+.qndrs-traffic-display-for-telraam *::after {
     box-sizing: inherit;
 }
 
-.qndrs-telraam-inzicht__screen-reader-text {
+.qndrs-traffic-display-for-telraam__screen-reader-text {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -39,7 +39,7 @@
     border: 0;
 }
 
-.qndrs-telraam-inzicht__header {
+.qndrs-traffic-display-for-telraam__header {
     display: flex;
     flex-wrap: wrap;
     align-items: end;
@@ -48,36 +48,36 @@
     margin-block-end: 1.25rem;
 }
 
-.qndrs-telraam-inzicht__header h2,
-.qndrs-telraam-inzicht__summary-section h3 {
+.qndrs-traffic-display-for-telraam__header h2,
+.qndrs-traffic-display-for-telraam__summary-section h3 {
     margin: 0;
     color: inherit;
     line-height: 1.2;
 }
 
-.qndrs-telraam-inzicht__header h2 {
+.qndrs-traffic-display-for-telraam__header h2 {
     font-size: clamp(1.35rem, 2vw, 1.75rem);
 }
 
-.qndrs-telraam-inzicht__summary-section h3 {
+.qndrs-traffic-display-for-telraam__summary-section h3 {
     margin-block-end: 0.75rem;
     font-size: 1rem;
 }
 
-.qndrs-telraam-inzicht__meta {
+.qndrs-traffic-display-for-telraam__meta {
     margin: 0;
     color: var(--qndrs-telraam-color-muted);
     font-size: 0.95rem;
 }
 
-.qndrs-telraam-inzicht__summary {
+.qndrs-traffic-display-for-telraam__summary {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 0.75rem;
     margin: 0;
 }
 
-.qndrs-telraam-inzicht__summary-item {
+.qndrs-traffic-display-for-telraam__summary-item {
     min-width: 0;
     padding: 1rem;
     background: var(--qndrs-telraam-color-surface-soft);
@@ -85,7 +85,7 @@
     border-radius: calc(var(--qndrs-telraam-radius) - 4px);
 }
 
-.qndrs-telraam-inzicht__summary-item dt {
+.qndrs-traffic-display-for-telraam__summary-item dt {
     margin: 0 0 0.35rem;
     color: var(--qndrs-telraam-color-muted);
     font-size: 0.82rem;
@@ -93,7 +93,7 @@
     line-height: 1.25;
 }
 
-.qndrs-telraam-inzicht__summary-item dd {
+.qndrs-traffic-display-for-telraam__summary-item dd {
     margin: 0;
     font-size: 1.75rem;
     font-size: clamp(1.45rem, 8cqi, 2rem);
@@ -103,7 +103,7 @@
     white-space: nowrap;
 }
 
-.qndrs-telraam-inzicht__summary-item--uptime {
+.qndrs-traffic-display-for-telraam__summary-item--uptime {
     grid-column: 1 / -1;
     display: flex;
     align-items: center;
@@ -114,18 +114,18 @@
     border-color: transparent;
 }
 
-.qndrs-telraam-inzicht__summary-item--uptime dt {
+.qndrs-traffic-display-for-telraam__summary-item--uptime dt {
     margin: 0;
     color: var(--qndrs-telraam-color-accent);
 }
 
-.qndrs-telraam-inzicht__summary-item--uptime dd {
+.qndrs-traffic-display-for-telraam__summary-item--uptime dd {
     color: var(--qndrs-telraam-color-accent);
     font-size: 0.95rem;
     font-weight: 700;
 }
 
-.qndrs-telraam-inzicht__table-wrapper {
+.qndrs-traffic-display-for-telraam__table-wrapper {
     max-width: 100%;
     margin-block-start: 0;
     overflow-x: auto;
@@ -133,7 +133,7 @@
     border-radius: calc(var(--qndrs-telraam-radius) - 4px);
 }
 
-.qndrs-telraam-inzicht__table-caption {
+.qndrs-traffic-display-for-telraam__table-caption {
     margin: 1.25rem 0 0;
     padding: 0.75rem 1rem;
     color: var(--qndrs-telraam-color-muted);
@@ -145,7 +145,7 @@
     line-height: 1.45;
 }
 
-.qndrs-telraam-inzicht__table {
+.qndrs-traffic-display-for-telraam__table {
     width: 100%;
     min-width: 42rem;
     margin: 0;
@@ -154,7 +154,7 @@
     font-size: 0.92rem;
 }
 
-.qndrs-telraam-inzicht__table caption {
+.qndrs-traffic-display-for-telraam__table caption {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -166,8 +166,8 @@
     white-space: nowrap;
 }
 
-.qndrs-telraam-inzicht__table th,
-.qndrs-telraam-inzicht__table td {
+.qndrs-traffic-display-for-telraam__table th,
+.qndrs-traffic-display-for-telraam__table td {
     padding: 0.7rem 1rem;
     border: 0;
     border-block-start: 1px solid var(--qndrs-telraam-color-border);
@@ -176,12 +176,12 @@
     white-space: nowrap;
 }
 
-.qndrs-telraam-inzicht__table th:first-child,
-.qndrs-telraam-inzicht__table td:first-child {
+.qndrs-traffic-display-for-telraam__table th:first-child,
+.qndrs-traffic-display-for-telraam__table td:first-child {
     text-align: left;
 }
 
-.qndrs-telraam-inzicht__table thead th {
+.qndrs-traffic-display-for-telraam__table thead th {
     color: var(--qndrs-telraam-color-muted);
     background: var(--qndrs-telraam-color-surface-soft);
     font-size: 0.78rem;
@@ -190,72 +190,72 @@
     text-transform: uppercase;
 }
 
-.qndrs-telraam-inzicht__table tbody th {
+.qndrs-traffic-display-for-telraam__table tbody th {
     color: var(--qndrs-telraam-color-text);
     font-weight: 600;
 }
 
-.qndrs-telraam-inzicht__table tbody tr:nth-child(even) {
+.qndrs-traffic-display-for-telraam__table tbody tr:nth-child(even) {
     background: rgba(246, 248, 250, 0.65);
 }
 
-.qndrs-telraam-inzicht__empty,
-.qndrs-telraam-inzicht--error {
+.qndrs-traffic-display-for-telraam__empty,
+.qndrs-traffic-display-for-telraam--error {
     color: var(--qndrs-telraam-color-muted);
 }
 
-.qndrs-telraam-inzicht--error {
+.qndrs-traffic-display-for-telraam--error {
     border-color: #d63638;
     box-shadow: none;
 }
 
 @media (max-width: 720px) {
-    .qndrs-telraam-inzicht__header {
+    .qndrs-traffic-display-for-telraam__header {
         display: block;
     }
 
-    .qndrs-telraam-inzicht__meta {
+    .qndrs-traffic-display-for-telraam__meta {
         margin-block-start: 0.4rem;
     }
 
 }
 
 @container (max-width: 52rem) {
-    .qndrs-telraam-inzicht__summary {
+    .qndrs-traffic-display-for-telraam__summary {
         grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 }
 
 @container (max-width: 38rem) {
-    .qndrs-telraam-inzicht__summary {
+    .qndrs-traffic-display-for-telraam__summary {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
 
 @container (max-width: 26rem) {
-    .qndrs-telraam-inzicht__summary {
+    .qndrs-traffic-display-for-telraam__summary {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
 @container (max-width: 18rem) {
-    .qndrs-telraam-inzicht__summary {
+    .qndrs-traffic-display-for-telraam__summary {
         grid-template-columns: 1fr;
     }
 }
 
 @media (max-width: 420px) {
-    .qndrs-telraam-inzicht {
+    .qndrs-traffic-display-for-telraam {
         padding: 1rem;
     }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-    .qndrs-telraam-inzicht__summary-item {
+    .qndrs-traffic-display-for-telraam__summary-item {
         transition: border-color 160ms ease, transform 160ms ease;
     }
 
-    .qndrs-telraam-inzicht__summary-item:hover {
+    .qndrs-traffic-display-for-telraam__summary-item:hover {
         border-color: var(--qndrs-telraam-color-accent);
         transform: translateY(-1px);
     }

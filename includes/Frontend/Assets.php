@@ -18,7 +18,7 @@ if (! defined('ABSPATH')) {
  */
 final class Assets
 {
-    private const STYLE_HANDLE = 'qndrs-telraam-inzicht';
+    private const STYLE_HANDLE = 'qndrs-traffic-display-for-telraam';
 
     /**
      * Register frontend asset hooks.

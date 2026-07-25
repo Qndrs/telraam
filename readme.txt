@@ -1,10 +1,10 @@
-=== Qndrs Telraam Inzicht ===
+=== Qndrs Traffic Display for Telraam ===
 Contributors: qndrs
-Tags: telraam, traffic, statistics, mobility, shortcode
+Tags: traffic, statistics, mobility, shortcode, data
 Requires at least: 6.5
 Tested up to: 7.0
 Requires PHP: 8.3
-Stable tag: 0.3.2
+Stable tag: 0.3.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Display Telraam traffic statistics on your WordPress website using a shortcode.
 
 == Description ==
 
-Qndrs Telraam Inzicht displays traffic statistics from the Telraam API on a WordPress website.
+Qndrs Traffic Display for Telraam displays traffic statistics from the Telraam API on a WordPress website.
 
 The plugin currently provides a shortcode for showing traffic totals for a Telraam segment. It uses the WordPress HTTP API for requests and WordPress transients for caching, so Telraam API limits are respected.
 
@@ -42,7 +42,7 @@ Customize or visually hide the plugin heading:
 
 `[qndrs_telraam_segment title=""]`
 
-The plugin requires a Telraam API token. You can configure the token and default segment settings in Settings > Qndrs Telraam Inzicht.
+The plugin requires a Telraam API token. You can configure the token and default segment settings in Settings > Qndrs Traffic Display for Telraam.
 
 The settings page includes an API connection test. The test uses the saved token and default segment ID, but never displays the token.
 
@@ -72,9 +72,9 @@ This plugin is not affiliated with or endorsed by Telraam. Telraam API use is su
 
 == Installation ==
 
-1. Upload the plugin folder to `/wp-content/plugins/qndrs-telraam-inzicht`.
-2. Activate Qndrs Telraam Inzicht through the WordPress Plugins screen.
-3. Go to Settings > Qndrs Telraam Inzicht.
+1. Upload the plugin folder to `/wp-content/plugins/qndrs-traffic-display-for-telraam`.
+2. Activate Qndrs Traffic Display for Telraam through the WordPress Plugins screen.
+3. Go to Settings > Qndrs Traffic Display for Telraam.
 4. Enter your Telraam API token.
 5. Configure a default Telraam segment ID and cache duration.
 6. Use the API connection test to verify the token and segment.
@@ -104,9 +104,17 @@ Not yet. This is planned for a later version.
 
 = Is the plugin translation-ready? =
 
-Yes. The plugin uses the `qndrs-telraam-inzicht` text domain and is prepared for WordPress.org language packs.
+Yes. The plugin uses the `qndrs-traffic-display-for-telraam` text domain and is prepared for WordPress.org language packs.
 
 == Changelog ==
+
+= 0.3.3 =
+
+* Renamed the plugin to Qndrs Traffic Display for Telraam for clearer third-party service naming.
+* Changed the plugin slug and text domain to `qndrs-traffic-display-for-telraam`.
+* Removed the private GitHub Plugin URI from the plugin header.
+* Removed packaged Dutch `.po` and `.mo` files in favor of WordPress.org language packs.
+* Changed table output to show the newest traffic rows first.
 
 = 0.3.2 =
 
@@ -114,7 +122,6 @@ Yes. The plugin uses the `qndrs-telraam-inzicht` text domain and is prepared for
 * Improved Telraam API rate-limit handling during cold-cache page renders.
 * Refined responsive summary card breakpoints for narrow and wide containers.
 * Added a `title` shortcode attribute, including `title=""` to visually hide the plugin heading.
-* Changed table output to show the newest traffic rows first.
 
 = 0.3.1 =
 

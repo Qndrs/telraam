@@ -1,8 +1,8 @@
-# Qndrs Telraam Inzicht - Projectplan
+# Qndrs Traffic Display for Telraam - Projectplan
 
 ## Doel
 
-Dit project bouwt de WordPress-plugin `qndrs-telraam-inzicht`, waarmee Telraam-statistieken op een WordPress-website getoond kunnen worden.
+Dit project bouwt de WordPress-plugin `qndrs-traffic-display-for-telraam`, waarmee Telraam-statistieken op een WordPress-website getoond kunnen worden.
 
 De plugin haalt verkeersdata op uit de Telraam API, cached die data binnen WordPress, en toont begrijpelijke statistieken via shortcodes en later eventueel Gutenberg blocks.
 
@@ -25,7 +25,7 @@ Eerste concrete testcase:
 - API-token nooit op de frontend tonen
 - Plugin volledig internationaliseerbaar maken
 - Brontaal/fallback: Engels
-- Meegeleverde vertaling: Nederlands
+- Translation-ready voor WordPress.org language packs; geen `.po`/`.mo` in de review-ZIP
 
 ## Telraam API uitgangspunten
 
@@ -68,7 +68,7 @@ De eerste versie moet klein, testbaar en bruikbaar zijn.
 Voorgestelde structuur:
 
 ```text
-qndrs-telraam-inzicht.php
+qndrs-traffic-display-for-telraam.php
 includes/
   Api/
     Client.php
@@ -80,9 +80,7 @@ assets/
   css/
   js/
 languages/
-  qndrs-telraam-inzicht.pot
-  qndrs-telraam-inzicht-nl_NL.po
-  qndrs-telraam-inzicht-nl_NL.mo
+  qndrs-traffic-display-for-telraam.pot
 ```
 
 ### 2. Admin instellingen
@@ -181,12 +179,12 @@ De plugin wordt vanaf de MVP tweetalig opgezet.
 Uitgangspunten:
 
 - Alle zichtbare teksten worden vertaalbaar gemaakt
-- Plugin slug: `qndrs-telraam-inzicht`
-- Textdomain: `qndrs-telraam-inzicht`
+- Plugin slug: `qndrs-traffic-display-for-telraam`
+- Textdomain: `qndrs-traffic-display-for-telraam`
 - Brontaal/fallback: Engels
-- Meegeleverde vertaling: Nederlands (`nl_NL`)
-- Vertaalbestanden in `languages/`
-- Plugin header bevat `Text Domain: qndrs-telraam-inzicht` en `Domain Path: /languages`
+- Geen meegeleverde `.po`/`.mo` in de WordPress.org package; vertalingen lopen via translate.wordpress.org/language packs.
+- POT-template in `languages/`
+- Plugin header bevat `Text Domain: qndrs-traffic-display-for-telraam` en `Domain Path: /languages`
 - Geen hardcoded Nederlandse of Engelse frontend/admin-strings zonder vertaalfunctie
 
 WordPress functies:
@@ -208,7 +206,7 @@ Voorbeeld:
 
 ```php
 sprintf(
-    esc_html__( 'Showing traffic data for segment %s.', 'qndrs-telraam-inzicht' ),
+    esc_html__( 'Showing traffic data for segment %s.', 'qndrs-traffic-display-for-telraam' ),
     esc_html( $segment_id )
 );
 ```
@@ -326,7 +324,7 @@ Regels om expliciet te bewaken:
 - Main plugin header blijft de bron voor pluginnaam, versie en runtime requirements
 - `Stable tag` moet overeenkomen met de pluginversie wanneer er een officiële release wordt gemaakt
 - Nieuwe WordPress.org plugins moeten geen `Stable Tag: trunk` gebruiken
-- Pluginmap bij distributie: `qndrs-telraam-inzicht`
+- Pluginmap bij distributie: `qndrs-traffic-display-for-telraam`
 - Alle code, assets en dependencies moeten GPLv2-or-later compatibel zijn
 - Geen tracking of externe API-calls zonder duidelijke uitleg en functionele noodzaak
 - Geen API-token, secrets of persoonlijke testdata in repository, logs, screenshots of readme
@@ -357,7 +355,7 @@ De plugin moet in documentatie vermelden:
 
 ## Eerste implementatiestappen
 
-1. Plugin bootstrap maken in `qndrs-telraam-inzicht.php`
+1. Plugin bootstrap maken in `qndrs-traffic-display-for-telraam.php`
 2. Admin settings page maken
 3. API client maken
 4. Transient caching toevoegen
@@ -379,7 +377,7 @@ De plugin moet in documentatie vermelden:
 - Frontend-layout prioriteert nu inhoudelijk: verkeerstellingen zijn primair; uptime is een kleine datakwaliteitsindicatie, geen gelijkwaardige hoofdstatistiek.
 - Grote uur-tabel voorlopig niet pagineren. De table view ondersteunt nu een `rows` attribuut (`rows="24"` standaard, `rows="all"` voor alles) en volledige uurdata blijft een detailweergave.
 - Frontend-output moet netjes renderen zonder template-inspringing in de HTML-output; timestamps moeten als leesbare lokale datum/tijd met machineleesbaar `<time datetime="">` worden getoond.
-- Frontend basisstijl gebruikt gescopete CSS onder `.qndrs-telraam-inzicht`, met CSS-variabelen voor latere theming.
+- Frontend basisstijl gebruikt gescopete CSS onder `.qndrs-traffic-display-for-telraam`, met CSS-variabelen voor latere theming.
 - Frontend summary cards moeten container-responsief blijven, zodat shortcodes ook in sidebars bruikbaar blijven.
 - Brede tegels moeten weer over de volledige beschikbare breedte vullen; smalle containers gebruiken expliciete container-breakpoints naar 3, 2 en 1 kolom.
 - Frontend labels moeten kort genoeg blijven voor sidebarplaatsing; huidige korte labels: "Telraam" en "Uptime".

@@ -1,16 +1,16 @@
 <?php
 /**
- * Plugin Name: Qndrs Telraam Inzicht
- * Plugin URI: https://github.com/Qndrs/telraam
+ * Plugin Name: Qndrs Traffic Display for Telraam
+ * Plugin URI: https://qndrs.nl
  * Description: Display Telraam traffic statistics on your WordPress website.
- * Version: 0.3.2
+ * Version: 0.3.3
  * Requires at least: 6.5
  * Requires PHP: 8.3
  * Author: Qndrs
  * Author URI: https://qndrs.nl
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: qndrs-telraam-inzicht
+ * Text Domain: qndrs-traffic-display-for-telraam
  * Domain Path: /languages
  *
  * @package Qndrs_Telraam_Inzicht
@@ -22,7 +22,7 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
-define('QNDRS_TELRAAM_INZICHT_VERSION', '0.3.2');
+define('QNDRS_TELRAAM_INZICHT_VERSION', '0.3.3');
 define('QNDRS_TELRAAM_INZICHT_MINIMUM_PHP_VERSION', '8.3.0');
 define('QNDRS_TELRAAM_INZICHT_PLUGIN_FILE', __FILE__);
 define('QNDRS_TELRAAM_INZICHT_PLUGIN_DIR', plugin_dir_path(__FILE__));
@@ -41,12 +41,12 @@ function qndrs_telraam_inzicht_activate(): void
             esc_html(
                 sprintf(
                     /* translators: 1: required PHP version, 2: current PHP version. */
-                    __('Qndrs Telraam Inzicht requires PHP %1$s or higher. Your server is running PHP %2$s.', 'qndrs-telraam-inzicht'),
+                    __('Qndrs Traffic Display for Telraam requires PHP %1$s or higher. Your server is running PHP %2$s.', 'qndrs-traffic-display-for-telraam'),
                     QNDRS_TELRAAM_INZICHT_MINIMUM_PHP_VERSION,
                     PHP_VERSION
                 )
             ),
-            esc_html__('Qndrs Telraam Inzicht activation failed', 'qndrs-telraam-inzicht'),
+            esc_html__('Qndrs Traffic Display for Telraam activation failed', 'qndrs-traffic-display-for-telraam'),
             [
                 'back_link' => true,
             ]
@@ -70,7 +70,7 @@ function qndrs_telraam_inzicht_php_version_notice(): void
         esc_html(
             sprintf(
                 /* translators: 1: required PHP version, 2: current PHP version. */
-                __('Qndrs Telraam Inzicht requires PHP %1$s or higher. Your server is running PHP %2$s. The plugin has not been loaded.', 'qndrs-telraam-inzicht'),
+                __('Qndrs Traffic Display for Telraam requires PHP %1$s or higher. Your server is running PHP %2$s. The plugin has not been loaded.', 'qndrs-traffic-display-for-telraam'),
                 QNDRS_TELRAAM_INZICHT_MINIMUM_PHP_VERSION,
                 PHP_VERSION
             )

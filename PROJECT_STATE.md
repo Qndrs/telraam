@@ -1,12 +1,12 @@
-# Qndrs Telraam Inzicht - Projectstate
+# Qndrs Traffic Display for Telraam - Projectstate
 
 Laatste update: 2026-07-25
 
 ## Korte status
 
-`qndrs-telraam-inzicht` is functioneel MVP-klaar en de eerste WordPress.org review-submission is ingediend.
+`qndrs-traffic-display-for-telraam` is functioneel MVP-klaar. De eerste WordPress.org submission onder de oude naam is gepend; reviewfixes worden nu verwerkt met de nieuwe naam `Qndrs Traffic Display for Telraam`.
 
-De plugin toont Telraam verkeersstatistieken via shortcode, gebruikt de WordPress HTTP API voor Telraam API-calls, cached responses met transients, heeft een compacte adminpagina, is internationaliseerbaar opgezet en heeft een geteste Nederlandse vertaling als ontwikkelbestand.
+De plugin toont Telraam verkeersstatistieken via shortcode, gebruikt de WordPress HTTP API voor Telraam API-calls, cached responses met transients, heeft een compacte adminpagina en is internationaliseerbaar opgezet voor WordPress.org language packs.
 
 De repository blijft voorlopig private totdat de WordPress.org-review is afgerond.
 
@@ -16,15 +16,15 @@ De repository blijft voorlopig private totdat de WordPress.org-review is afgeron
 - Remote: `https://github.com/Qndrs/telraam.git`
 - Branch: `main`
 - Laatste opgeslagen state-commit vóór deze wijzigingsronde: `6355802 Record WordPress.org submission state`
-- Huidige werkversie: `0.3.2`
-- Werkboom was schoon na commit/push van de MVP/publicatie-afronding.
+- Huidige werkversie: `0.3.3`
+- Werkboom bevat reviewfixes voor WordPress.org: nieuwe naam/slug/textdomain, verwijderde private Plugin URI en verwijderde `.po/.mo` bestanden.
 
 ## Plugin-identiteit
 
-- Pluginnaam: `Qndrs Telraam Inzicht`
-- Slug/mapnaam voor distributie: `qndrs-telraam-inzicht`
-- Hoofdbestand: `qndrs-telraam-inzicht.php`
-- Textdomain: `qndrs-telraam-inzicht`
+- Pluginnaam: `Qndrs Traffic Display for Telraam`
+- Slug/mapnaam voor distributie: `qndrs-traffic-display-for-telraam`
+- Hoofdbestand: `qndrs-traffic-display-for-telraam.php`
+- Textdomain: `qndrs-traffic-display-for-telraam`
 - Licentie: GPL-2.0-or-later
 - Minimum PHP: 8.3
 - Requires at least: WordPress 6.5
@@ -57,11 +57,11 @@ Aanwezig en getest:
 - Table-output wordt van recent naar oud gesorteerd, zodat de standaard `rows="24"` de meest recente regels toont.
 - Telraam S2 nachtverkeer wordt als aparte categorie getoond en niet bij auto's of zwaar verkeer opgeteld.
 - Frontend HTML gebruikt gelabelde secties, headings, `<time>`, tabelcaption en veilige escaping.
-- Frontend CSS is gescoped onder `.qndrs-telraam-inzicht` en container-responsief.
+- Frontend CSS is gescoped onder `.qndrs-traffic-display-for-telraam` en container-responsief.
 - Frontend shadow-variabele staat standaard op `none`; latere stijlkeuzes kunnen dezelfde variabele gebruiken voor presets zoals skeleton/light/night.
 - Admin CSS is gescoped onder `.qndrs-telraam-admin`.
 - Alle zichtbare strings zijn vertaalbaar gemaakt.
-- Nederlands (`nl_NL`) is aanwezig als ontwikkelvertaling.
+- Runtime-vertalingen lopen via WordPress.org language packs; `.po/.mo` bestanden worden niet meegeleverd.
 
 ## Geteste situaties
 
@@ -73,13 +73,15 @@ Bevestigd op testomgeving en externe installatie:
 - Foutmeldingen bij ontbrekend token werken op frontend en admin.
 - Cache wissen werkt.
 - Shortcode met standaardtitel werkt.
+- Standaard zichtbare shortcode-heading is voor reviewveiligheid gewijzigd naar `Traffic data`.
 - Shortcode met `title="..."` toont de aangepaste titel.
 - Shortcode met `title=""` verbergt de zichtbare plugin-heading.
 - Tabelsortering recent naar oud is gedeployed naar de testsite en via WP-CLI gecontroleerd.
 - Frontend shadow-default `--qndrs-telraam-shadow: none` is gedeployed naar de testsite.
-- ZIP-installatie van `0.3.2` werkt.
+- ZIP-installatie van `0.3.2` werkte vóór de reviewfixes.
 - Plugin Check was groen op de testsite.
 - Plugin Check opnieuw gedraaid na publicatie-readme en versie-sync: groen.
+- Plugin Check opnieuw gedraaid op de hernoemde plugin `qndrs-traffic-display-for-telraam`: groen.
 - PHP lint op gewijzigde pluginbestanden is groen.
 
 Belangrijk diagnosepunt uit test:
@@ -89,15 +91,15 @@ Belangrijk diagnosepunt uit test:
 ## Distributie
 
 - Lokale distributie-ZIP's staan buiten de repo in `D:\_qndrs\Telraam-plugin\pub`
-- Laatste gemaakte submission-ZIP: `D:\_qndrs\Telraam-plugin\pub\qndrs-telraam-inzicht.zip`
-- ZIP-mapstructuur: `qndrs-telraam-inzicht/`
+- Nieuwe submission-ZIP is gemaakt als `D:\_qndrs\Telraam-plugin\pub\qndrs-traffic-display-for-telraam.zip`
+- ZIP-mapstructuur: `qndrs-traffic-display-for-telraam/`
 - ZIP bevat het hoofdpluginbestand.
 - ZIP sluit projectdocumentatie en gitdata uit.
-- Review-ZIP controle: 22 entries, hoofdpluginbestand aanwezig, `readme.txt` aanwezig, versieheader `0.3.2`, stable tag `0.3.2`, External services-sectie aanwezig.
+- Nieuwe review-ZIP is gemaakt: 20 entries, rootmap `qndrs-traffic-display-for-telraam/`, hoofdpluginbestand aanwezig, `readme.txt` aanwezig, geen `.po/.mo`, geen projectdocs/gitdata, versieheader `0.3.3`, stable tag `0.3.3`, textdomain `qndrs-traffic-display-for-telraam`, geen `Plugin URI`, External services-sectie aanwezig.
 - `.gitignore` houdt lokale ZIP-bestanden en een eventuele `pub/` map buiten git.
 - `.gitattributes` sluit `PROJECT_PLAN.md`, `PROJECT_STATE.md`, `.gitattributes` en lokale release-zips uit bij `git archive`.
 
-De submission-ZIP `qndrs-telraam-inzicht.zip` is ingediend voor WordPress.org review.
+De nieuwe gewenste permalink voor reply aan WordPress.org is `qndrs-traffic-display-for-telraam`.
 
 ## WordPress.org-publicatievoorbereiding
 
@@ -131,13 +133,11 @@ Publicatie-readiness:
 - `readme.txt` bevat nu een expliciete `External services`-sectie voor Telraam.
 - Telraam is als derde partij gedocumenteerd met service-, API-, terms-, privacy- en datalicentielinks.
 
-Nog te doen na submission:
+Nog te doen voor de volgende reviewronde:
 
-1. Wachten op feedback van het WordPress.org plugin review team.
-2. Eventuele reviewfeedback verwerken in GitHub.
+1. Nieuwe ZIP uploaden via de WordPress.org Add Your Plugin-pagina.
+2. Reply sturen in dezelfde reviewmail met gewenste permalink `qndrs-traffic-display-for-telraam`.
 3. Bij goedkeuring SVN `trunk` en `tags/{version}` vullen volgens WordPress.org releaseflow.
-4. Controleren of screenshots wenselijk zijn voor de WordPress.org pluginpagina.
-5. Daarna repository publiek zetten wanneer de review/publicatie stabiel is.
 
 ## Telraam-documentatie die relevant blijft
 
