@@ -62,6 +62,10 @@ Aanwezig en getest:
 - Admin CSS is gescoped onder `.qndrs-telraam-admin`.
 - Alle zichtbare strings zijn vertaalbaar gemaakt.
 - Runtime-vertalingen lopen via WordPress.org language packs; `.po/.mo` bestanden worden niet meegeleverd.
+- Voor lokale/testsite-NL is buiten de pluginpackage een language pack geplaatst:
+  - `D:\_qndrs\Telraam-plugin\pub\languages\qndrs-traffic-display-for-telraam-nl_NL.po`
+  - `D:\_qndrs\Telraam-plugin\pub\languages\qndrs-traffic-display-for-telraam-nl_NL.mo`
+  - testsitepad: `wp-content/languages/plugins/qndrs-traffic-display-for-telraam-nl_NL.mo`
 
 ## Geteste situaties
 
@@ -82,6 +86,7 @@ Bevestigd op testomgeving en externe installatie:
 - Plugin Check was groen op de testsite.
 - Plugin Check opnieuw gedraaid na publicatie-readme en versie-sync: groen.
 - Plugin Check opnieuw gedraaid op de hernoemde plugin `qndrs-traffic-display-for-telraam`: groen.
+- Handmatige NL language pack voor de nieuwe textdomain getest op de testsite: `Traffic totals` wordt `Verkeerstotalen`, `Traffic data` wordt `Verkeersdata`.
 - PHP lint op gewijzigde pluginbestanden is groen.
 
 Belangrijk diagnosepunt uit test:
@@ -154,6 +159,7 @@ Nog te doen voor de volgende reviewronde:
 - Geen Composer-dependency in de MVP.
 - Geen PSR-7 dependency; WordPress HTTP API is voldoende.
 - Geen `load_plugin_textdomain()` call; WordPress.org language packs krijgen voorrang.
+- `.po/.mo` bestanden blijven buiten de WordPress.org review-ZIP; lokale taaltests gebruiken `wp-content/languages/plugins/`.
 - Shortcode-first; Gutenberg block pas later.
 - Uptime blijft een kleine datakwaliteitsindicator, niet een hoofdstatistiek.
 - Nachtverkeer is aparte Telraam S2-categorie.
