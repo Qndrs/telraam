@@ -34,7 +34,7 @@ Limit table rows:
 
 `[qndrs_telraam_segment id="9000010390" days="7" view="table" rows="24"]`
 
-Use `rows="all"` to show all returned rows. The default is `24`.
+Table rows are shown from newest to oldest. Use `rows="all"` to show all returned rows. The default is `24`.
 
 Customize or visually hide the plugin heading:
 
@@ -114,6 +114,7 @@ Yes. The plugin uses the `qndrs-telraam-inzicht` text domain and is prepared for
 * Improved Telraam API rate-limit handling during cold-cache page renders.
 * Refined responsive summary card breakpoints for narrow and wide containers.
 * Added a `title` shortcode attribute, including `title=""` to visually hide the plugin heading.
+* Changed table output to show the newest traffic rows first.
 
 = 0.3.1 =
 

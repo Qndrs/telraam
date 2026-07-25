@@ -250,6 +250,16 @@ final class Shortcodes
             return '<p class="qndrs-telraam-inzicht__empty">' . esc_html__('No traffic rows were returned by the Telraam API.', 'qndrs-telraam-inzicht') . '</p>';
         }
 
+        usort(
+            $rows,
+            static function (array $first, array $second): int {
+                $first_timestamp = strtotime($first['time']) ?: 0;
+                $second_timestamp = strtotime($second['time']) ?: 0;
+
+                return $second_timestamp <=> $first_timestamp;
+            }
+        );
+
         $visible_rows = null === $rows_limit ? $rows : array_slice($rows, 0, $rows_limit);
         $caption = self::format_table_caption($segment_id, $days, count($visible_rows), count($rows));
 

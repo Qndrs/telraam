@@ -7,7 +7,7 @@
     --qndrs-telraam-color-accent: #1d6f8f;
     --qndrs-telraam-color-accent-soft: #e8f4f7;
     --qndrs-telraam-radius: 14px;
-    --qndrs-telraam-shadow: 0 10px 30px rgba(23, 32, 42, 0.08);
+    --qndrs-telraam-shadow: none;
 
     box-sizing: border-box;
     max-width: 100%;

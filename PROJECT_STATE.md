@@ -15,7 +15,7 @@ De repository blijft voorlopig private totdat de WordPress.org-review is afgeron
 - Lokale repo: `D:\_qndrs\Telraam-plugin\telraam`
 - Remote: `https://github.com/Qndrs/telraam.git`
 - Branch: `main`
-- Laatste gepushte commit: `e3f4997 Prepare WordPress.org MVP submission`
+- Laatste opgeslagen state-commit vóór deze wijzigingsronde: `6355802 Record WordPress.org submission state`
 - Huidige werkversie: `0.3.2`
 - Werkboom was schoon na commit/push van de MVP/publicatie-afronding.
 
@@ -54,9 +54,11 @@ Aanwezig en getest:
 - `title=""` verbergt de zichtbare plugin-heading, maar behoudt een screenreader-heading voor toegankelijke structuur.
 - Summary-output met voetgangers, tweewielers, auto's, zwaar verkeer, nachtverkeer en uptime.
 - Table-output met uurregels.
+- Table-output wordt van recent naar oud gesorteerd, zodat de standaard `rows="24"` de meest recente regels toont.
 - Telraam S2 nachtverkeer wordt als aparte categorie getoond en niet bij auto's of zwaar verkeer opgeteld.
 - Frontend HTML gebruikt gelabelde secties, headings, `<time>`, tabelcaption en veilige escaping.
 - Frontend CSS is gescoped onder `.qndrs-telraam-inzicht` en container-responsief.
+- Frontend shadow-variabele staat standaard op `none`; latere stijlkeuzes kunnen dezelfde variabele gebruiken voor presets zoals skeleton/light/night.
 - Admin CSS is gescoped onder `.qndrs-telraam-admin`.
 - Alle zichtbare strings zijn vertaalbaar gemaakt.
 - Nederlands (`nl_NL`) is aanwezig als ontwikkelvertaling.
@@ -73,6 +75,8 @@ Bevestigd op testomgeving en externe installatie:
 - Shortcode met standaardtitel werkt.
 - Shortcode met `title="..."` toont de aangepaste titel.
 - Shortcode met `title=""` verbergt de zichtbare plugin-heading.
+- Tabelsortering recent naar oud is gedeployed naar de testsite en via WP-CLI gecontroleerd.
+- Frontend shadow-default `--qndrs-telraam-shadow: none` is gedeployed naar de testsite.
 - ZIP-installatie van `0.3.2` werkt.
 - Plugin Check was groen op de testsite.
 - Plugin Check opnieuw gedraaid na publicatie-readme en versie-sync: groen.
