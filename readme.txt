@@ -36,6 +36,12 @@ Limit table rows:
 
 Use `rows="all"` to show all returned rows. The default is `24`.
 
+Customize or visually hide the plugin heading:
+
+`[qndrs_telraam_segment title="Traffic in our street"]`
+
+`[qndrs_telraam_segment title=""]`
+
 The plugin requires a Telraam API token. You can configure the token and default segment settings in Settings > Qndrs Telraam Inzicht.
 
 The settings page includes an API connection test. The test uses the saved token and default segment ID, but never displays the token.
@@ -43,6 +49,24 @@ The settings page includes an API connection test. The test uses the saved token
 The saved API token can be cleared from the settings page without entering a replacement token.
 
 The settings page uses a compact card layout with token and cache actions next to the related fields.
+
+### External services
+
+This plugin connects to the Telraam API to retrieve traffic statistics for the Telraam segment configured by the site administrator or provided in a shortcode.
+
+The plugin sends an HTTPS POST request to `https://telraam-api.net/v1/reports/traffic` when cached data is not available, when the API connection test is used, or when the cache is manually refreshed. The request includes the configured Telraam API token in the `X-Api-Key` header and a JSON body containing the requested segment ID, start time, end time, report level, and report format. The plugin does not send WordPress user data or visitor data to Telraam.
+
+Traffic data returned by Telraam is displayed on the site frontend and may be cached in WordPress transients for the configured cache duration.
+
+Telraam service: https://telraam.net/
+
+Telraam API documentation: https://faq.telraam.net/en/category/2/data-interpretation-and-the-telraam-api
+
+Telraam terms of use: https://telraam.net/en/terms-of-use
+
+Telraam privacy policy: https://telraam.net/en/privacy-policy
+
+Telraam data license information: https://faq.telraam.net/en/article/9/telraam-data-license-what-can-i-do-with-the-telraam-data
 
 This plugin is not affiliated with or endorsed by Telraam. Telraam API use is subject to Telraam's own terms, rate limits, and data licensing conditions.
 
@@ -89,6 +113,7 @@ Yes. The plugin uses the `qndrs-telraam-inzicht` text domain and is prepared for
 * Added Telraam S2 night traffic counts as a separate traffic category.
 * Improved Telraam API rate-limit handling during cold-cache page renders.
 * Refined responsive summary card breakpoints for narrow and wide containers.
+* Added a `title` shortcode attribute, including `title=""` to visually hide the plugin heading.
 
 = 0.3.1 =
 

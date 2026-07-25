@@ -47,6 +47,7 @@ final class Shortcodes
                 'id' => $options['default_segment_id'],
                 'days' => (string) $options['default_days'],
                 'rows' => '24',
+                'title' => __('Telraam', 'qndrs-telraam-inzicht'),
                 'view' => 'summary',
             ],
             is_array($attributes) ? $attributes : [],
@@ -56,6 +57,7 @@ final class Shortcodes
         $segment_id = preg_replace('/[^0-9]/', '', (string) $attributes['id']) ?? '';
         $days = max(1, min(90, absint($attributes['days'])));
         $rows_limit = self::parse_rows_limit((string) $attributes['rows']);
+        $title = self::parse_title((string) $attributes['title']);
         $view = sanitize_key((string) $attributes['view']);
 
         if ('' === $segment_id) {
@@ -73,7 +75,7 @@ final class Shortcodes
             return self::render_error($report->get_error_message());
         }
 
-        return self::render_report($report, $segment_id, $days, $view, $rows_limit);
+        return self::render_report($report, $segment_id, $days, $view, $rows_limit, $title);
     }
 
     /**
@@ -91,6 +93,18 @@ final class Shortcodes
     }
 
     /**
+     * Parse the optional visible title.
+     *
+     * Empty title values hide the visible plugin heading while preserving an accessible heading.
+     */
+    private static function parse_title(string $title): ?string
+    {
+        $title = trim(wp_strip_all_tags($title));
+
+        return '' === $title ? null : $title;
+    }
+
+    /**
      * Render a report.
      *
      * @param array<string, mixed> $report Telraam API response.
@@ -98,8 +112,9 @@ final class Shortcodes
      * @param int                  $days Number of requested days.
      * @param string               $view Requested shortcode view.
      * @param int|null             $rows_limit Maximum number of table rows, or null for all rows.
+     * @param string|null          $title Visible heading text, or null to hide it visually.
      */
-    private static function render_report(array $report, string $segment_id, int $days, string $view, ?int $rows_limit): string
+    private static function render_report(array $report, string $segment_id, int $days, string $view, ?int $rows_limit, ?string $title): string
     {
         $normalized_report = (new TrafficReportNormalizer())->normalize($report);
         $rows = $normalized_report['rows'];
@@ -107,12 +122,14 @@ final class Shortcodes
         $component_id = wp_unique_id('qndrs-telraam-inzicht-');
         $heading_id = $component_id . 'heading';
         $summary_heading_id = $component_id . 'summary-heading';
+        $heading_class = null === $title ? ' class="qndrs-telraam-inzicht__screen-reader-text"' : '';
+        $heading_text = $title ?? __('Telraam', 'qndrs-telraam-inzicht');
 
         ob_start();
         ?>
         <section class="qndrs-telraam-inzicht qndrs-telraam-inzicht--<?php echo esc_attr($view); ?>" aria-labelledby="<?php echo esc_attr($heading_id); ?>">
             <header class="qndrs-telraam-inzicht__header">
-                <h2 id="<?php echo esc_attr($heading_id); ?>"><?php esc_html_e('Telraam', 'qndrs-telraam-inzicht'); ?></h2>
+                <h2 id="<?php echo esc_attr($heading_id); ?>"<?php echo $heading_class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php echo esc_html($heading_text); ?></h2>
                 <p class="qndrs-telraam-inzicht__meta">
                     <?php echo esc_html(self::format_segment_period($segment_id, $days)); ?>
                 </p>

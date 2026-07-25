@@ -386,7 +386,7 @@ De plugin moet in documentatie vermelden:
 - Telraam API rate limiting moet rekening houden met meerdere shortcodes op één koude-cache pagina; live API-calls worden binnen één PHP request gespreid en 429 krijgt één retry.
 - Telraam S2 nachtverkeer moet als aparte categorie worden getoond; niet optellen bij auto's of zwaar verkeer.
 - Later verkeer en nachtverkeer relateren aan zonsopkomst, zonsondergang en seizoen voor trends en infographics.
-- Later een `title` shortcode-attribuut toevoegen, inclusief `title=""` om de plugin-heading te verbergen wanneer de site-eigenaar zelf een titel in de editor plaatst.
+- Shortcode ondersteunt een `title` attribuut; met `title=""` wordt de plugin-heading visueel verborgen wanneer de site-eigenaar zelf een titel in de editor plaatst.
 - Mobiele tabeltitel moet buiten de horizontaal scrollende tabel blijven; native `<caption>` blijft beschikbaar voor screenreaders.
 - Admin basisstijl gebruikt gescopete CSS onder `.qndrs-telraam-admin`, met kaartlayout, veldgroepen en statusbadge.
 - Fun styling komt pas na de neutrale basisroute en moet optioneel blijven, bijvoorbeeld via style presets.
