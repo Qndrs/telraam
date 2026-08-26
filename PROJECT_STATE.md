@@ -4,7 +4,7 @@ Laatste update: 2026-08-26
 
 ## Korte status
 
-`qndrs-traffic-display-for-telraam` is functioneel MVP-klaar en versie `0.3.4` is succesvol gepubliceerd op WordPress.org. SVN `trunk` is vastgelegd in revisie `3658249`, de schone release-tag `0.3.4` met 20 bestanden in revisie `3658268` en de Qndrs-pluginiconen in revisie `3658826`. De eerdere `Access denied`-meldingen bleken veroorzaakt door de hoofdlettergevoelige WordPress.org-gebruikersnaam: committoegang hoort bij `Qndrs`, niet `qndrs`. De publieke pluginpagina staat op `https://wordpress.org/plugins/qndrs-traffic-display-for-telraam/`. De Nederlandse WordPress.org-pluginpagina en Stable Readme zijn volledig gepubliceerd (`74/74` vertaald). Het officiële Nederlandse runtime-languagepack voor versie `0.3.4` is beschikbaar; van de `63` Stable-runtimevertalingen zijn `58` goedgekeurd en hebben `5` de status `Changes requested` (`0` onvertaald, wachtend, fuzzy of met waarschuwingen).
+`qndrs-traffic-display-for-telraam` is functioneel MVP-klaar en versie `0.3.5` is succesvol gepubliceerd op WordPress.org. De releasebron staat in Git-commit `c5fc0d283f402ac06d1ebfe3f5e033a36e683288` en tag `v0.3.5`; SVN `trunk` is bijgewerkt in revisie `3666106` en de schone release-tag `0.3.5` met 20 bestanden is gepubliceerd in revisie `3666108`. De publieke WordPress.org-API toont versie `0.3.5`, `Tested up to: 7.1` en de nieuwe download. De Nederlandse Stable Readme-set staat nog op `74/74`, maar de nieuwe changelogregel voor `0.3.5` verschijnt voorlopig in het Engels. Van de `63` Stable-runtimevertalingen zijn `58` goedgekeurd en staan `5` op `Waiting`; het officiële Nederlandse runtime-languagepack is nog alleen voor versie `0.3.4` beschikbaar.
 
 De plugin toont Telraam verkeersstatistieken via shortcode, gebruikt de WordPress HTTP API voor Telraam API-calls, cached responses met transients, heeft een compacte adminpagina en is internationaliseerbaar opgezet voor WordPress.org language packs.
 
@@ -15,15 +15,15 @@ De GitHub-repository `Qndrs/telraam` is publiek; de release op WordPress.org en 
 - Lokale repo: `D:\_qndrs\Telraam-plugin\telraam`
 - Remote: `https://github.com/Qndrs/telraam.git`
 - Branch: `main`
-- Huidige HEAD: `1d7700f3941bc1a13198e689ce2c04f1035b14d1 Record language pack handling`
-- Huidige werkversie: `0.3.5` (metadata-patchrelease, nog niet gepubliceerd)
-- De tracked werkboom bevat de nog niet gecommitte wijzigingen voor de gepubliceerde versie `0.3.4` en de voorbereide compatibiliteitsrelease `0.3.5`, naast deze bijgewerkte projectstate.
+- Releasebron: `c5fc0d283f402ac06d1ebfe3f5e033a36e683288 Release version 0.3.5`; Git-tag `v0.3.5`
+- Huidige werkversie: `0.3.5` (gepubliceerd)
+- GitHub `main` en de dereferenced tag `v0.3.5` wijzen naar dezelfde releasebroncommit.
 - De werkboom bevat twee ongetrackte mappen: `includes/Api/smb/` en `includes/Api/streams/`. Deze zijn lokaal aangemaakt op 27 juli 2026, na de release-ZIP van 25 juli 2026, en zitten niet in die ZIP. Herkomst en beoogd gebruik zijn niet vastgesteld; niet committen, verwijderen of in een nieuwe distributie opnemen voordat dit is beoordeeld.
 - Tijdens de preflight voor `0.3.5` bleken oude PSR-log-testbestanden en Bootstrap-assets per ongeluk onder `.git/refs/Test` en `.git/objects/80` te staan. De vijf vervuilde bronpaden zijn zonder verwijdering verplaatst naar `D:\_qndrs\Telraam-plugin\git-recovery-quarantine-20260826`; daarna is `git fsck --full --no-reflogs` zonder fouten afgerond en werkt Git-refverwerking weer normaal.
 
 ## Projectadministratie
 
-- De centrale projectvermelding in `%ROBERT_AI_HOME%\PROJECTS.md` is op 26 augustus 2026 bijgewerkt met de publieke GitHub-repository, de gepubliceerde Nederlandse pluginpagina en het beschikbare Nederlandse runtime-languagepack.
+- De centrale projectvermelding in `%ROBERT_AI_HOME%\PROJECTS.md` is op 26 augustus 2026 bijgewerkt met release `0.3.5`, WordPress 7.1-compatibiliteit en de resterende languagepack-/vertaalactie.
 - Deze `PROJECT_STATE.md` blijft de lokale bron voor gedetailleerde status; de centrale projectindex bevat alleen de compacte status, focus en eerstvolgende stap.
 
 ## Plugin-identiteit
@@ -113,6 +113,7 @@ Belangrijk diagnosepunt uit test:
 - Lokale distributie-ZIP's staan buiten de repo in `D:\_qndrs\Telraam-plugin\pub`
 - De gecorrigeerde review-ZIP staat voor upload zonder versienummer als `D:\_qndrs\Telraam-plugin\pub\qndrs-traffic-display-for-telraam.zip`; een identieke lokale reserve staat als `qndrs-traffic-display-for-telraam-0.3.4.zip` (SHA-256 `7a7f1051b62fa0339d04237f8f41a825595900c64097118807684d2e4527936d`).
 - De lokale testkandidaat voor metadata-patchrelease `0.3.5` staat als `D:\_qndrs\Telraam-plugin\pub\qndrs-traffic-display-for-telraam-0.3.5-rc.zip` (20 bestanden, één correcte pluginroot, slash-genormaliseerde ZIP-paden, SHA-256 `951ad9afa196ac1027acf6c9d2475258ff3da2516d463e6ba490d6a07b67b5f4`). Deze kandidaat is op de WordPress 7.1-testsite door Plugin Check gecontroleerd zonder fouten en is nog niet gepubliceerd.
+- De publieke WordPress.org-ZIP voor `0.3.5` bevat exact dezelfde 20 bestanden als SVN-tag `0.3.5`, zonder uitgesloten projectdocs, gitdata of onbekende API-mappen en zonder hashverschillen per bestand. Publieke ZIP-SHA-256: `e2da975386d37651487d1e6f3e06d18b9a6f72e16becb03dce51b63938128111`.
 - ZIP-mapstructuur: `qndrs-traffic-display-for-telraam/`
 - ZIP bevat het hoofdpluginbestand.
 - ZIP sluit projectdocumentatie en gitdata uit.
@@ -161,10 +162,10 @@ Actuele publicatiestatus:
 2. De goedgekeurde versie `0.3.4` is in SVN `trunk` gepubliceerd onder revisie `3658249`.
 3. Vanuit de schone checkout `D:\_qndrs\Telraam-plugin\wordpress-org-svn-clean` is `trunk` gekopieerd naar `tags/0.3.4`; de tag bevat exact 20 bestanden en is gepubliceerd onder revisie `3658268`.
 4. De publieke pluginpagina is zichtbaar op `https://wordpress.org/plugins/qndrs-traffic-display-for-telraam/`. De Qndrs-iconen zijn in SVN-revisie `3658826` gepubliceerd; het CDN-bestand is technisch geverifieerd. Controleer na de CDN-cacheverwerking ook de visuele weergave op de pluginpagina.
-5. Op 26 augustus 2026 is op Translate.WordPress.org gecontroleerd dat de Stable-runtimevertalingen op `Translated 58`, `Changes requested 5`, `Untranslated 0`, `Waiting 0`, `Fuzzy 0` en `Warnings 0` staan. Het officiële Nederlandse languagepack voor versie `0.3.4` is gegenereerd en via `downloads.wordpress.org` beschikbaar. Verwerk of beantwoord de vijf reviewverzoeken en laat de gecorrigeerde vertalingen goedkeuren om ook de runtime-set op `63/63` te brengen.
-6. Op 26 augustus 2026 is op Translate.WordPress.org gecontroleerd dat Stable Readme volledig is goedgekeurd: `Translated 74`, met `0` onvertaalde, wachtende, fuzzy of afgekeurde strings en `0` waarschuwingen. De Nederlandse pluginpagina toont de vertaalde beschrijving, installatie, FAQ en changelog.
-7. Metadata-patchrelease `0.3.5` is lokaal voorbereid met `Tested up to: 7.1`, consistente plugin-/stable-tag-/POT-versies en een compatibiliteitsregel in de changelog. De releasekandidaat werkt op de WordPress 7.1-testsite en Plugin Check is groen. Inspecteer Git-diff en releasepayload en publiceer daarna alleen na expliciete autorisatie naar GitHub en WordPress.org SVN.
-8. Controleer na correctie van de vijf runtimevertalingen dat Stable op `Translated 63` staat en dat WordPress.org het Nederlandse languagepack opnieuw heeft gegenereerd.
+5. Na publicatie van `0.3.5` staat Stable runtime op `Translated 58`, `Waiting 5`, `Untranslated 0`, `Changes requested 0`, `Fuzzy 0` en `Warnings 0`. Development runtime staat op `Translated 58`, `Untranslated 5` en verder overal `0`. De translation-API levert nog alleen het Nederlandse languagepack voor `0.3.4`; het pakket voor `0.3.5` is nog niet gegenereerd.
+6. Stable Readme en Development Readme staan beide op `Translated 74`, met alle overige statussen op `0`. De nieuwe changelogregel `Confirmed compatibility with WordPress 7.1.` verschijnt op de Nederlandse pluginpagina nog in het Engels en is nog niet als nieuwe Readme-string in de telling zichtbaar.
+7. Metadata-patchrelease `0.3.5` is gepubliceerd vanuit Git-commit `c5fc0d2` en Git-tag `v0.3.5`. WordPress.org SVN `trunk` staat in revisie `3666106`, tag `0.3.5` in revisie `3666108`; de publieke API en pluginpagina tonen versie `0.3.5`, Tested up to `7.1` en de nieuwe changelog. De publieke ZIP is beschikbaar en exact tegen de SVN-tag gevalideerd.
+8. Laat de vijf wachtende Stable-runtimevertalingen goedkeuren, vertaal de nieuwe `0.3.5`-changelogregel zodra WordPress.org die in Stable Readme exposeert en controleer daarna generatie van het Nederlandse `0.3.5`-languagepack.
 9. Plaats na de resterende publieke controles een introductiebericht over de plugin in de Telraam-community.
 10. Gebruik voor toekomstig SVN-onderhoud de schone checkout. De oudere map `D:\_qndrs\Telraam-plugin\wordpress-org-svn` bevat lokale, onversioned CakePHP-bestanden onder `tags/0.3.4` en mag niet met brede toevoegcommando's worden gebruikt.
 
