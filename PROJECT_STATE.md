@@ -1,23 +1,30 @@
 # Qndrs Traffic Display for Telraam - Projectstate
 
-Laatste update: 2026-07-25
+Laatste update: 2026-08-26
 
 ## Korte status
 
-`qndrs-traffic-display-for-telraam` is functioneel MVP-klaar. De eerste WordPress.org submission onder de oude naam is gepend; reviewfixes worden nu verwerkt met de nieuwe naam `Qndrs Traffic Display for Telraam`.
+`qndrs-traffic-display-for-telraam` is functioneel MVP-klaar en versie `0.3.4` is succesvol gepubliceerd op WordPress.org. SVN `trunk` is vastgelegd in revisie `3658249`, de schone release-tag `0.3.4` met 20 bestanden in revisie `3658268` en de Qndrs-pluginiconen in revisie `3658826`. De eerdere `Access denied`-meldingen bleken veroorzaakt door de hoofdlettergevoelige WordPress.org-gebruikersnaam: committoegang hoort bij `Qndrs`, niet `qndrs`. De publieke pluginpagina staat op `https://wordpress.org/plugins/qndrs-traffic-display-for-telraam/`. De Nederlandse WordPress.org-pluginpagina en Stable Readme zijn volledig gepubliceerd (`74/74` vertaald). Het officiële Nederlandse runtime-languagepack voor versie `0.3.4` is beschikbaar; van de `63` Stable-runtimevertalingen zijn `58` goedgekeurd en hebben `5` de status `Changes requested` (`0` onvertaald, wachtend, fuzzy of met waarschuwingen).
 
 De plugin toont Telraam verkeersstatistieken via shortcode, gebruikt de WordPress HTTP API voor Telraam API-calls, cached responses met transients, heeft een compacte adminpagina en is internationaliseerbaar opgezet voor WordPress.org language packs.
 
-De repository blijft voorlopig private totdat de WordPress.org-review is afgerond.
+De GitHub-repository `Qndrs/telraam` is publiek; de release op WordPress.org en de Nederlandse vertaling zijn eveneens publiek beschikbaar.
 
 ## Repo
 
 - Lokale repo: `D:\_qndrs\Telraam-plugin\telraam`
 - Remote: `https://github.com/Qndrs/telraam.git`
 - Branch: `main`
-- Laatste opgeslagen state-commit vóór deze wijzigingsronde: `6355802 Record WordPress.org submission state`
-- Huidige werkversie: `0.3.3`
-- Werkboom bevat reviewfixes voor WordPress.org: nieuwe naam/slug/textdomain, verwijderde private Plugin URI en verwijderde `.po/.mo` bestanden.
+- Huidige HEAD: `1d7700f3941bc1a13198e689ce2c04f1035b14d1 Record language pack handling`
+- Huidige werkversie: `0.3.5` (metadata-patchrelease, nog niet gepubliceerd)
+- De tracked werkboom bevat de nog niet gecommitte wijzigingen voor de gepubliceerde versie `0.3.4` en de voorbereide compatibiliteitsrelease `0.3.5`, naast deze bijgewerkte projectstate.
+- De werkboom bevat twee ongetrackte mappen: `includes/Api/smb/` en `includes/Api/streams/`. Deze zijn lokaal aangemaakt op 27 juli 2026, na de release-ZIP van 25 juli 2026, en zitten niet in die ZIP. Herkomst en beoogd gebruik zijn niet vastgesteld; niet committen, verwijderen of in een nieuwe distributie opnemen voordat dit is beoordeeld.
+- Tijdens de preflight voor `0.3.5` bleken oude PSR-log-testbestanden en Bootstrap-assets per ongeluk onder `.git/refs/Test` en `.git/objects/80` te staan. De vijf vervuilde bronpaden zijn zonder verwijdering verplaatst naar `D:\_qndrs\Telraam-plugin\git-recovery-quarantine-20260826`; daarna is `git fsck --full --no-reflogs` zonder fouten afgerond en werkt Git-refverwerking weer normaal.
+
+## Projectadministratie
+
+- De centrale projectvermelding in `%ROBERT_AI_HOME%\PROJECTS.md` is op 26 augustus 2026 bijgewerkt met de publieke GitHub-repository, de gepubliceerde Nederlandse pluginpagina en het beschikbare Nederlandse runtime-languagepack.
+- Deze `PROJECT_STATE.md` blijft de lokale bron voor gedetailleerde status; de centrale projectindex bevat alleen de compacte status, focus en eerstvolgende stap.
 
 ## Plugin-identiteit
 
@@ -66,6 +73,7 @@ Aanwezig en getest:
   - `D:\_qndrs\Telraam-plugin\pub\languages\qndrs-traffic-display-for-telraam-nl_NL.po`
   - `D:\_qndrs\Telraam-plugin\pub\languages\qndrs-traffic-display-for-telraam-nl_NL.mo`
   - testsitepad: `wp-content/languages/plugins/qndrs-traffic-display-for-telraam-nl_NL.mo`
+- De menselijk beoordeelde Stable Readme-importbron staat buiten de pluginpackage als `D:\_qndrs\Telraam-plugin\pub\languages\wp-plugins-qndrs-traffic-display-for-telraam-stable-readme-nl.po`.
 
 ## Geteste situaties
 
@@ -88,26 +96,34 @@ Bevestigd op testomgeving en externe installatie:
 - Plugin Check opnieuw gedraaid op de hernoemde plugin `qndrs-traffic-display-for-telraam`: groen.
 - Handmatige NL language pack voor de nieuwe textdomain getest op de testsite: `Traffic totals` wordt `Verkeerstotalen`, `Traffic data` wordt `Verkeersdata`.
 - PHP lint op gewijzigde pluginbestanden is groen.
+- PHP lint op alle 15 tracked PHP-bestanden is voor versie `0.3.4` groen met PHP `8.4.22`.
+- Alle External services-URL's zijn op 17 augustus 2026 met redirects gecontroleerd en geven HTTP `200`; de nieuwe datalicentie-overzichtspagina staat op het officiële Telraam-hoofddomein.
+- De versie-`0.3.4`-ZIP is inhoudelijk gecontroleerd: 20 bestanden, slash-genormaliseerde paden, consistente versieheader/stable tag/POT-versie, geen oude gemelde URL en geen uitgesloten of ongetrackte bestanden.
+- Versie `0.3.4` is op `https://qndrs.training/telraam/` geactiveerd en gecontroleerd met WordPress `7.0.4`, PHP `8.4.24` en `WP_DEBUG=true`; na verwijdering van de oude pluginmap is een volledige deactiveer-/activeercyclus opnieuw groen uitgevoerd, Plugin Check is groen, de shortcode is geregistreerd en de frontend geeft HTTP `200`.
+- Op 26 augustus 2026 is bevestigd dat de plugin op `https://qndrs.training/telraam/` werkt met WordPress `7.1`. De eerste Plugin Check gaf uitsluitend `outdated_tested_upto_header`, omdat `Tested up to: 7.0` lager was dan de actuele WordPress-versie `7.1`. Na installatie van releasecandidate `0.3.5` met `Tested up to: 7.1` is Plugin Check opnieuw uitgevoerd en afgerond zonder fouten.
+- De Qndrs-iconen van 128 en 256 pixels zijn als afzonderlijke WordPress.org-assetcommit gepubliceerd in SVN-revisie `3658826`; beide iconen worden via het WordPress.org-CDN met HTTP `200` geserveerd en zijn met SHA-256 gecontroleerd tegen de centrale bron.
 
 Belangrijk diagnosepunt uit test:
 
 - Verschillende statistieken tussen twee sites bleken veroorzaakt door verschillende segment-ID's (`9000010390` versus `9000010300`), niet door cache of API-afwijking.
+- De eerste activatie van de hernoemde plugin gaf een fatale `Cannot redeclare function qndrs_telraam_inzicht_activate()`, omdat de oude testplugin `qndrs-telraam-inzicht` versie `0.3.2` nog actief was en dezelfde globale functies/classes laadde. De oude plugin is gedeactiveerd en daarna volledig verwijderd; versie `0.3.4` activeert vervolgens zonder fout.
 
 ## Distributie
 
 - Lokale distributie-ZIP's staan buiten de repo in `D:\_qndrs\Telraam-plugin\pub`
-- Nieuwe submission-ZIP is gemaakt als `D:\_qndrs\Telraam-plugin\pub\qndrs-traffic-display-for-telraam.zip`
+- De gecorrigeerde review-ZIP staat voor upload zonder versienummer als `D:\_qndrs\Telraam-plugin\pub\qndrs-traffic-display-for-telraam.zip`; een identieke lokale reserve staat als `qndrs-traffic-display-for-telraam-0.3.4.zip` (SHA-256 `7a7f1051b62fa0339d04237f8f41a825595900c64097118807684d2e4527936d`).
+- De lokale testkandidaat voor metadata-patchrelease `0.3.5` staat als `D:\_qndrs\Telraam-plugin\pub\qndrs-traffic-display-for-telraam-0.3.5-rc.zip` (20 bestanden, één correcte pluginroot, slash-genormaliseerde ZIP-paden, SHA-256 `951ad9afa196ac1027acf6c9d2475258ff3da2516d463e6ba490d6a07b67b5f4`). Deze kandidaat is op de WordPress 7.1-testsite door Plugin Check gecontroleerd zonder fouten en is nog niet gepubliceerd.
 - ZIP-mapstructuur: `qndrs-traffic-display-for-telraam/`
 - ZIP bevat het hoofdpluginbestand.
 - ZIP sluit projectdocumentatie en gitdata uit.
-- Nieuwe review-ZIP is gemaakt: 20 entries, rootmap `qndrs-traffic-display-for-telraam/`, hoofdpluginbestand aanwezig, `readme.txt` aanwezig, geen `.po/.mo`, geen projectdocs/gitdata, versieheader `0.3.3`, stable tag `0.3.3`, textdomain `qndrs-traffic-display-for-telraam`, geen `Plugin URI`, External services-sectie aanwezig.
+- De review-ZIP bevat 20 bestanden met rootmap `qndrs-traffic-display-for-telraam/`, hoofdpluginbestand en `readme.txt`, zonder `.po/.mo`, projectdocs/gitdata of de ongetrackte API-mappen; versieheader, stable tag en POT-versie zijn `0.3.4`.
 - `Plugin URI` is bewust weggelaten; `Author URI` blijft `https://qndrs.nl`, zodat plugin- en author-URI niet gelijk zijn.
 - `.gitignore` houdt lokale ZIP-bestanden en een eventuele `pub/` map buiten git.
 - `.gitattributes` sluit `PROJECT_PLAN.md`, `PROJECT_STATE.md`, `.gitattributes` en lokale release-zips uit bij `git archive`.
 
 De nieuwe gewenste permalink voor reply aan WordPress.org is `qndrs-traffic-display-for-telraam`.
 
-## WordPress.org-publicatievoorbereiding
+## WordPress.org-publicatie
 
 Gebruikte referenties:
 
@@ -139,18 +155,25 @@ Publicatie-readiness:
 - `readme.txt` bevat nu een expliciete `External services`-sectie voor Telraam.
 - Telraam is als derde partij gedocumenteerd met service-, API-, terms-, privacy- en datalicentielinks.
 
-Nog te doen voor de volgende reviewronde:
+Actuele publicatiestatus:
 
-1. Nieuwe ZIP uploaden via de WordPress.org Add Your Plugin-pagina.
-2. Reply sturen in dezelfde reviewmail met gewenste permalink `qndrs-traffic-display-for-telraam`.
-3. Bij goedkeuring SVN `trunk` en `tags/{version}` vullen volgens WordPress.org releaseflow.
+1. WordPress.org bevestigde dat de commitrechten aan de hoofdlettergevoelige gebruikersnaam `Qndrs` zijn gekoppeld; hiermee is de eerdere `Access denied`-blokkade opgelost.
+2. De goedgekeurde versie `0.3.4` is in SVN `trunk` gepubliceerd onder revisie `3658249`.
+3. Vanuit de schone checkout `D:\_qndrs\Telraam-plugin\wordpress-org-svn-clean` is `trunk` gekopieerd naar `tags/0.3.4`; de tag bevat exact 20 bestanden en is gepubliceerd onder revisie `3658268`.
+4. De publieke pluginpagina is zichtbaar op `https://wordpress.org/plugins/qndrs-traffic-display-for-telraam/`. De Qndrs-iconen zijn in SVN-revisie `3658826` gepubliceerd; het CDN-bestand is technisch geverifieerd. Controleer na de CDN-cacheverwerking ook de visuele weergave op de pluginpagina.
+5. Op 26 augustus 2026 is op Translate.WordPress.org gecontroleerd dat de Stable-runtimevertalingen op `Translated 58`, `Changes requested 5`, `Untranslated 0`, `Waiting 0`, `Fuzzy 0` en `Warnings 0` staan. Het officiële Nederlandse languagepack voor versie `0.3.4` is gegenereerd en via `downloads.wordpress.org` beschikbaar. Verwerk of beantwoord de vijf reviewverzoeken en laat de gecorrigeerde vertalingen goedkeuren om ook de runtime-set op `63/63` te brengen.
+6. Op 26 augustus 2026 is op Translate.WordPress.org gecontroleerd dat Stable Readme volledig is goedgekeurd: `Translated 74`, met `0` onvertaalde, wachtende, fuzzy of afgekeurde strings en `0` waarschuwingen. De Nederlandse pluginpagina toont de vertaalde beschrijving, installatie, FAQ en changelog.
+7. Metadata-patchrelease `0.3.5` is lokaal voorbereid met `Tested up to: 7.1`, consistente plugin-/stable-tag-/POT-versies en een compatibiliteitsregel in de changelog. De releasekandidaat werkt op de WordPress 7.1-testsite en Plugin Check is groen. Inspecteer Git-diff en releasepayload en publiceer daarna alleen na expliciete autorisatie naar GitHub en WordPress.org SVN.
+8. Controleer na correctie van de vijf runtimevertalingen dat Stable op `Translated 63` staat en dat WordPress.org het Nederlandse languagepack opnieuw heeft gegenereerd.
+9. Plaats na de resterende publieke controles een introductiebericht over de plugin in de Telraam-community.
+10. Gebruik voor toekomstig SVN-onderhoud de schone checkout. De oudere map `D:\_qndrs\Telraam-plugin\wordpress-org-svn` bevat lokale, onversioned CakePHP-bestanden onder `tags/0.3.4` en mag niet met brede toevoegcommando's worden gebruikt.
 
 ## Telraam-documentatie die relevant blijft
 
 - Telraam: https://telraam.net/
 - Telraam API documentatie: https://faq.telraam.net/en/category/2/data-interpretation-and-the-telraam-api
 - Telraam API tokeninformatie: https://faq.telraam.net/article/397/api-token-information-update
-- Telraam data license: https://faq.telraam.net/en/article/9/telraam-data-license-what-can-i-do-with-the-telraam-data
+- Telraam data licensing overview: https://telraam.net/en/network
 - Telraam terms of use: https://telraam.net/en/terms-of-use
 - Telraam privacy policy: https://telraam.net/en/privacy-policy
 

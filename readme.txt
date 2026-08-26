@@ -2,9 +2,9 @@
 Contributors: qndrs
 Tags: traffic, statistics, mobility, shortcode, data
 Requires at least: 6.5
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 0.3.3
+Stable tag: 0.3.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,7 +66,7 @@ Telraam terms of use: https://telraam.net/en/terms-of-use
 
 Telraam privacy policy: https://telraam.net/en/privacy-policy
 
-Telraam data license information: https://faq.telraam.net/en/article/9/telraam-data-license-what-can-i-do-with-the-telraam-data
+Telraam data licensing overview: https://telraam.net/en/network
 
 This plugin is not affiliated with or endorsed by Telraam. Telraam API use is subject to Telraam's own terms, rate limits, and data licensing conditions.
 
@@ -107,6 +107,14 @@ Not yet. This is planned for a later version.
 Yes. The plugin uses the `qndrs-traffic-display-for-telraam` text domain and is prepared for WordPress.org language packs.
 
 == Changelog ==
+
+= 0.3.5 =
+
+* Confirmed compatibility with WordPress 7.1.
+
+= 0.3.4 =
+
+* Replaced an unavailable Telraam data licensing link with a working official Telraam page.
 
 = 0.3.3 =
 
